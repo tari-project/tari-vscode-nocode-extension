@@ -1,0 +1,33 @@
+---
+name: CI
+
+'on':
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+concurrency:
+  # https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/v') || github.ref != 'refs/heads/main' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: 'moonrepo/setup-toolchain@v0'
+        with:
+          auto-install: true
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build the extension
+        run: moon tari-extension:build
+      - name: Verify formatting
+        run: moon :format
+      - name: Lint the project
+        run: moon :lint
+      - name: Run tests
+        run: moon :test

@@ -24,5 +24,6 @@ jobs:
         run: moon tari-extension:build
 
       - name: Publish to VS Code Marketplace
+        if: secrets.VSCE_TOKEN != ''
         run: pnpm dlx vsce publish -p ${{ secrets.VSCE_TOKEN }}
         working-directory: packages/tari-extension

@@ -1,0 +1,41 @@
+{
+  "name": "tari-extension-query-builder-webview",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "preview": "vite preview",
+    "ladle": "ladle serve"
+  },
+  "dependencies": {
+    "@tari-project/tarijs-all": "catalog:",
+    "@tari-project/typescript-bindings": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tari-extension-common": "workspace:^",
+    "tari-extension-query-builder": "workspace:^",
+    "use-debounce": "^10.0.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@types/vscode-webview": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-react-refresh": "catalog:",
+    "globals": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vite": "catalog:"
+  }
+}

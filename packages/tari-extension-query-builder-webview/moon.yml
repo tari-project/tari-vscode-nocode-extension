@@ -1,0 +1,38 @@
+language: "typescript"
+platform: "node"
+type: "library"
+
+fileGroups:
+  configs:
+    - "eslint.config.js"
+    - "package.json"
+    - "eslint.config.js"
+    - "tsconfig.app.json"
+    - "tsconfig.json"
+    - "tsconfig.node.json"
+    - "vite.config.ts"
+  sources:
+    - "index.html"
+    - "src/**/*"
+
+tasks:
+  build:
+    command: "pnpm run build"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+    outputs:
+      - "dist"
+    deps:
+      - "tari-extension-common:build"
+      - "tari-extension-query-builder:build"
+  format:
+    command: "pnpm run format"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+  lint:
+    command: "pnpm run lint"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"

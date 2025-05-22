@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "../tari-extension-common"
+    },
+    {
+      "path": "../tari-extension-common/tsconfig.esm.json"
+    }
+  ]
+}

@@ -1,0 +1,317 @@
+{
+  "V1": {
+    "functions": [
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "a_addr"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "b_addr"
+          },
+          {
+            "arg_type": "U16",
+            "name": "fee"
+          }
+        ],
+        "is_mut": false,
+        "name": "new",
+        "output": {
+          "Other": {
+            "name": "Component"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Bucket"
+              }
+            },
+            "name": "input_bucket"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "output_resource"
+          }
+        ],
+        "is_mut": true,
+        "name": "swap",
+        "output": {
+          "Other": {
+            "name": "Bucket"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Bucket"
+              }
+            },
+            "name": "a_bucket"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Bucket"
+              }
+            },
+            "name": "b_bucket"
+          }
+        ],
+        "is_mut": true,
+        "name": "add_liquidity",
+        "output": {
+          "Other": {
+            "name": "Bucket"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Bucket"
+              }
+            },
+            "name": "lp_bucket"
+          }
+        ],
+        "is_mut": true,
+        "name": "remove_liquidity",
+        "output": {
+          "Tuple": [
+            {
+              "Other": {
+                "name": "Bucket"
+              }
+            },
+            {
+              "Other": {
+                "name": "Bucket"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_a_resource",
+        "output": {
+          "Other": {
+            "name": "ResourceAddress"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_b_resource",
+        "output": {
+          "Other": {
+            "name": "ResourceAddress"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_pool_balances",
+        "output": {
+          "Other": {
+            "name": "HashMap"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource_address"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_pool_balance",
+        "output": {
+          "Other": {
+            "name": "Amount"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Amount"
+              }
+            },
+            "name": "amount"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_pool_ratio",
+        "output": {
+          "Other": {
+            "name": "Amount"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          }
+        ],
+        "is_mut": false,
+        "name": "lp_resource",
+        "output": {
+          "Other": {
+            "name": "ResourceAddress"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          }
+        ],
+        "is_mut": false,
+        "name": "lp_total_supply",
+        "output": {
+          "Other": {
+            "name": "Amount"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          }
+        ],
+        "is_mut": false,
+        "name": "fee",
+        "output": "U16"
+      }
+    ],
+    "tari_version": "0.8.0",
+    "template_name": "TariswapPool"
+  }
+}

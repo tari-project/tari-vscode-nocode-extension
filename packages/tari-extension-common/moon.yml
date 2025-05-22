@@ -1,0 +1,47 @@
+language: "typescript"
+platform: "node"
+type: "library"
+
+fileGroups:
+  configs:
+    - "tsconfig.csj.json"
+    - "tsconfig.esm.json"
+    - "package.json"
+  sources:
+    - "src/**/*"
+
+tasks:
+  build-cjs:
+    command: "pnpm run build:cjs"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+    outputs:
+      - "dist/cjs"
+  build-esm:
+    command: "pnpm run build:esm"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+    outputs:
+      - "dist/esm"
+  build:
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+    deps:
+      - "build-cjs"
+      - "build-esm"
+  format:
+    command: "pnpm run format"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+  lint:
+    command: "pnpm run lint"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+    deps:
+      - "format"
+      - "build"

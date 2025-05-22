@@ -6,8 +6,7 @@ import { readFile } from "fs/promises";
 import { ACCOUNT_KNOWN_PARTS } from "./known-parts/account";
 
 describe(JsonOutline, () => {
-  it.skip("can parse account details", async () => {
-    throw new Error("Not implemented");
+  it("can parse account details", async () => {
     const data = await fetchTestData("account.json");
     const outline = parseDocument("Account", data, ACCOUNT_KNOWN_PARTS);
 

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { QueryBuilder, TemplateReader, useStore } from "tari-extension-query-builder";
+import { QueryBuilder, TemplateReader, useStore } from "@tari-project/tari-extension-query-builder";
 import { GeneratedCodeType, Messenger, TariFlowMessages, TariFlowNodeDetails, Theme } from "tari-extension-common";
 
-import "tari-extension-query-builder/dist/tari-extension-query-builder.css";
+import "@tari-project/tari-extension-query-builder/dist/tari-extension-query-builder.css";
 import "./root.css";
 import { TemplateDef } from "@tari-project/typescript-bindings";
 import { Transaction } from "@tari-project/tarijs-all";

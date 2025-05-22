@@ -18,7 +18,7 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "tari-extension-common": "workspace:^",
-    "tari-extension-query-builder": "workspace:^",
+    "@tari-project/tari-extension-query-builder": "workspace:^",
     "use-debounce": "^10.0.4"
   },
   "devDependencies": {

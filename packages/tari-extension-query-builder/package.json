@@ -1,5 +1,5 @@
 {
-  "name": "tari-extension-query-builder",
+  "name": "@tari-project/tari-extension-query-builder",
   "private": true,
   "version": "0.0.0",
   "type": "module",

@@ -1,0 +1,84 @@
+{
+  "name": "tari-extension-query-builder",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --build tsconfig.lib.json && BUILD_LIB=true vite build",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "preview": "vite preview",
+    "ladle": "ladle serve",
+    "test": "vitest run src"
+  },
+  "main": "dist/tari-extension-query-builder.umd.js",
+  "module": "dist/tari-extension-query-builder.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/tari-extension-query-builder.es.js",
+      "require": "./dist/tari-extension-query-builder.umd.js"
+    },
+    "./style": {
+      "style": "./dist/tari-extension-query-builder.css"
+    },
+    "./dist/tari-extension-query-builder.css": "./dist/tari-extension-query-builder.css"
+  },
+  "sideEffects": [
+    "./dist/tari-extension-query-builder.css"
+  ],
+  "dependencies": {
+    "@ladle/react": "^5.0.1",
+    "@radix-ui/react-alert-dialog": "^1.1.6",
+    "@radix-ui/react-checkbox": "^1.1.4",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-icons": "^1.3.2",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-popover": "^1.1.7",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-tooltip": "^1.1.8",
+    "@tailwindcss/vite": "^4.0.12",
+    "@tari-project/tarijs-all": "catalog:",
+    "@xyflow/react": "^12.4.4",
+    "autoprefixer": "^10.4.21",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.479.0",
+    "next-themes": "^0.4.6",
+    "postcss": "^8.5.3",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "sonner": "^2.0.3",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss": "^4.0.12",
+    "tailwindcss-animate": "^1.0.7",
+    "tari-extension-common": "workspace:^",
+    "uuid": "catalog:",
+    "zod": "^3.24.2",
+    "zustand": "catalog:"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@tari-project/typescript-bindings": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-react-refresh": "catalog:",
+    "globals": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "catalog:"
+  }
+}

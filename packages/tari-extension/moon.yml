@@ -1,0 +1,47 @@
+language: "typescript"
+platform: "node"
+type: "library"
+
+fileGroups:
+  configs:
+    - "tsconfig.json"
+    - "package.json"
+  sources:
+    - "src/**/*"
+
+tasks:
+  build:
+    command: "pnpm run build && \
+      rm -rf dist/webview && \
+      mkdir -p dist/webview && \
+      cp -R ../tari-extension-webview/dist/* dist/webview && \
+      rm -rf dist/query-builder-webview && \
+      mkdir -p dist/query-builder-webview && \
+      cp -R ../tari-extension-query-builder-webview/dist/* dist/query-builder-webview"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+    outputs:
+      - "dist"
+    deps:
+      - "tari-extension-common:build"
+      - "tari-extension-webview:build"
+      - "tari-extension-query-builder-webview:build"
+  watch:
+    command: "pnpm run watch"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+  format:
+    command: "pnpm run format"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+  lint:
+    command: "pnpm run lint"
+    inputs:
+      - "@files(sources)"
+      - "@files(configs)"
+    deps:
+      - "format"
+      - "build"

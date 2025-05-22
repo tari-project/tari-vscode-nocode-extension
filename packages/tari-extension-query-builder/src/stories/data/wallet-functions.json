@@ -1,0 +1,580 @@
+{
+  "V1": {
+    "functions": [
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "NonFungibleAddress"
+              }
+            },
+            "name": "public_key_token"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Option"
+              }
+            },
+            "name": "owner_rule"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Option"
+              }
+            },
+            "name": "access_rules"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Option"
+              }
+            },
+            "name": "bucket"
+          }
+        ],
+        "is_mut": false,
+        "name": "create",
+        "output": {
+          "Other": {
+            "name": "Component"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          }
+        ],
+        "is_mut": false,
+        "name": "balance",
+        "output": {
+          "Other": {
+            "name": "Amount"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          }
+        ],
+        "is_mut": false,
+        "name": "confidential_commitment_count",
+        "output": "U32"
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Amount"
+              }
+            },
+            "name": "amount"
+          }
+        ],
+        "is_mut": true,
+        "name": "withdraw",
+        "output": {
+          "Other": {
+            "name": "Bucket"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "NonFungibleId"
+              }
+            },
+            "name": "nf_id"
+          }
+        ],
+        "is_mut": true,
+        "name": "withdraw_non_fungible",
+        "output": {
+          "Other": {
+            "name": "Bucket"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Vec": {
+                "Other": {
+                  "name": "NonFungibleId"
+                }
+              }
+            },
+            "name": "nf_ids"
+          }
+        ],
+        "is_mut": true,
+        "name": "withdraw_many_non_fungibles",
+        "output": {
+          "Other": {
+            "name": "Bucket"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ConfidentialWithdrawProof"
+              }
+            },
+            "name": "withdraw_proof"
+          }
+        ],
+        "is_mut": true,
+        "name": "withdraw_confidential",
+        "output": {
+          "Other": {
+            "name": "Bucket"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Bucket"
+              }
+            },
+            "name": "bucket"
+          }
+        ],
+        "is_mut": true,
+        "name": "deposit",
+        "output": "Unit"
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Vec": {
+                "Other": {
+                  "name": "Bucket"
+                }
+              }
+            },
+            "name": "buckets"
+          }
+        ],
+        "is_mut": true,
+        "name": "deposit_all",
+        "output": "Unit"
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_non_fungible_ids",
+        "output": {
+          "Vec": {
+            "Other": {
+              "name": "NonFungibleId"
+            }
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&self"
+              }
+            },
+            "name": "self"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_balances",
+        "output": {
+          "Tuple": [
+            {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            {
+              "Other": {
+                "name": "Amount"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ConfidentialWithdrawProof"
+              }
+            },
+            "name": "proof"
+          }
+        ],
+        "is_mut": true,
+        "name": "reveal_confidential",
+        "output": {
+          "Other": {
+            "name": "Bucket"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ConfidentialWithdrawProof"
+              }
+            },
+            "name": "proof"
+          }
+        ],
+        "is_mut": true,
+        "name": "join_confidential",
+        "output": "Unit"
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Amount"
+              }
+            },
+            "name": "amount"
+          }
+        ],
+        "is_mut": true,
+        "name": "pay_fee",
+        "output": "Unit"
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ConfidentialWithdrawProof"
+              }
+            },
+            "name": "proof"
+          }
+        ],
+        "is_mut": true,
+        "name": "pay_fee_confidential",
+        "output": "Unit"
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          }
+        ],
+        "is_mut": true,
+        "name": "create_proof_for_resource",
+        "output": {
+          "Other": {
+            "name": "Proof"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Vec": {
+                "Other": {
+                  "name": "NonFungibleId"
+                }
+              }
+            },
+            "name": "ids"
+          }
+        ],
+        "is_mut": true,
+        "name": "create_proof_by_non_fungible_ids",
+        "output": {
+          "Other": {
+            "name": "Proof"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "&mut self"
+              }
+            },
+            "name": "self"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "ResourceAddress"
+              }
+            },
+            "name": "resource"
+          },
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Amount"
+              }
+            },
+            "name": "amount"
+          }
+        ],
+        "is_mut": true,
+        "name": "create_proof_by_amount",
+        "output": {
+          "Other": {
+            "name": "Proof"
+          }
+        }
+      },
+      {
+        "arguments": [
+          {
+            "arg_type": {
+              "Other": {
+                "name": "Bucket"
+              }
+            },
+            "name": "bucket"
+          }
+        ],
+        "is_mut": false,
+        "name": "get_non_fungible_ids_for_bucket",
+        "output": {
+          "Vec": {
+            "Other": {
+              "name": "NonFungibleId"
+            }
+          }
+        }
+      }
+    ],
+    "tari_version": "0.8.0",
+    "template_name": "Account"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "./packages/tari-extension/"
+    },
+    {
+      "path": "./packages/tari-extension-common/"
+    },
+    {
+      "path": "packages/tari-extension"
+    },
+    {
+      "path": "packages/tari-extension-common"
+    },
+    {
+      "path": "packages/tari-extension-webview"
+    },
+    {
+      "path": "packages/tari-extension-query-builder"
+    },
+    {
+      "path": "packages/tari-extension-query-builder-webview"
+    }
+  ]
+}

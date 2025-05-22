@@ -1,0 +1,7 @@
+.list-substates::part(body) {
+  overflow: visible;
+}
+
+.list-substates:last-child {
+  margin-bottom: 0;
+}

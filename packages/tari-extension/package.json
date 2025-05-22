@@ -1,0 +1,145 @@
+{
+  "name": "tari-extension",
+  "publisher": "tari-labs",
+  "version": "0.0.1",
+  "displayName": "Tari Ootle",
+  "description": "Improves the Tari experience",
+  "keywords": [
+    "tari",
+    "ootle",
+    "crypto"
+  ],
+  "icon": "TODO",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "pnpm run build",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "@types/vscode": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "dependencies": {
+    "tari-extension-common": "workspace:^",
+    "typed-emitter": "^2.1.0",
+    "uuid": "catalog:"
+  },
+  "activationEvents": [],
+  "contributes": {
+    "configuration": {
+      "title": "Tari Extension",
+      "properties": {
+        "tari.walletDaemonAddress": {
+          "type": "string",
+          "default": null,
+          "description": "Wallet Daemon Address"
+        },
+        "tari.walletConnectProjectId": {
+          "type": "string",
+          "default": null,
+          "description": "Wallet Connect Project ID"
+        },
+        "tari.defaultProvider": {
+          "type": "string",
+          "default": "wallet-daemon",
+          "description": "Default Provider",
+          "enum": [
+            "wallet-daemon",
+            "wallet-connect"
+          ],
+          "enumDescriptions": [
+            "Wallet Daemon",
+            "Wallet Connect"
+          ]
+        },
+        "tari.minTransactionFee": {
+          "type": "number",
+          "default": 3000,
+          "description": "Minimum Transaction Fee"
+        },
+        "tari.network": {
+          "type": "string",
+          "default": "LocalNet",
+          "description": "Tari network to execute transactions on",
+          "enum": [
+            "MainNet",
+            "StageNet",
+            "NextNet",
+            "LocalNet",
+            "Igor",
+            "Esmeralda"
+          ],
+          "enumDescriptions": [
+            "MainNet",
+            "StageNet",
+            "NextNet",
+            "LocalNet",
+            "Igor",
+            "Esmeralda"
+          ]
+        },
+        "tari.maxTransactionExecutionResults": {
+          "type": "number",
+          "default": 5,
+          "description": "Maximum transaction execution results to show"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.tari",
+        "title": "Tari Extension"
+      },
+      {
+        "command": "tari.flow-document.new",
+        "title": "Create new Tari Flow",
+        "category": "Tari Flow"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tariActivityBarContainer",
+          "title": "Tari",
+          "icon": "resources/tari.svg"
+        }
+      ]
+    },
+    "views": {
+      "tariActivityBarContainer": [
+        {
+          "type": "webview",
+          "id": "tariActivityBarView",
+          "name": "Tari"
+        }
+      ]
+    },
+    "customEditors": [
+      {
+        "viewType": "tari.flow-document",
+        "displayName": "Tari Flow",
+        "selector": [
+          {
+            "filenamePattern": "*.tari"
+          }
+        ]
+      }
+    ]
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "packageManager": "pnpm@10.4.1"
+}

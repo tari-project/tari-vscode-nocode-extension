@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.esm.tsbuildinfo",
+    "module": "ESNext",
+    "outDir": "dist/esm",
+    "esModuleInterop": true,
+    "declaration": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "target": "ESNext"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

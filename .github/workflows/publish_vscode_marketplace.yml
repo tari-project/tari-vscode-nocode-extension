@@ -1,0 +1,31 @@
+name: Publish Extension
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on tags starting with 'v'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+        with:
+          auto-install: true
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build the extension
+        run: moon tari-extension:build
+
+      - name: Publish to VS Code Marketplace
+        if: secrets.VSCE_TOKEN != ''
+        run: bash ./scripts/vscode_publish.sh
+        working-directory: packages/tari-extension
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}

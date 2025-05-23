@@ -21,13 +21,18 @@ jobs:
       - uses: 'moonrepo/setup-toolchain@v0'
         with:
           auto-install: true
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Build the extension
         run: moon tari-extension:build
+
       - name: Verify formatting
         run: moon :format
+
       - name: Lint the project
         run: moon :lint
+
       - name: Run tests
         run: moon :test

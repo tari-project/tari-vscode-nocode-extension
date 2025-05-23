@@ -295,6 +295,9 @@ importers:
 
   packages/tari-extension-query-builder-webview:
     dependencies:
+      '@tari-project/tari-extension-query-builder':
+        specifier: workspace:^
+        version: link:../tari-extension-query-builder
       '@tari-project/tarijs-all':
         specifier: 'catalog:'
         version: 0.6.0(@types/react@19.0.10)(react@19.0.0)(typescript@5.7.3)(webextension-polyfill@0.12.0)(zod@3.24.2)
@@ -310,9 +313,6 @@ importers:
       tari-extension-common:
         specifier: workspace:^
         version: link:../tari-extension-common
-      tari-extension-query-builder:
-        specifier: workspace:^
-        version: link:../tari-extension-query-builder
       use-debounce:
         specifier: ^10.0.4
         version: 10.0.4(react@19.0.0)

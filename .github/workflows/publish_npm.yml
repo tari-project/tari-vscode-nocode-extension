@@ -1,0 +1,35 @@
+---
+# Publishing the package to the npm registry when its version is bumped
+name: Publish Query Builder Package to npmjs
+
+on:
+  push:
+    branches:
+      - main # Or the branch you merge version bumps into
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+        with:
+          auto-install: true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build @tari-project/tari-extension-query-builder
+        run: moon tari-extension-query-builder:build
+
+      - name: Publish @tari-project/tari-extension-query-builder
+        run: |
+          pnpm config set git-checks false
+          pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+          pnpm publish --access public --no-git-checks
+        working-directory: packages/tari-extension-query-builder
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

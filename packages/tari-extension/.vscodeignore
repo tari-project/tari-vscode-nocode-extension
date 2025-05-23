@@ -1,0 +1,9 @@
+./.vscode
+./resources
+./src
+./test-workspace
+./.gitignore
+./.prettierignore
+./eslint.config.mjs
+./moon.yml
+./tsconfig.json

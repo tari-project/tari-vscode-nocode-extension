@@ -25,5 +25,7 @@ jobs:
 
       - name: Publish to VS Code Marketplace
         if: secrets.VSCE_TOKEN != ''
-        run: pnpm dlx vsce publish -p ${{ secrets.VSCE_TOKEN }}
+        run: bash ./scripts/vscode_publish.sh
         working-directory: packages/tari-extension
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}

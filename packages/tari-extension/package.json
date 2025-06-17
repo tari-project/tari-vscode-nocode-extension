@@ -9,7 +9,7 @@
     "ootle",
     "crypto"
   ],
-  "icon": "TODO",
+  "icon": "resources/tari_logo_purple.ico",
   "main": "./dist/extension.js",
   "scripts": {
     "build": "tsc",
@@ -19,7 +19,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
-  "author": "",
+  "author": "Tari Labs",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "catalog:",

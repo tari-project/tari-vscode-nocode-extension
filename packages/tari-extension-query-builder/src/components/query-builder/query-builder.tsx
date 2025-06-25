@@ -8,7 +8,7 @@ import {
   Panel,
   MiniMap,
 } from "@xyflow/react";
-import { CALL_NODE_DRAG_DROP_TYPE, GeneratedCodeType, TransactionProps } from "tari-extension-common";
+import { CALL_NODE_DRAG_DROP_TYPE, GeneratedCodeType, TransactionProps } from "@tari-project/tari-extension-common";
 import useStore from "../../store/store";
 import { useShallow } from "zustand/shallow";
 import { InputConnectionType, GenericNodeType, NodeType, QueryBuilderState } from "@/store/types";

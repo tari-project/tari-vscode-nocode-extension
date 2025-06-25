@@ -1,7 +1,7 @@
 {
   "name": "tari-extension-query-builder-webview",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,7 +17,7 @@
     "@tari-project/typescript-bindings": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "tari-extension-common": "workspace:^",
+    "@tari-project/tari-extension-common": "workspace:^",
     "@tari-project/tari-extension-query-builder": "workspace:^",
     "use-debounce": "^10.0.4"
   },

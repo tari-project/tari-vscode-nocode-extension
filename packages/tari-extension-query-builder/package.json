@@ -1,7 +1,7 @@
 {
   "name": "@tari-project/tari-extension-query-builder",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -57,7 +57,7 @@
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.12",
     "tailwindcss-animate": "^1.0.7",
-    "tari-extension-common": "workspace:^",
+    "@tari-project/tari-extension-common": "workspace:^",
     "uuid": "catalog:",
     "zod": "^3.24.2",
     "zustand": "catalog:"

@@ -6,7 +6,7 @@ import {
   ShowGeneratedCodeRequest,
   TariFlowMessages,
   TariFlowNodeDetails,
-} from "tari-extension-common";
+} from "@tari-project/tari-extension-common";
 import { getTheme } from "../theme";
 import { NoSubscriberError, PromiseAggregator } from "../PromiseAggregator";
 import { FlowToTariView } from "../types";

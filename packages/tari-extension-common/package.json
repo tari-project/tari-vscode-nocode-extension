@@ -1,7 +1,7 @@
 {
-  "name": "tari-extension-common",
-  "private": true,
-  "version": "0.0.2",
+  "name": "@tari-project/tari-extension-common",
+  "private": false,
+  "version": "0.0.3",
   "description": "Tari VS Code extension common code",
   "scripts": {
     "build:cjs": "tsc -p tsconfig.json",

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { QueryBuilder, TemplateReader, useStore } from "@tari-project/tari-extension-query-builder";
-import { GeneratedCodeType, Messenger, TariFlowMessages, TariFlowNodeDetails, Theme } from "tari-extension-common";
+import { GeneratedCodeType, Messenger, TariFlowMessages, TariFlowNodeDetails, Theme } from "@tari-project/tari-extension-common";
 
 import "@tari-project/tari-extension-query-builder/dist/tari-extension-query-builder.css";
 import "./root.css";

@@ -4,13 +4,13 @@ import {
   ExecuteTransactionBaseRequest,
   GeneratedCodeType,
   ShowGeneratedCodeRequest,
+  TariConfiguration,
   TariConfigurationKey,
   TariNetwork,
   TariProviderType,
   TimedOutError,
   WebViewMessages,
-} from "tari-extension-common";
-import { TariConfiguration } from "tari-extension-common";
+} from "@tari-project/tari-extension-common";
 import { LongOperation } from "./LongOperation";
 import { ReadOnlyJsonDocumentProvider } from "./doc-providers/ReadOnlyJsonDocumentProvider";
 import { TariFlowEditorProvider } from "./flow-view/TariFlowEditor";

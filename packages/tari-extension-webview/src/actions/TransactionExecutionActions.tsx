@@ -16,7 +16,7 @@ import { useTariStore } from "../store/tari-store";
 import { useEffect, useState } from "react";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import JsonOutlineTree from "../components/JsonOutlineTree";
-import { JsonOutlineItem } from "tari-extension-common";
+import { JsonOutlineItem } from "@tari-project/tari-extension-common";
 import { TransactionResult } from "@tari-project/tarijs-all";
 import { JsonOutline } from "../json-parser/JsonOutline";
 import { TRANSACTION_EXECUTION_PARTS } from "../json-parser/known-parts/transaction-execution";

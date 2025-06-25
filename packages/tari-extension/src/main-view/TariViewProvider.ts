@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { AllowedActions, Messenger } from "tari-extension-common";
+import { AllowedActions, Messenger } from "@tari-project/tari-extension-common";
 import { getHtmlForWebview } from "../webview";
 
 export class TariViewProvider<T extends AllowedActions<keyof T>> implements vscode.WebviewViewProvider {

@@ -15,7 +15,7 @@ import {
 import * as ve from "@vscode-elements/elements";
 import { useTariStore } from "./store/tari-store";
 import { WalletConnectTariSigner } from "@tari-project/wallet-connect-signer";
-import { TariConfiguration, TariNetwork, TariProviderType } from "tari-extension-common";
+import { TariConfiguration, TariNetwork, TariProviderType } from "@tari-project/tari-extension-common";
 import { useCallback, useRef, useState } from "react";
 import { useCollapsibleToggle } from "./hooks/collapsible-toggle";
 import { useEnterKey } from "./hooks/textfield-enter";

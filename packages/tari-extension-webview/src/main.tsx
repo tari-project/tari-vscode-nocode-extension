@@ -8,7 +8,7 @@ import {
   TariConfigurationKey,
   TariNetwork,
   WebViewMessages,
-} from "tari-extension-common";
+} from "@tari-project/tari-extension-common";
 import { useTariStore } from "./store/tari-store";
 import {
   buildTransactionRequest,

@@ -1,4 +1,4 @@
-import { JSONPath } from "tari-extension-common";
+import { JSONPath } from "@tari-project/tari-extension-common";
 
 interface ItemWithPath {
   path: JSONPath;

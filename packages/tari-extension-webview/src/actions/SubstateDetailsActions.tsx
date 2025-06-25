@@ -1,7 +1,7 @@
 import { TariSigner } from "@tari-project/tarijs-all";
 import { useTariStore } from "../store/tari-store";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { JsonOutlineItem } from "tari-extension-common";
+import { JsonOutlineItem } from "@tari-project/tari-extension-common";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import {
   VscodeButton,

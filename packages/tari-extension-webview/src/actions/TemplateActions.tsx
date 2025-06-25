@@ -15,7 +15,7 @@ import {
 } from "@vscode-elements/react-elements";
 import * as ve from "@vscode-elements/elements";
 import JsonOutlineTree from "../components/JsonOutlineTree";
-import { JsonOutlineItem } from "tari-extension-common";
+import { JsonOutlineItem } from "@tari-project/tari-extension-common";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import { JsonOutline } from "../json-parser/JsonOutline";
 import { TEMPLATE_DETAILS_PARTS } from "../json-parser/known-parts/template-details";

@@ -1,4 +1,4 @@
-import { GeneratedCodeType } from "tari-extension-common";
+import { GeneratedCodeType } from "@tari-project/tari-extension-common";
 import * as vscode from "vscode";
 
 export interface CodeDocumentDetails {

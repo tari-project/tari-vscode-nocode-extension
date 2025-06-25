@@ -8,7 +8,7 @@ import { JsonOutline } from "../json-parser/JsonOutline";
 import JsonOutlineTree from "../components/JsonOutlineTree";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import { ACCOUNT_KNOWN_PARTS } from "../json-parser/known-parts/account";
-import { JsonOutlineItem } from "tari-extension-common";
+import { JsonOutlineItem } from "@tari-project/tari-extension-common";
 
 interface AccountActionsProps {
   signer: TariSigner;

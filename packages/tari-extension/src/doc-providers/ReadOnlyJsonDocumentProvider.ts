@@ -1,4 +1,4 @@
-import { JsonOutlineItem } from "tari-extension-common";
+import { JsonOutlineItem } from "@tari-project/tari-extension-common";
 import * as vscode from "vscode";
 
 export interface JsonDocumentDetails {

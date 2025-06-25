@@ -1,6 +1,6 @@
 import { AccountData, ListSubstatesResponse, Substate, TariSigner, TransactionResult } from "@tari-project/tarijs-all";
 import { SubstateType, TemplateDef } from "@tari-project/typescript-bindings";
-import { Messenger, TariConfiguration, TariProviderType, WebViewMessages } from "tari-extension-common";
+import { Messenger, TariConfiguration, TariProviderType, WebViewMessages } from "@tari-project/tari-extension-common";
 import { WebviewApi } from "vscode-webview";
 
 export interface TransactionExecutionResult {

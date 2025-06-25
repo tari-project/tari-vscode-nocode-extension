@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
-import { Message, Messenger, TariFlowMessages } from "tari-extension-common";
+import { Message, Messenger, TariFlowMessages } from "@tari-project/tari-extension-common";
 
 const messenger = registerMessenger();
 const rootElement = document.getElementById("root");

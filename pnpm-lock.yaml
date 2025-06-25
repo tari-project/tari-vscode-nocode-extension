@@ -92,7 +92,7 @@ importers:
 
   packages/tari-extension:
     dependencies:
-      tari-extension-common:
+      '@tari-project/tari-extension-common':
         specifier: workspace:^
         version: link:../tari-extension-common
       typed-emitter:
@@ -186,6 +186,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.0.12
         version: 4.0.12(vite@6.2.0(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2))
+      '@tari-project/tari-extension-common':
+        specifier: workspace:^
+        version: link:../tari-extension-common
       '@tari-project/tarijs-all':
         specifier: 'catalog:'
         version: 0.6.0(@types/react@19.0.10)(react@19.0.0)(typescript@5.7.3)(webextension-polyfill@0.12.0)(zod@3.24.2)
@@ -228,9 +231,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.0.12)
-      tari-extension-common:
-        specifier: workspace:^
-        version: link:../tari-extension-common
       uuid:
         specifier: 'catalog:'
         version: 11.1.0
@@ -295,6 +295,9 @@ importers:
 
   packages/tari-extension-query-builder-webview:
     dependencies:
+      '@tari-project/tari-extension-common':
+        specifier: workspace:^
+        version: link:../tari-extension-common
       '@tari-project/tari-extension-query-builder':
         specifier: workspace:^
         version: link:../tari-extension-query-builder
@@ -310,9 +313,6 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.0.0(react@19.0.0)
-      tari-extension-common:
-        specifier: workspace:^
-        version: link:../tari-extension-common
       use-debounce:
         specifier: ^10.0.4
         version: 10.0.4(react@19.0.0)
@@ -365,6 +365,9 @@ importers:
 
   packages/tari-extension-webview:
     dependencies:
+      '@tari-project/tari-extension-common':
+        specifier: workspace:^
+        version: link:../tari-extension-common
       '@tari-project/tarijs-all':
         specifier: 'catalog:'
         version: 0.6.0(@types/react@19.0.10)(react@19.0.0)(typescript@5.7.3)(webextension-polyfill@0.12.0)(zod@3.24.2)
@@ -395,9 +398,6 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.0.0(react@19.0.0)
-      tari-extension-common:
-        specifier: workspace:^
-        version: link:../tari-extension-common
       uuid:
         specifier: 'catalog:'
         version: 11.1.0

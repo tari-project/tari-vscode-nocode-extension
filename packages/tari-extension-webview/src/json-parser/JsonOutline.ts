@@ -1,7 +1,7 @@
 import { findNodeAtOffset, JSONPath, parseTree, visit, Node } from "jsonc-parser";
 import { JsonDocument } from "./JsonDocument";
 import { pathMatches } from "./path-matches";
-import { JsonOutlineItem, JsonOutlineItemBase } from "tari-extension-common";
+import { JsonOutlineItem, JsonOutlineItemBase } from "@tari-project/tari-extension-common";
 
 export interface KnownJsonPart {
   path: JSONPath;

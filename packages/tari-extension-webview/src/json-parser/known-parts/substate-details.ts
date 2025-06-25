@@ -1,4 +1,4 @@
-import { Markdown } from "tari-extension-common";
+import { Markdown } from "@tari-project/tari-extension-common";
 import { CborValue, parseCbor } from "../../utils/cbor";
 import { KnownJsonPart } from "../JsonOutline";
 import { getPropertyDetails } from "../tree-node-helpers";

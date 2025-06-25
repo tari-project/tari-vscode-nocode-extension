@@ -1,6 +1,6 @@
 import { VscodeLabel, VscodeTree } from "@vscode-elements/react-elements";
 import * as ve from "@vscode-elements/elements";
-import { CALL_NODE_DRAG_DROP_TYPE, JsonOutlineItem } from "tari-extension-common";
+import { CALL_NODE_DRAG_DROP_TYPE, JsonOutlineItem } from "@tari-project/tari-extension-common";
 import { VscTreeActionEvent, VscTreeSelectEvent } from "@vscode-elements/elements/dist/vscode-tree/vscode-tree";
 import { buildTree, TreeNode } from "../json-parser/tree-builder";
 import { useCallback, useEffect, useRef } from "react";

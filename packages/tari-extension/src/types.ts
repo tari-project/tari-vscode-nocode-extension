@@ -1,4 +1,8 @@
-import { ExecuteTransactionBaseRequest, ShowGeneratedCodeRequest, TransactionProps } from "@tari-project/tari-extension-common";
+import {
+  ExecuteTransactionBaseRequest,
+  ShowGeneratedCodeRequest,
+  TransactionProps,
+} from "@tari-project/tari-extension-common";
 
 export interface FlowToTariView {
   getTransactionProps: () => Promise<TransactionProps>;

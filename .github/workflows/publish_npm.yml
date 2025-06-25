@@ -4,8 +4,8 @@ name: Publish Query Builder Package to npmjs
 
 on:
   push:
-    branches:
-      - main # Or the branch you merge version bumps into
+    tags:
+      - 'v*' # Trigger on tags starting with 'v'
 
 jobs:
   publish:

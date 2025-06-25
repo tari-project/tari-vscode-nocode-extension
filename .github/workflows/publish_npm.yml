@@ -28,7 +28,21 @@ jobs:
       - name: Build @tari-project/tari-extension-query-builder
         run: moon tari-extension-query-builder:build
 
+      - name: Get package version (@tari-project/tari-extension-common)
+        id: get_version_common
+        run: echo "version=$(node -p \"require('./packages/tari-extension-common/package.json').version\")" >> $GITHUB_OUTPUT
+
+      - name: Check if version exists on npm (@tari-project/tari-extension-common)
+        id: check_npm_common
+        run: |
+          if npm view @tari-project/tari-extension-common@${{ steps.get_version_common.outputs.version }} > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish @tari-project/tari-extension-common
+        if: steps.check_npm_common.outputs.exists == 'false'
         run: |
           pnpm config set git-checks false
           pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
@@ -37,8 +51,21 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Get package version (@tari-project/tari-extension-query-builder)
+        id: get_version_query_builder
+        run: echo "version=$(node -p \"require('./packages/tari-extension-query-builder/package.json').version\")" >> $GITHUB_OUTPUT
+
+      - name: Check if version exists on npm (@tari-project/tari-extension-query-builder)
+        id: check_npm_query_builder
+        run: |
+          if npm view @tari-project/tari-extension-query-builder@${{ steps.get_version_query_builder.outputs.version }} > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Publish @tari-project/tari-extension-query-builder
+        if: steps.check_npm_query_builder.outputs.exists == 'false'
         run: |
           pnpm config set git-checks false
           pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}

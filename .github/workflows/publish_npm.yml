@@ -22,8 +22,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build @tari-project/tari-extension-common
+        run: moon tari-extension-common:build
+
       - name: Build @tari-project/tari-extension-query-builder
         run: moon tari-extension-query-builder:build
+
+      - name: Publish @tari-project/tari-extension-common
+        run: |
+          pnpm config set git-checks false
+          pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+          pnpm publish --access public --no-git-checks
+        working-directory: packages/tari-extension-common
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 
       - name: Publish @tari-project/tari-extension-query-builder
         run: |

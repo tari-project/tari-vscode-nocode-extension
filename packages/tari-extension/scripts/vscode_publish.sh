@@ -14,7 +14,12 @@ TARBALL=$(ls *.tgz)
 tar -xzf "$TARBALL"
 
 cd package
-PUBLISH_OUTPUT=$(pnpm dlx @vscode/vsce publish -p $VSCE_PAT 2>&1) || true
+
+# Remove devDependencies from package.json
+jq 'del(.devDependencies)' package.json > package.tmp.json && mv package.tmp.json package.json
+
+npm install --production --omit=dev
+PUBLISH_OUTPUT=$(npx -y @vscode/vsce publish -p $VSCE_PAT 2>&1) || true
 if echo "$PUBLISH_OUTPUT" | grep -q "already exists"; then
   echo "Extension with this version already exists. Skipping publish."
 else

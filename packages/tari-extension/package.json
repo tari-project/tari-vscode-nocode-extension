@@ -1,7 +1,7 @@
 {
   "name": "tari-extension",
   "publisher": "tari-labs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "displayName": "Tari Ootle",
   "description": "Improves the Tari experience",
   "keywords": [

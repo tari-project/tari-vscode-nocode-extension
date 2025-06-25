@@ -1,12 +1,14 @@
 name: Publish Extension
 
 on:
-  push:
-    tags:
-      - 'v*' # Trigger on tags starting with 'v'
+  workflow_run:
+    workflows: ["Publish Query Builder Package to npmjs"]
+    types:
+      - completed
 
 jobs:
   publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

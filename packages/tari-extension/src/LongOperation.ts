@@ -1,13 +1,7 @@
 import * as vscode from "vscode";
-import TypedEmitter from "typed-emitter";
 import { EventEmitter } from "events";
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type EmittedEvents = {
-  stop: (cancelled: boolean) => void;
-};
-
-export class LongOperation extends (EventEmitter as new () => TypedEmitter<EmittedEvents>) {
+export class LongOperation extends EventEmitter {
   private progress?: vscode.Progress<{
     message?: string;
     increment?: number;
@@ -35,7 +29,7 @@ export class LongOperation extends (EventEmitter as new () => TypedEmitter<Emitt
         });
 
         return new Promise<boolean>((resolve) => {
-          this.on("stop", (cancelled) => {
+          this.once("stop", (cancelled: boolean) => {
             resolve(cancelled);
           });
         });

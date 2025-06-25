@@ -1,7 +1,7 @@
 {
   "name": "tari-extension",
   "publisher": "tari-labs",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "displayName": "Tari Ootle",
   "description": "Improves the Tari experience",
   "keywords": [
@@ -11,6 +11,10 @@
   ],
   "icon": "resources/tari_logo_purple.ico",
   "main": "./dist/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tari-project/tari-vscode-nocode-extension.git"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
@@ -32,7 +36,6 @@
   },
   "dependencies": {
     "@tari-project/tari-extension-common": "workspace:^",
-    "typed-emitter": "^2.1.0",
     "uuid": "catalog:"
   },
   "activationEvents": [],

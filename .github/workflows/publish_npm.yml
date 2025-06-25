@@ -30,7 +30,7 @@ jobs:
 
       - name: Get package version (@tari-project/tari-extension-common)
         id: get_version_common
-        run: echo "version=$(node -p \"require('./packages/tari-extension-common/package.json').version\")" >> $GITHUB_OUTPUT
+        run: echo "version=$(jq -r .version ./packages/tari-extension-common/package.json)" >> $GITHUB_OUTPUT
 
       - name: Check if version exists on npm (@tari-project/tari-extension-common)
         id: check_npm_common
@@ -53,7 +53,7 @@ jobs:
 
       - name: Get package version (@tari-project/tari-extension-query-builder)
         id: get_version_query_builder
-        run: echo "version=$(node -p \"require('./packages/tari-extension-query-builder/package.json').version\")" >> $GITHUB_OUTPUT
+        run: echo "version=$(jq -r .version ./packages/tari-extension-query-builder/package.json)" >> $GITHUB_OUTPUT
 
       - name: Check if version exists on npm (@tari-project/tari-extension-query-builder)
         id: check_npm_query_builder

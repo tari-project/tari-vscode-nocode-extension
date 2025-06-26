@@ -180,9 +180,6 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.8
         version: 1.1.8(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@tailwindcss/vite':
-        specifier: ^4.0.12
-        version: 4.0.12(vite@6.2.0(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2))
       '@tari-project/tari-extension-common':
         specifier: workspace:^
         version: link:../tari-extension-common
@@ -192,9 +189,6 @@ importers:
       '@xyflow/react':
         specifier: ^12.4.4
         version: 12.4.4(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      autoprefixer:
-        specifier: ^10.4.21
-        version: 10.4.21(postcss@8.5.3)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -207,18 +201,12 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      postcss:
-        specifier: ^8.5.3
-        version: 8.5.3
       sonner:
         specifier: ^2.0.3
         version: 2.0.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       tailwind-merge:
         specifier: ^3.0.2
         version: 3.0.2
-      tailwindcss:
-        specifier: ^4.0.12
-        version: 4.0.12
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.0.12)
@@ -228,13 +216,13 @@ importers:
       zod:
         specifier: ^3.24.2
         version: 3.24.2
-      zustand:
-        specifier: 'catalog:'
-        version: 5.0.3(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
     devDependencies:
       '@eslint/js':
         specifier: 'catalog:'
         version: 9.21.0
+      '@tailwindcss/vite':
+        specifier: ^4.0.12
+        version: 4.0.12(vite@6.2.0(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2))
       '@tari-project/typescript-bindings':
         specifier: 'catalog:'
         version: 1.5.2
@@ -250,6 +238,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: 'catalog:'
         version: 4.3.4(vite@6.2.0(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2))
+      autoprefixer:
+        specifier: ^10.4.21
+        version: 10.4.21(postcss@8.5.3)
       eslint:
         specifier: 'catalog:'
         version: 9.21.0(jiti@2.4.2)
@@ -265,6 +256,9 @@ importers:
       globals:
         specifier: 'catalog:'
         version: 15.15.0
+      postcss:
+        specifier: ^8.5.3
+        version: 8.5.3
       prettier:
         specifier: 'catalog:'
         version: 3.5.2
@@ -274,6 +268,9 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.0.0(react@19.0.0)
+      tailwindcss:
+        specifier: ^4.0.12
+        version: 4.0.12
       typescript:
         specifier: 'catalog:'
         version: 5.7.3
@@ -289,6 +286,9 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 3.0.7(@types/debug@4.1.12)(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2)(msw@2.7.3(@types/node@22.13.5)(typescript@5.7.3))
+      zustand:
+        specifier: 'catalog:'
+        version: 5.0.3(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
 
   packages/tari-extension-query-builder-webview:
     dependencies:

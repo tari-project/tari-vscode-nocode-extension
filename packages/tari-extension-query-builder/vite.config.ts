@@ -21,12 +21,13 @@ export default defineConfig({
           fileName: (format) => `tari-extension-query-builder.${format}.js`,
         },
         rollupOptions: {
-          external: ["react", "react-dom", "react-flow-renderer"],
+          external: ["react", "react-dom", "react-flow-renderer", "react/jsx-runtime"],
           output: {
             globals: {
               react: "React",
               "react-dom": "ReactDOM",
               "react-flow-renderer": "ReactFlowRenderer",
+              "react/jsx-runtime": "ReactJsxRuntime",
             },
           },
         },

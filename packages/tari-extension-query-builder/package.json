@@ -1,7 +1,7 @@
 {
   "name": "@tari-project/tari-extension-query-builder",
   "private": false,
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -31,8 +31,9 @@
     "./dist/tari-extension-query-builder.css"
   ],
   "peerDependencies": {
-    "react": ">=17.0.0",
-    "react-dom": ">=17.0.0"
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "zustand": ">= 5.0.0"
   },
   "dependencies": {
     "@ladle/react": "^5.0.1",
@@ -46,43 +47,43 @@
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
-    "@tailwindcss/vite": "^4.0.12",
     "@tari-project/tarijs-all": "catalog:",
     "@xyflow/react": "^12.4.4",
-    "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.479.0",
     "next-themes": "^0.4.6",
-    "postcss": "^8.5.3",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.0.2",
-    "tailwindcss": "^4.0.12",
     "tailwindcss-animate": "^1.0.7",
     "@tari-project/tari-extension-common": "workspace:^",
     "uuid": "catalog:",
-    "zod": "^3.24.2",
-    "zustand": "catalog:"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/js": "catalog:",
+    "@tailwindcss/vite": "^4.0.12",
     "@tari-project/typescript-bindings": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
+    "autoprefixer": "^10.4.21",
     "eslint": "catalog:",
     "eslint-plugin-react": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-react-refresh": "catalog:",
     "globals": "catalog:",
+    "postcss": "^8.5.3",
     "prettier": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "tailwindcss": "^4.0.12",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "^4.5.3",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "zustand": "catalog:"
   }
 }

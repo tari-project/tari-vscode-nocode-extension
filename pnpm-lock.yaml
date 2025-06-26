@@ -210,12 +210,6 @@ importers:
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
-      react:
-        specifier: 'catalog:'
-        version: 19.0.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.0.0(react@19.0.0)
       sonner:
         specifier: ^2.0.3
         version: 2.0.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -274,6 +268,12 @@ importers:
       prettier:
         specifier: 'catalog:'
         version: 3.5.2
+      react:
+        specifier: 'catalog:'
+        version: 19.0.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.0.0(react@19.0.0)
       typescript:
         specifier: 'catalog:'
         version: 5.7.3

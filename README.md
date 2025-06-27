@@ -2,13 +2,12 @@
 
 > **✨ Visual blockchain development for the Tari ecosystem**
 
-Transform your Tari development experience with a powerful VS Code extension that brings visual transaction building, intelligent code completion, and seamless blockchain integration directly to your IDE.
+Transform your Tari development experience with a powerful VS Code extension that brings visual transaction building and seamless blockchain integration directly to your IDE.
 
 ## 🚀 What You'll Get
 
 - **🎨 Visual Transaction Builder**: Drag-and-drop interface for creating complex Tari transactions
-- **📝 Custom .tari File Support**: Dedicated editor with syntax highlighting and validation
-- **🔍 Smart Code Completion**: Context-aware suggestions for Tari APIs and patterns
+- **📝 Custom .tari File Support**: Dedicated visual flow editor 
 - **⚡ Live Preview**: Real-time visualization of your transaction flows
 - **🛡️ Built-in Validation**: Catch errors before deployment with cycle detection and parameter validation
 - **🌐 Tari Network Integration**: Direct connection to Tari wallets and network nodes
@@ -31,7 +30,7 @@ Transform your Tari development experience with a powerful VS Code extension tha
 
 2. **Clone and setup**:
    ```bash
-   git clone https://github.com/fluffypony/tari-vscode-nocode-extension.git
+   git clone https://github.com/tari-project/tari-vscode-nocode-extension.git
    cd tari-vscode-nocode-extension
    
    # Install correct tool versions and dependencies
@@ -120,7 +119,7 @@ flowchart LR
     subgraph "🎨 Visual Editor"
         A[Input Node<br/>💰 Amount: 1000]
         B[Call Node<br/>🔄 transfer_tokens]
-        C[Log Node<br/>📝 "Transfer Complete"]
+        C[Log Node<br/>📝 Transfer Complete]
     end
     
     A -->|amount| B
@@ -136,10 +135,10 @@ flowchart LR
 ```
 
 **Features:**
-- **🧩 Smart Node System**: Pre-built nodes for common Tari operations (transfer, mint, validate)
+- **🧩 Smart Node System**: Pre-built nodes for common Tari operations (add input parameters, emit log, allocate address)
 - **🔗 Intelligent Connection**: Automatic parameter validation and type checking with real-time feedback
 - **📊 Execution Planning**: Optimal transaction ordering with cycle detection and dependency resolution
-- **⚡ Real-time Preview**: Live code generation and validation as you build your transaction flow
+- **⚡ Real-time Preview**: Live TypeScript and JavaScript generation and validation as you build your transaction flow
 
 ### Custom .tari File Editor
 Dedicated file format for storing and sharing transaction flows:
@@ -180,7 +179,7 @@ Seamless connection to the Tari ecosystem:
 ## 🚦 Development Status
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#51cf66', 'primaryTextColor': '#000', 'primaryBorderColor': '#37b24d', 'lineColor': '#868e96', 'secondaryColor': '#ff6b6b', 'tertiaryColor': '#ffd43b'}}}%%
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor': '#51cf66', 'primaryTextColor': '#fff', 'primaryBorderColor': '#37b24d', 'lineColor': '#868e96', 'secondaryColor': '#ff6b6b', 'tertiaryColor': '#ffd43b'}}}%%
 pie title Project Completion Status
     "Core Extension (Complete)" : 85
     "Visual Builder (Complete)" : 90
@@ -205,13 +204,13 @@ pie title Project Completion Status
 moon tari-extension:build
 
 # 🧪 Run tests
-pnpm test
+moon :test
 
-# 🎨 Format code
-pnpm format
+# 🎨 Verify code formatting
+moon :format
 
 # 🔍 Lint code
-pnpm lint
+moon :lint
 
 # 📦 Build specific package
 cd packages/tari-extension-query-builder
@@ -237,7 +236,7 @@ Licensed under the **BSD 3-Clause License** - see [LICENSE](LICENSE) for details
 - **[ReactFlow](https://reactflow.dev/)** - Visual graph editing
 - **[React](https://react.dev/)** - Modern UI framework
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development
-- **[Moon.js](https://moonrepo.dev/)** - Monorepo build orchestration
+- **[Moon](https://moonrepo.dev/)** - Monorepo build orchestration
 - **[pnpm](https://pnpm.io/)** - Fast, disk space efficient package manager
 
 ---

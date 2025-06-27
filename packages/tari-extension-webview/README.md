@@ -1,11 +1,13 @@
 # Tari Extension Webview
 
 ---
+
 Last Updated: 2025-06-26
 Version: 1.0.0
 Verified Against: Current codebase
 Test Sources: json-parser/JsonOutline.spec.ts, json-parser/tree-builder.spec.ts
 Implementation: json-parser/JsonOutline.ts, json-parser/tree-builder.ts
+
 ---
 
 React-based webview interface for the Tari VS Code extension, providing interactive JSON parsing and tree visualization capabilities for Tari blockchain data.
@@ -33,6 +35,7 @@ function parseDocument(title: string, json: string, knownParts: KnownJsonPart[])
 ```
 
 **Example Usage with Account Data:**
+
 ```typescript
 // SOURCE: packages/tari-extension-webview/src/json-parser/JsonOutline.spec.ts:9-12
 // VERIFIED: 2025-06-26
@@ -41,6 +44,7 @@ const outline = parseDocument("Account", data, ACCOUNT_KNOWN_PARTS);
 ```
 
 **Generated Outline Structure:**
+
 ```typescript
 // SOURCE: packages/tari-extension-webview/src/json-parser/JsonOutline.spec.ts:13-118
 // VERIFIED: 2025-06-26
@@ -92,6 +96,7 @@ const result = buildTree([a, b, c, d, e]);
 ```
 
 **Expected Tree Structure:**
+
 ```typescript
 // SOURCE: packages/tari-extension-webview/src/json-parser/tree-builder.spec.ts:14-28
 // VERIFIED: 2025-06-26
@@ -145,17 +150,20 @@ export interface KnownJsonPart {
 ## Development
 
 ### Building
+
 ```bash
 pnpm install
 pnpm build
 ```
 
 ### Testing
+
 ```bash
 pnpm test
 ```
 
 **Test Coverage:**
+
 - JSON outline parsing with Tari account data
 - Tree building with nested path structures
 - Error handling for malformed JSON

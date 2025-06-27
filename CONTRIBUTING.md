@@ -16,7 +16,7 @@ We're excited to have you contribute to the Tari VS Code Extension project. This
 
 1. **Fork and clone**:
    ```bash
-   git fork https://github.com/fluffypony/tari-vscode-nocode-extension.git
+   git fork https://github.com/tari-project/tari-vscode-nocode-extension.git
    git clone https://github.com/YOUR_USERNAME/tari-vscode-nocode-extension.git
    cd tari-vscode-nocode-extension
    ```
@@ -39,7 +39,7 @@ We're excited to have you contribute to the Tari VS Code Extension project. This
    moon tari-extension:build
    
    # Run tests
-   pnpm test
+   moon :test
    
    # Start local development
    cd packages/tari-extension
@@ -108,7 +108,7 @@ graph TD
 ### 🐛 Bug Reports
 
 **Before reporting:**
-1. Check [existing issues](https://github.com/fluffypony/tari-vscode-nocode-extension/issues)
+1. Check [existing issues](https://github.com/tari-project/tari-vscode-nocode-extension/issues)
 2. Try the latest development version
 3. Gather debugging information
 
@@ -211,9 +211,6 @@ pnpm format
 
 # Lint and fix issues
 pnpm lint:fix
-
-# Type checking
-pnpm typecheck
 ```
 
 **Testing Requirements:**
@@ -248,17 +245,14 @@ describe("ExecutionPlanner", () => {
 
 ```bash
 # Run all tests
-pnpm test
+moon :test
 
 # Run tests for specific package
-cd packages/tari-extension-query-builder
+cd packages/tari-extension-webview
 pnpm test
 
 # Run tests in watch mode
 pnpm test --watch
-
-# Run tests with coverage
-pnpm test --coverage
 ```
 
 ### Building and Testing Locally
@@ -483,4 +477,4 @@ We value all contributions and recognize contributors in:
 
 Your contributions help make blockchain development more accessible and enjoyable for developers worldwide. Whether you're fixing a typo, adding a feature, or helping other contributors, every contribution matters.
 
-**Ready to get started?** Check out the [good first issue](https://github.com/fluffypony/tari-vscode-nocode-extension/labels/good%20first%20issue) label for beginner-friendly contributions.
+**Ready to get started?** Check out the [good first issue](https://github.com/tari-project/tari-vscode-nocode-extension/labels/good%20first%20issue) label for beginner-friendly contributions.

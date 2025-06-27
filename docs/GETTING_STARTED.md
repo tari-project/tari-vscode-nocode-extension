@@ -54,18 +54,18 @@ For developers or those wanting the latest features:
 
 2. **Clone and build**:
    ```bash
-   git clone https://github.com/fluffypony/tari-vscode-nocode-extension.git
+   git clone https://github.com/tari-project/tari-vscode-nocode-extension.git
    cd tari-vscode-nocode-extension
    proto use
    pnpm install
    moon tari-extension:build
    ```
 
-3. **Install in VS Code**:
-   ```bash
-   cd packages/tari-extension
-   code --install-extension $(ls *.vsix | head -1)
-   ```
+3. **Launch extension**:
+   - Open VS Code in the `packages/tari-extension` directory
+   - Go to "Run and Debug" panel (Ctrl/Cmd + Shift + D)
+   - Select "Run Extension" configuration
+   - Press F5 to launch Extension Development Host
 
 ## 🎨 Your First Transaction
 
@@ -131,7 +131,7 @@ Let's create a simple "Hello Tari" transaction with a step-by-step visual guide:
 ```mermaid
 flowchart TD
     subgraph "🎯 Your First Transaction Flow"
-        A[📥 Input Node<br/>message: "Hello Tari!"]
+        A[📥 Input Node<br/>message: Hello Tari!]
         B[🔲 Call Node<br/>emit_log]
         C[📊 Log Node<br/>Display Result]
     end
@@ -430,7 +430,7 @@ The extension provides real-time feedback on your transaction:
 
 ### Getting Help
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/fluffypony/tari-vscode-nocode-extension/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/tari-project/tari-vscode-nocode-extension/issues)
 - **Documentation**: [Developer Guide](DEVELOPER_GUIDE.md) and [API Reference](API_REFERENCE.md)
 - **Community**: Join Tari Discord for real-time help
 
@@ -443,7 +443,7 @@ Now that you've mastered the basics:
    - [API Reference](API_REFERENCE.md) for complete function listings
 
 2. **Join the Community**:
-   - Contribute to the project on [GitHub](https://github.com/fluffypony/tari-vscode-nocode-extension)
+   - Contribute to the project on [GitHub](https://github.com/tari-project/tari-vscode-nocode-extension)
    - Share your transactions and get feedback
 
 3. **Build Real Applications**:

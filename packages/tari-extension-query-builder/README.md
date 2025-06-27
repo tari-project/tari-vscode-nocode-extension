@@ -1,11 +1,13 @@
 # Tari Extension Query Builder
 
 ---
+
 Last Updated: 2025-06-26
 Version: 1.0.0
 Verified Against: Current codebase
 Test Sources: execute/ExecutionPlanner.spec.ts
 Implementation: execute/ExecutionPlanner.ts
+
 ---
 
 React-based visual query builder for creating and executing Tari blockchain transactions through a drag-and-drop interface using ReactFlow.
@@ -38,6 +40,7 @@ const buildNode = (id: string, data: Partial<GenericNode["data"]> = {}): Generic
 ```
 
 **Basic Execution Order Example:**
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.spec.ts:52-63
 // VERIFIED: 2025-06-26
@@ -54,6 +57,7 @@ expect(order).toEqual(["A", "B", "C"]);
 ```
 
 **Parameter Connection Example:**
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.spec.ts:65-82
 // VERIFIED: 2025-06-26
@@ -78,6 +82,7 @@ expect(order).toEqual(["Start", "A", "B", "End"]);
 ## Error Handling
 
 ### Cycle Detection
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.spec.ts:161-171
 // VERIFIED: 2025-06-26
@@ -93,6 +98,7 @@ expect(() => executor.getExecutionOrder()).toThrowError(CycleDetectedError);
 ```
 
 ### Ambiguous Order Detection
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.spec.ts:87-108
 // VERIFIED: 2025-06-26
@@ -120,6 +126,7 @@ try {
 ### ExecutionPlanner Class
 
 **Constructor:**
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.ts:37-42
 // VERIFIED: 2025-06-26
@@ -132,6 +139,7 @@ constructor(
 ```
 
 **Key Methods:**
+
 - `getExecutionOrder()`: Returns ordered array of node IDs for execution
 - `buildTransactionDescription()`: Creates transaction details from execution plan
 - `buildTransaction()`: Converts transaction details to executable transaction
@@ -139,6 +147,7 @@ constructor(
 ### Helper Functions
 
 **Building Input Parameters:**
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.spec.ts:23-27
 // VERIFIED: 2025-06-26
@@ -150,6 +159,7 @@ const buildInputParameter = (name: string): NonNullable<GenericNode["data"]["inp
 ```
 
 **Building Output Parameters:**
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.spec.ts:28-31
 // VERIFIED: 2025-06-26
@@ -160,6 +170,7 @@ const buildOutputParameter = (name: string): GenericNode["data"]["output"] => ({
 ```
 
 **Building Edges:**
+
 ```typescript
 // SOURCE: packages/tari-extension-query-builder/src/execute/ExecutionPlanner.spec.ts:32-38
 // VERIFIED: 2025-06-26
@@ -175,17 +186,20 @@ const buildEdge = (source: ConnectionPoint, target: ConnectionPoint): Edge => ({
 ## Development
 
 ### Building
+
 ```bash
 pnpm install
 pnpm build
 ```
 
 ### Testing
+
 ```bash
 pnpm test
 ```
 
 **Test Coverage:**
+
 - Execution order calculation with various node configurations
 - Cycle detection in transaction flows
 - Ambiguous order error handling

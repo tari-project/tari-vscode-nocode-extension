@@ -96,7 +96,7 @@ sequenceDiagram
 2. **Setup project**:
    ```bash
    # Clone repository
-   git clone https://github.com/fluffypony/tari-vscode-nocode-extension.git
+   git clone https://github.com/tari-project/tari-vscode-nocode-extension.git
    cd tari-vscode-nocode-extension
    
    # Install correct tool versions
@@ -118,7 +118,7 @@ This command builds the entire project with proper dependency ordering.
 ## Project Structure
 
 ```
-├── .moon/                    # Moon.js workspace configuration
+├── .moon/                    # Moon workspace configuration
 ├── packages/
 │   ├── tari-extension/      # Main VS Code extension
 │   │   ├── src/
@@ -218,7 +218,7 @@ src/
 
 ```bash
 # Run all tests
-pnpm test
+moon :test
 
 # Run tests for specific package
 cd packages/tari-extension-query-builder
@@ -293,7 +293,6 @@ The project uses GitHub Actions for automated publishing:
 1. **NPM Packages** (published first):
    - `tari-extension-common`
    - `tari-extension-query-builder`
-   - `tari-extension-webview`
 
 2. **VS Code Extension** (published after NPM packages):
    - `tari-extension` package to VS Code Marketplace
@@ -391,7 +390,9 @@ docs(readme): update installation instructions
 3. **Verify build**:
    ```bash
    moon tari-extension:build
-   pnpm test
+   moon :test
+   moon :format
+   moon :lint
    ```
 
 4. **Submit pull request**:

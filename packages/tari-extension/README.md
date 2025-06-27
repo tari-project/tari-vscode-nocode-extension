@@ -7,6 +7,7 @@ This is the main extension package that provides VS Code integration for the Tar
 ## ✨ Core Features
 
 ### 🎨 Visual Transaction Builder
+
 Transform complex blockchain operations into intuitive drag-and-drop workflows:
 
 - **Custom .tari File Editor**: Dedicated editor for transaction flow definitions
@@ -51,7 +52,7 @@ graph TB
         ExtensionHost[Extension Host Process]
         WebviewContext[Webview Sandbox]
     end
-    
+
     subgraph "🎯 Extension Core Components"
         ExtensionEntry[extension.ts<br/>Entry Point]
         MainView[main-view/<br/>Activity Bar]
@@ -59,39 +60,39 @@ graph TB
         DocProviders[doc-providers/<br/>Virtual Documents]
         ThemeSync[theme.ts<br/>Theme Detection]
     end
-    
+
     subgraph "🌐 React Interface"
         ReactComponents[React Components]
         QueryBuilder[Visual Query Builder]
         JSONParser[JSON Outline Parser]
     end
-    
+
     subgraph "🔗 External Integration"
         TariNetwork[Tari Network]
         WalletDaemon[Wallet Daemon]
     end
-    
+
     VSCodeAPI --> ExtensionHost
     ExtensionHost --> ExtensionEntry
     ExtensionEntry --> MainView
     ExtensionEntry --> FlowView
     ExtensionEntry --> DocProviders
     ExtensionEntry --> ThemeSync
-    
+
     MainView --> WebviewContext
     FlowView --> WebviewContext
     WebviewContext --> ReactComponents
     ReactComponents --> QueryBuilder
     ReactComponents --> JSONParser
-    
+
     ExtensionEntry --> TariNetwork
     TariNetwork --> WalletDaemon
-    
+
     classDef vscode fill:#845ef7,stroke:#7048e8,color:#fff
     classDef extension fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef react fill:#4dabf7,stroke:#1c7ed6,color:#fff
     classDef network fill:#51cf66,stroke:#37b24d,color:#fff
-    
+
     class VSCodeAPI,ExtensionHost,WebviewContext vscode
     class ExtensionEntry,MainView,FlowView,DocProviders,ThemeSync extension
     class ReactComponents,QueryBuilder,JSONParser react
@@ -114,30 +115,36 @@ graph TB
 3. Search for "Tari VS Code Extension"
 4. Click Install
 
-### Manual Installation (Development)
+### Manual execution (Development)
 
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/fluffypony/tari-vscode-nocode-extension.git
+   git clone https://github.com/tari-project/tari-vscode-nocode-extension.git
    cd tari-vscode-nocode-extension
    ```
 
 2. Install dependencies:
+
    ```bash
    proto use
    pnpm install
    ```
 
 3. Build the extension:
+
    ```bash
    moon tari-extension:build
    ```
 
-4. Install locally:
+4. Launch extension:
    ```bash
    cd packages/tari-extension
-   code --install-extension $(ls *.vsix | head -1)
+   code .
    ```
+   - Go to "Run and Debug" panel (Ctrl/Cmd + Shift + D)
+   - Select "Run Extension" configuration
+   - Press F5 to launch Extension Development Host
 
 ## 🎯 Usage Guide
 
@@ -152,6 +159,7 @@ graph TB
 ### Working with .tari Files
 
 **File Structure:**
+
 ```json
 {
   "version": "1.0",
@@ -215,12 +223,14 @@ Configure the extension via VS Code settings:
 ### Local Development
 
 1. **Open extension workspace**:
+
    ```bash
    cd packages/tari-extension
    code .
    ```
 
 2. **Launch Extension Development Host**:
+
    - Press `F5` or go to Run and Debug
    - Select "Run Extension" configuration
    - New VS Code window opens with extension loaded

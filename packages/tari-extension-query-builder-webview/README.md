@@ -1,10 +1,12 @@
 # Tari Extension Query Builder Webview
 
 ---
+
 Last Updated: 2025-06-26
 Version: 1.0.0
 Verified Against: Current codebase
 Implementation: Webview-optimized build of tari-extension-query-builder
+
 ---
 
 Webview-optimized build of the Tari Extension Query Builder for integration into VS Code's custom editor interface. This package provides the same visual query building capabilities as the standalone query builder but packaged specifically for VS Code webview contexts.
@@ -36,6 +38,7 @@ The webview integrates with the main extension through:
 ## Development
 
 ### Building
+
 ```bash
 pnpm install
 pnpm build
@@ -44,6 +47,7 @@ pnpm build
 The build process creates webview-specific assets that are consumed by the main Tari VS Code extension.
 
 ### Testing
+
 Testing is handled at the parent query builder level, as this package is primarily a build configuration variant.
 
 ## Usage

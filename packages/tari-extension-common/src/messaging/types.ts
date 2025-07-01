@@ -9,7 +9,6 @@ export interface TariFlowNodeDetails {
 
 export interface ExecuteTransactionBaseRequest {
   transaction: Record<string, unknown>;
-  dryRun: boolean;
 }
 
 export interface ExecuteTransactionRequest extends ExecuteTransactionBaseRequest {
@@ -109,6 +108,7 @@ export interface WebViewMessages {
 export type Theme = "dark" | "light";
 
 export interface TransactionProps {
+  network: TariNetwork;
   accountAddress: string;
   fee: number;
 }

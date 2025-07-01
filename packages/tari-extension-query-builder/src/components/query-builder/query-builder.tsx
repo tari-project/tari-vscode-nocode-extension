@@ -8,7 +8,12 @@ import {
   Panel,
   MiniMap,
 } from "@xyflow/react";
-import { CALL_NODE_DRAG_DROP_TYPE, GeneratedCodeType, TransactionProps } from "@tari-project/tari-extension-common";
+import {
+  CALL_NODE_DRAG_DROP_TYPE,
+  GeneratedCodeType,
+  TariNetwork,
+  TransactionProps,
+} from "@tari-project/tari-extension-common";
 import useStore from "../../store/store";
 import { useShallow } from "zustand/shallow";
 import { InputConnectionType, GenericNodeType, NodeType, QueryBuilderState } from "@/store/types";
@@ -57,13 +62,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
-import { Amount, Transaction } from "@tari-project/tarijs-all";
+import { Amount, Network } from "@tari-project/tarijs-all";
 import { MissingDataError } from "@/execute/MissingDataError";
 import { toast } from "sonner";
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { BuilderCodegen } from "@/codegen/BuilderCodegen";
 import { getNextAvailable } from "@/lib/get-next-available";
 import { ALLOCATE_COMPONENT_ADDRESS_RESULT, ALLOCATE_RESOURCE_ADDRESS_RESULT } from "./nodes/generic-node.types";
+import { UnsignedTransactionV1 } from "@tari-project/typescript-bindings";
 
 export type Theme = "dark" | "light";
 
@@ -86,7 +92,7 @@ export interface QueryBuilderProps {
   theme: Theme;
   readOnly?: boolean;
   getTransactionProps?: () => Promise<TransactionProps>;
-  executeTransaction?: (transaction: Transaction, dryRun: boolean) => Promise<void>;
+  executeTransaction?: (transaction: UnsignedTransactionV1) => Promise<void>;
   showGeneratedCode?: (code: string, type: GeneratedCodeType) => Promise<void>;
 }
 
@@ -167,9 +173,9 @@ function Flow({
       const planner = new ExecutionPlanner(nodes, edges);
       try {
         const executionOrder = planner.getExecutionOrder();
-        const { accountAddress, fee } = await getTransactionProps();
+        const { network, accountAddress, fee } = await getTransactionProps();
         const details = planner.buildTransactionDescription(executionOrder, accountAddress, new Amount(fee));
-        return { planner, details };
+        return { network, planner, details };
       } catch (e) {
         let errorMessage = "Failed to determine execution order";
         if (e instanceof AmbiguousOrderError) {
@@ -205,6 +211,23 @@ function Flow({
     [nodes, edges, getNodeById],
   );
 
+  const getNetwork = (network: TariNetwork) => {
+    switch (network) {
+      case TariNetwork.MainNet:
+        return Network.MainNet;
+      case TariNetwork.StageNet:
+        return Network.StageNet;
+      case TariNetwork.NextNet:
+        return Network.NextNet;
+      case TariNetwork.LocalNet:
+        return Network.LocalNet;
+      case TariNetwork.Igor:
+        return Network.Igor;
+      case TariNetwork.Esmeralda:
+        return Network.Esmeralda;
+    }
+  };
+
   const handleExecute = useCallback(
     async (dryRun: boolean) => {
       if (!getTransactionProps || !executeTransaction) {
@@ -213,9 +236,9 @@ function Flow({
 
       setLoading(true);
       try {
-        const { planner, details } = await buildTransactionDescriptions(getTransactionProps);
-        const transaction = planner.buildTransaction(details);
-        await executeTransaction(transaction, dryRun);
+        const { network, planner, details } = await buildTransactionDescriptions(getTransactionProps);
+        const transaction = planner.buildTransaction(getNetwork(network), details, dryRun);
+        await executeTransaction(transaction);
         toast.success("Transaction executed");
       } catch (e) {
         if (e instanceof Error) {

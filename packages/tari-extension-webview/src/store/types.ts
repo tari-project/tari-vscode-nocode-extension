@@ -1,4 +1,10 @@
-import { AccountData, ListSubstatesResponse, Substate, TariSigner, TransactionResult } from "@tari-project/tarijs-all";
+import {
+  AccountData,
+  GetTransactionResultResponse,
+  ListSubstatesResponse,
+  Substate,
+  TariSigner,
+} from "@tari-project/tarijs-all";
 import { SubstateType, TemplateDef } from "@tari-project/typescript-bindings";
 import { Messenger, TariConfiguration, TariProviderType, WebViewMessages } from "@tari-project/tari-extension-common";
 import { WebviewApi } from "vscode-webview";
@@ -6,7 +12,7 @@ import { WebviewApi } from "vscode-webview";
 export interface TransactionExecutionResult {
   dateTimestamp: number;
   succeeded: boolean;
-  result: TransactionResult;
+  result: GetTransactionResultResponse;
 }
 
 export interface TariStoreEphemeral {
@@ -53,13 +59,13 @@ export interface TemplateAction {
 
 export interface TransactionExecutionState {
   transactionExecutions?: TransactionExecutionResult[];
-  openedTransactionResult?: TransactionResult;
+  openedTransactionResult?: GetTransactionResultResponse;
 }
 
 export interface TransactionExecutionAction {
-  addTransactionExecution: (result: TransactionResult, maxResults?: number) => void;
+  addTransactionExecution: (result: GetTransactionResultResponse, maxResults?: number) => void;
   setTransactionExecutions: (transactionExecutions?: TransactionExecutionResult[]) => void;
-  setOpenedTransactionResult: (openedTransactionResult?: TransactionResult) => void;
+  setOpenedTransactionResult: (openedTransactionResult?: GetTransactionResultResponse) => void;
 }
 
 export interface TariStore {

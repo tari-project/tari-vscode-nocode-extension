@@ -102,11 +102,9 @@ export class BuilderCodegen {
                       factory.createIdentifier("builder"),
                       undefined,
                       undefined,
-                      factory.createNewExpression(
-                        factory.createIdentifier("TransactionBuilder"),
-                        undefined,
-                        [factory.createIdentifier("network")],
-                      ),
+                      factory.createNewExpression(factory.createIdentifier("TransactionBuilder"), undefined, [
+                        factory.createIdentifier("network"),
+                      ]),
                     ),
                   ],
                   ts.NodeFlags.Const,
@@ -174,18 +172,13 @@ export class BuilderCodegen {
                       factory.createIdentifier("submitTransactionRequest"),
                       undefined,
                       undefined,
-                      factory.createCallExpression(
-                        factory.createIdentifier("buildTransactionRequest"),
-                        undefined,
-                        [
-                          factory.createCallExpression(
-                            factory.createIdentifier("buildTransaction"),
-                            undefined,
-                            [factory.createIdentifier("network"), ...Object.keys(this.details.context.inputParams).map((key) => factory.createIdentifier(key))],
-                          ),
-                          factory.createIdentifier("accountId"),
-                        ],
-                      ),
+                      factory.createCallExpression(factory.createIdentifier("buildTransactionRequest"), undefined, [
+                        factory.createCallExpression(factory.createIdentifier("buildTransaction"), undefined, [
+                          factory.createIdentifier("network"),
+                          ...Object.keys(this.details.context.inputParams).map((key) => factory.createIdentifier(key)),
+                        ]),
+                        factory.createIdentifier("accountId"),
+                      ]),
                     ),
                   ],
                   ts.NodeFlags.Const,
@@ -266,12 +259,15 @@ export class BuilderCodegen {
     switch (arg.type) {
       case "workspace":
         // Use { Workspace: "name" } instead of fromWorkspace()
-        return factory.createObjectLiteralExpression([
-          factory.createPropertyAssignment(
-            factory.createIdentifier("Workspace"),
-            factory.createStringLiteral(arg.value)
-          )
-        ], false);
+        return factory.createObjectLiteralExpression(
+          [
+            factory.createPropertyAssignment(
+              factory.createIdentifier("Workspace"),
+              factory.createStringLiteral(arg.value),
+            ),
+          ],
+          false,
+        );
       case "input":
         return factory.createPropertyAccessExpression(
           factory.createIdentifier(arg.reference.name),

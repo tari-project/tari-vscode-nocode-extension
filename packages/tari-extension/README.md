@@ -142,6 +142,7 @@ graph TB
    cd packages/tari-extension
    code .
    ```
+
    - Go to "Run and Debug" panel (Ctrl/Cmd + Shift + D)
    - Select "Run Extension" configuration
    - Press F5 to launch Extension Development Host
@@ -230,7 +231,6 @@ Configure the extension via VS Code settings:
    ```
 
 2. **Launch Extension Development Host**:
-
    - Press `F5` or go to Run and Debug
    - Select "Run Extension" configuration
    - New VS Code window opens with extension loaded

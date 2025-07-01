@@ -51,15 +51,25 @@ export class BuilderCodegen {
           factory.createNamedImports([
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("buildTransactionRequest")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("Network")),
-            factory.createImportSpecifier(false, undefined, factory.createIdentifier("ReqSubstate")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("submitAndWaitForTransaction")),
-            factory.createImportSpecifier(false, undefined, factory.createIdentifier("SubmitTxResult")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("TariSigner")),
-            factory.createImportSpecifier(false, undefined, factory.createIdentifier("Transaction")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("TransactionBuilder")),
           ]),
         ),
         factory.createStringLiteral("@tari-project/tarijs-all"),
+        undefined,
+      ),
+      factory.createImportDeclaration(
+        undefined,
+        factory.createImportClause(
+          false,
+          undefined,
+          factory.createNamedImports([
+            factory.createImportSpecifier(false, undefined, factory.createIdentifier("TransactionResult")),
+            factory.createImportSpecifier(false, undefined, factory.createIdentifier("UnsignedTransactionV1")),
+          ]),
+        ),
+        factory.createStringLiteral("@tari-project/typescript-bindings"),
         undefined,
       ),
       ...addEmptyCommentToFirstNode(buildInterfaces(this.details.context)),
@@ -70,8 +80,18 @@ export class BuilderCodegen {
           undefined,
           factory.createIdentifier("buildTransaction"),
           undefined,
-          buildInputArgs(this.details.context),
-          factory.createTypeReferenceNode(factory.createIdentifier("Transaction"), undefined),
+          [
+            factory.createParameterDeclaration(
+              undefined,
+              undefined,
+              factory.createIdentifier("network"),
+              undefined,
+              factory.createTypeReferenceNode(factory.createIdentifier("Network"), undefined),
+              undefined,
+            ),
+            ...buildInputArgs(this.details.context),
+          ],
+          factory.createTypeReferenceNode(factory.createIdentifier("UnsignedTransactionV1"), undefined),
           factory.createBlock(
             [
               factory.createVariableStatement(
@@ -82,7 +102,11 @@ export class BuilderCodegen {
                       factory.createIdentifier("builder"),
                       undefined,
                       undefined,
-                      factory.createNewExpression(factory.createIdentifier("TransactionBuilder"), undefined, []),
+                      factory.createNewExpression(
+                        factory.createIdentifier("TransactionBuilder"),
+                        undefined,
+                        [factory.createIdentifier("network")],
+                      ),
                     ),
                   ],
                   ts.NodeFlags.Const,
@@ -93,7 +117,7 @@ export class BuilderCodegen {
                 factory.createCallExpression(
                   factory.createPropertyAccessExpression(
                     factory.createIdentifier("builder"),
-                    factory.createIdentifier("build"),
+                    factory.createIdentifier("buildUnsignedTransaction"),
                   ),
                   undefined,
                   [],
@@ -135,27 +159,10 @@ export class BuilderCodegen {
               factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
               undefined,
             ),
-            factory.createParameterDeclaration(
-              undefined,
-              undefined,
-              factory.createIdentifier("requiredSubstates"),
-              undefined,
-              factory.createArrayTypeNode(
-                factory.createTypeReferenceNode(factory.createIdentifier("ReqSubstate"), undefined),
-              ),
-              factory.createArrayLiteralExpression([], false),
-            ),
-            factory.createParameterDeclaration(
-              undefined,
-              undefined,
-              factory.createIdentifier("isDryRun"),
-              undefined,
-              undefined,
-              factory.createFalse(),
-            ),
+            ...buildInputArgs(this.details.context),
           ],
           factory.createTypeReferenceNode(factory.createIdentifier("Promise"), [
-            factory.createTypeReferenceNode(factory.createIdentifier("SubmitTxResult"), undefined),
+            factory.createTypeReferenceNode(factory.createIdentifier("TransactionResult"), undefined),
           ]),
           factory.createBlock(
             [
@@ -167,18 +174,18 @@ export class BuilderCodegen {
                       factory.createIdentifier("submitTransactionRequest"),
                       undefined,
                       undefined,
-                      factory.createCallExpression(factory.createIdentifier("buildTransactionRequest"), undefined, [
-                        factory.createCallExpression(
-                          factory.createIdentifier("buildTransaction"),
-                          undefined,
-                          Object.keys(this.details.context.inputParams).map((key) => factory.createIdentifier(key)),
-                        ),
-                        factory.createIdentifier("accountId"),
-                        factory.createIdentifier("requiredSubstates"),
-                        factory.createIdentifier("undefined"),
-                        factory.createIdentifier("isDryRun"),
-                        factory.createIdentifier("network"),
-                      ]),
+                      factory.createCallExpression(
+                        factory.createIdentifier("buildTransactionRequest"),
+                        undefined,
+                        [
+                          factory.createCallExpression(
+                            factory.createIdentifier("buildTransaction"),
+                            undefined,
+                            [factory.createIdentifier("network"), ...Object.keys(this.details.context.inputParams).map((key) => factory.createIdentifier(key))],
+                          ),
+                          factory.createIdentifier("accountId"),
+                        ],
+                      ),
                     ),
                   ],
                   ts.NodeFlags.Const,
@@ -204,7 +211,12 @@ export class BuilderCodegen {
                   ts.NodeFlags.Const,
                 ),
               ),
-              factory.createReturnStatement(factory.createIdentifier("txResult")),
+              factory.createReturnStatement(
+                factory.createPropertyAccessExpression(
+                  factory.createIdentifier("txResult"),
+                  factory.createIdentifier("result"),
+                ),
+              ),
             ],
             true,
           ),
@@ -253,9 +265,13 @@ export class BuilderCodegen {
   private createArgValueAst(arg: ArgValue): ts.Expression {
     switch (arg.type) {
       case "workspace":
-        return factory.createCallExpression(factory.createIdentifier("fromWorkspace"), undefined, [
-          factory.createStringLiteral(arg.value),
-        ]);
+        // Use { Workspace: "name" } instead of fromWorkspace()
+        return factory.createObjectLiteralExpression([
+          factory.createPropertyAssignment(
+            factory.createIdentifier("Workspace"),
+            factory.createStringLiteral(arg.value)
+          )
+        ], false);
       case "input":
         return factory.createPropertyAccessExpression(
           factory.createIdentifier(arg.reference.name),

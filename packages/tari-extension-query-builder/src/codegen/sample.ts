@@ -38,12 +38,8 @@ export async function executeTransaction(
   signer: TariSigner,
   network: Network,
   accountId: number,
-  isDryRun = false,
 ): Promise<TransactionResult> {
-  const unsignedTransaction = buildTransaction(network);
-  unsignedTransaction.dry_run = isDryRun;
-
-  const submitTransactionRequest = buildTransactionRequest(unsignedTransaction, accountId);
+  const submitTransactionRequest = buildTransactionRequest(buildTransaction(network), accountId);
 
   const txResult = await submitAndWaitForTransaction(signer, submitTransactionRequest);
   return txResult.result;

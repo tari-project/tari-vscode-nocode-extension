@@ -138,6 +138,7 @@ graph TB
    ```
 
 4. Launch extension:
+
    ```bash
    cd packages/tari-extension
    code .

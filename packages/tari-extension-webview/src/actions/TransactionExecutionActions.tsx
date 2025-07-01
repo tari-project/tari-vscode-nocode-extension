@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import JsonOutlineTree from "../components/JsonOutlineTree";
 import { JsonOutlineItem } from "@tari-project/tari-extension-common";
-import { TransactionResult } from "@tari-project/tarijs-all";
+import { GetTransactionResultResponse } from "@tari-project/tarijs-all";
 import { JsonOutline } from "../json-parser/JsonOutline";
 import { TRANSACTION_EXECUTION_PARTS } from "../json-parser/known-parts/transaction-execution";
 import { TariStore, TariStoreAction } from "../store/types";
@@ -72,7 +72,7 @@ function TransactionExecutionActions({ open, onToggle }: TransactionExecutionAct
     }
   }, [open, openedTransactionResult, messenger, shouldShowDocument, setShouldShowDocument]);
 
-  const handleLoadTransaction = (result: TransactionResult) => {
+  const handleLoadTransaction = (result: GetTransactionResultResponse) => {
     setOpenedTransactionResult(result);
   };
 

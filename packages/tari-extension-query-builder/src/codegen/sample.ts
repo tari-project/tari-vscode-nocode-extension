@@ -1,24 +1,21 @@
 import {
   buildTransactionRequest,
-  fromWorkspace,
   Network,
-  ReqSubstate,
   submitAndWaitForTransaction,
-  SubmitTxResult,
   TariSigner,
-  Transaction,
   TransactionBuilder,
 } from "@tari-project/tarijs-all";
+import { TransactionResult, UnsignedTransactionV1 } from "@tari-project/typescript-bindings";
 
-function buildTransaction(): Transaction {
-  const builder = new TransactionBuilder();
+function buildTransaction(network: Network): UnsignedTransactionV1 {
+  const builder = new TransactionBuilder(network);
   builder.feeTransactionPayFromComponent("ACCOUNT_ADDRESS", "12345");
   builder.callMethod(
     {
       componentAddress: "COMPONENT_ADDRESS",
       methodName: "method_name",
     },
-    ["a1", 2, fromWorkspace("a2")],
+    ["a1", 2, { Workspace: "a2" }],
   );
   builder.saveVar("b3");
   builder.callFunction(
@@ -26,7 +23,7 @@ function buildTransaction(): Transaction {
       templateAddress: "TEMPLATE_ADDRESS",
       functionName: "function_name",
     },
-    ["b2", 3, fromWorkspace("b3")],
+    ["b2", 3, { Workspace: "b3" }],
   );
   builder.addInstruction({
     EmitLog: {
@@ -34,25 +31,20 @@ function buildTransaction(): Transaction {
       message: "Hello, world!",
     },
   });
-  return builder.build();
+  return builder.buildUnsignedTransaction();
 }
 
 export async function executeTransaction(
   signer: TariSigner,
   network: Network,
   accountId: number,
-  requiredSubstates: ReqSubstate[] = [],
   isDryRun = false,
-): Promise<SubmitTxResult> {
-  const submitTransactionRequest = buildTransactionRequest(
-    buildTransaction(),
-    accountId,
-    requiredSubstates,
-    undefined,
-    isDryRun,
-    network,
-  );
+): Promise<TransactionResult> {
+  const unsignedTransaction = buildTransaction(network);
+  unsignedTransaction.dry_run = isDryRun;
+
+  const submitTransactionRequest = buildTransactionRequest(unsignedTransaction, accountId);
 
   const txResult = await submitAndWaitForTransaction(signer, submitTransactionRequest);
-  return txResult;
+  return txResult.result;
 }

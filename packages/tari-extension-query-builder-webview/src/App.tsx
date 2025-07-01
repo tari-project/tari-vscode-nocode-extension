@@ -11,8 +11,7 @@ import {
 
 import "@tari-project/tari-extension-query-builder/dist/tari-extension-query-builder.css";
 import "./root.css";
-import { TemplateDef } from "@tari-project/typescript-bindings";
-import { Transaction } from "@tari-project/tarijs-all";
+import { TemplateDef, UnsignedTransactionV1 } from "@tari-project/typescript-bindings";
 
 interface AppProps {
   messenger: Messenger<TariFlowMessages> | undefined;
@@ -90,14 +89,13 @@ function App({ messenger }: AppProps) {
   }, [messenger]);
 
   const executeTransaction = useCallback(
-    async (transaction: Transaction, dryRun: boolean) => {
+    async (transaction: UnsignedTransactionV1) => {
       if (!messenger) {
         throw new Error("Messenger is not ready.");
       }
       const timeout = 30_000; // 30 seconds
       const request = {
         transaction: transaction as unknown as Record<string, unknown>,
-        dryRun,
       };
       await messenger.send("executeTransaction", request, timeout);
       return undefined;

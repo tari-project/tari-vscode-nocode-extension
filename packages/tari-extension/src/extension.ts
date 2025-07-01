@@ -162,6 +162,7 @@ export function activate(context: vscode.ExtensionContext) {
           const timeout = 200;
           const accountAddress = await messenger.send("getAccountAddress", undefined, timeout);
           return {
+            network: config[TariConfigurationKey.Network],
             accountAddress,
             fee: config[TariConfigurationKey.MinTransactionFee],
           };

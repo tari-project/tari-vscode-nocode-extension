@@ -6,19 +6,17 @@ import {
   Message,
   Messenger,
   TariConfigurationKey,
-  TariNetwork,
   WebViewMessages,
 } from "@tari-project/tari-extension-common";
 import { useTariStore } from "./store/tari-store";
 import {
   buildTransactionRequest,
-  Network,
+  GetTransactionResultResponse,
   TariSigner,
-  Transaction,
-  TransactionResult,
   TransactionStatus,
 } from "@tari-project/tarijs-all";
 import { SerializedTariStore } from "./store/types";
+import { UnsignedTransactionV1 } from "@tari-project/typescript-bindings";
 
 registerMessenger();
 const rootElement = document.getElementById("root");
@@ -78,15 +76,9 @@ function registerMessenger() {
     closeAllActions();
     setTransactionExecutionActionsOpen(true);
 
-    const isDryRun = request.dryRun;
-    const inputRefs = undefined; // Obsolete
     const submitTransactionRequest = buildTransactionRequest(
-      request.transaction as unknown as Transaction,
+      request.transaction as unknown as UnsignedTransactionV1,
       accountData.account_id,
-      [],
-      inputRefs,
-      isDryRun,
-      getNetwork(request.network),
     );
     const response = await signer.submitTransaction(submitTransactionRequest);
     const result = await waitForAnyTransactionResult(signer, response.transaction_id);
@@ -98,6 +90,8 @@ function registerMessenger() {
   });
 }
 
+// TODO:
+/*
 function getNetwork(network: TariNetwork) {
   switch (network) {
     case TariNetwork.MainNet:
@@ -114,11 +108,12 @@ function getNetwork(network: TariNetwork) {
       return Network.Esmeralda;
   }
 }
+*/
 
 export async function waitForAnyTransactionResult(
   signer: TariSigner,
   transactionId: string,
-): Promise<TransactionResult> {
+): Promise<GetTransactionResultResponse> {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   while (true) {
     const resp = await signer.getTransactionResult(transactionId);
@@ -130,7 +125,7 @@ export async function waitForAnyTransactionResult(
       TransactionStatus.DryRun,
     ];
     if (FINALIZED_STATUSES.includes(resp.status)) {
-      return resp as TransactionResult;
+      return resp;
     }
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }

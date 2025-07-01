@@ -1,11 +1,11 @@
 import { NODE_ENTRY, NODE_EXIT } from "@/components/query-builder/nodes/generic-node.types";
 import { CustomNode, GenericNode, GenericNodeType, InputParamsNode, NodeType } from "@/store/types";
-import { LogLevel, Type } from "@tari-project/typescript-bindings";
+import { LogLevel, Type, UnsignedTransactionV1 } from "@tari-project/typescript-bindings";
 import { Edge } from "@xyflow/react";
 import { CycleDetectedError } from "./CycleDetectedError";
 import { AmbiguousOrderError } from "./AmbiguousOrderError";
 import { MissingDataError } from "./MissingDataError";
-import { Amount, fromWorkspace, Transaction, TransactionBuilder } from "@tari-project/tarijs-all";
+import { Amount, Network, TransactionBuilder } from "@tari-project/tarijs-all";
 import { COMPONENT_ADDRESS_NAME } from "@/query-builder/template-reader";
 import {
   ArgValue,
@@ -382,8 +382,8 @@ export class ExecutionPlanner {
     };
   }
 
-  public buildTransaction(details: TransactionDetails): Transaction {
-    const builder = new TransactionBuilder();
+  public buildTransaction(network: Network, details: TransactionDetails, dryRun: boolean): UnsignedTransactionV1 {
+    const builder = new TransactionBuilder(network);
     for (const description of details.descriptions) {
       switch (description.type) {
         case "feeTransactionPayFromComponent":
@@ -424,12 +424,14 @@ export class ExecutionPlanner {
           break;
       }
     }
-    return builder.build();
+    const result = builder.buildUnsignedTransaction();
+    result.dry_run = dryRun;
+    return result;
   }
 }
 
 function unwrapArgValue(arg: ArgValue): unknown {
-  return arg.type === "workspace" ? fromWorkspace(arg.value) : arg.value;
+  return arg.type === "workspace" ? { Workspace: arg.value } : arg.value;
 }
 
 function unwrapArgValues(args: ArgValue[]): unknown[] {

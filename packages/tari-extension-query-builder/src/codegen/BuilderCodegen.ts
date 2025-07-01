@@ -50,7 +50,6 @@ export class BuilderCodegen {
           undefined,
           factory.createNamedImports([
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("buildTransactionRequest")),
-            factory.createImportSpecifier(false, undefined, factory.createIdentifier("fromWorkspace")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("Network")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("ReqSubstate")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("submitAndWaitForTransaction")),

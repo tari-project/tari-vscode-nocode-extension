@@ -1,7 +1,7 @@
 {
   "name": "@tari-project/tari-extension-query-builder",
   "private": false,
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -53,12 +53,12 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.479.0",
     "next-themes": "^0.4.6",
-    "sonner": "^2.0.3",
-    "tailwind-merge": "^3.0.2",
+    "sonner": "^2.0.5",
+    "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "@tari-project/tari-extension-common": "workspace:^",
     "uuid": "catalog:",
-    "zod": "^3.24.2"
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@eslint/js": "catalog:",

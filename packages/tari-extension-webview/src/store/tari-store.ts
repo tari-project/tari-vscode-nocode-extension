@@ -1,4 +1,9 @@
-import { ListSubstatesResponse, Substate, TransactionResult, TransactionStatus } from "@tari-project/tarijs-all";
+import {
+  GetTransactionResultResponse,
+  ListSubstatesResponse,
+  Substate,
+  TransactionStatus,
+} from "@tari-project/tarijs-all";
 import { TariConfigurationKey, TariProviderType } from "@tari-project/tari-extension-common";
 import { create } from "zustand";
 import { DEFAULT_WALLET_DAEMON_ADDRESS } from "../constants";
@@ -155,7 +160,7 @@ export const useTariStore = create<TariStore & TariStoreEphemeral & TariStoreAct
       setTransactionExecutions: (transactionExecutions?: TransactionExecutionResult[]) => {
         set((state) => ({ transactionExecutionState: { ...state.transactionExecutionState, transactionExecutions } }));
       },
-      setOpenedTransactionResult: (openedTransactionResult?: TransactionResult) => {
+      setOpenedTransactionResult: (openedTransactionResult?: GetTransactionResultResponse) => {
         set((state) => ({
           transactionExecutionState: { ...state.transactionExecutionState, openedTransactionResult },
         }));

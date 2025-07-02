@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "./browser-defaults.css"
+@import "./browser-defaults.css";
 
 @plugin "tailwindcss-animate";
 

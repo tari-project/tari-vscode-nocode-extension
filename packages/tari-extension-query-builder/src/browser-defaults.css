@@ -62,7 +62,8 @@ p {
 }
 
 /* Lists */
-ul, ol {
+ul,
+ol {
   list-style-type: initial; /* Restore bullet/number styles */
   margin-block-start: 1em;
   margin-block-end: 1em;
@@ -91,7 +92,9 @@ pre {
 }
 
 /* Code */
-code, kbd, samp {
+code,
+kbd,
+samp {
   font-family: monospace, monospace;
   font-size: 1em; /* Restore browser default size */
 }
@@ -101,7 +104,8 @@ a {
   text-decoration: underline; /* Default underline */
 }
 
-a:active, a:hover {
+a:active,
+a:hover {
   outline-width: 0;
 }
 
@@ -189,11 +193,13 @@ small {
   font-size: 0.83em; /* Approximate default for <small> */
 }
 
-strong, b {
+strong,
+b {
   font-weight: bolder; /* Make sure they are bolder than parent, not just bold */
 }
 
-em, i {
+em,
+i {
   font-style: italic;
 }
 
@@ -218,7 +224,8 @@ progress {
 }
 
 /* Sub/Sup */
-sub, sup {
+sub,
+sup {
   font-size: 75%;
   line-height: 0;
   position: relative;

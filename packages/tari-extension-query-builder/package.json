@@ -1,7 +1,7 @@
 {
   "name": "@tari-project/tari-extension-query-builder",
   "private": false,
-  "version": "0.0.11",
+  "version": "0.0.12",
   "type": "module",
   "scripts": {
     "dev": "vite",

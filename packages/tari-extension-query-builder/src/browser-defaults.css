@@ -125,22 +125,6 @@ figure {
   margin-inline-end: 40px;
 }
 
-/* Form elements */
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: inherit; /* Inherit font from parent */
-  font-size: 100%; /* Default font size */
-  line-height: 1.15; /* Maintain consistent line-height */
-  margin: 0; /* Remove potential margin from preflight */
-  padding: initial; /* Remove padding, let browser defaults or specific styles apply */
-  border: initial; /* Restore default borders */
-  border-radius: initial; /* Restore default border-radius */
-  appearance: auto; /* Restore browser-specific styling for form elements */
-}
-
 button,
 [type="button"],
 [type="reset"],

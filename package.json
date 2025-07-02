@@ -1,6 +1,6 @@
 {
   "name": "tari-extension",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Tari VS Code extension",
   "type": "module",
   "keywords": [],

@@ -157,8 +157,8 @@ function Flow({
         const reader = new TemplateReader(json.template, json.templateAddress);
 
         const reactflowBounds = reactflowRef.current?.getBoundingClientRect();
-        const flowX = ((event.clientX - (reactflowBounds?.left ?? 0)) - viewport.x) / viewport.zoom;
-        const flowY = ((event.clientY - (reactflowBounds?.top ?? 0)) - viewport.y) / viewport.zoom;
+        const flowX = (event.clientX - (reactflowBounds?.left ?? 0) - viewport.x) / viewport.zoom;
+        const flowY = (event.clientY - (reactflowBounds?.top ?? 0) - viewport.y) / viewport.zoom;
 
         const nodeData = reader.getGenericNode(json.functionName);
         if (nodeData) {

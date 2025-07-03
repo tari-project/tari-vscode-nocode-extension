@@ -3,7 +3,7 @@ import { addEdge, applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
 import { v4 as uuidv4 } from "uuid";
 import { CustomNode, InputConnectionType, NodeType, type QueryBuilderState } from "./types";
 import { NODE_ENTRY, NODE_EXIT } from "@/components/query-builder/nodes/generic-node.types";
-import { latestVersionHandler, versionHandlers } from "./persistence/handlers";
+import { getSchemaFullPath, latestVersionHandler, versionHandlers } from "./persistence/handlers";
 import { NEW_INPUT_PARAM } from "@/components/query-builder/nodes/input/constants";
 import { getNextAvailable } from "@/lib/get-next-available";
 import {
@@ -244,7 +244,11 @@ const useStore = create<QueryBuilderState>((set, get) => ({
   saveStateToString: () => {
     const state = get();
     const persistedState = latestVersionHandler.save(state);
-    return JSON.stringify(persistedState, undefined, 2);
+    const withSchema = {
+      $schema: getSchemaFullPath(persistedState.version),
+      ...persistedState,
+    };
+    return JSON.stringify(withSchema, undefined, 2);
   },
   loadStateFromString: (state) => {
     try {

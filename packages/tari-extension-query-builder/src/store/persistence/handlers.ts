@@ -12,5 +12,9 @@ export const versionHandlers: Record<string, VersionHandler<AnyPersistedState>> 
   "1.0": { version: "1.0", save: saveStateV1, load: loadStateV1 },
 };
 
+export const getSchemaFileName = (version: string) => `tari-schema-v${version}.json`;
+export const getSchemaFullPath = (version: string) =>
+  `https://tari-project.github.io/tari-vscode-nocode-extension/schemas/${getSchemaFileName(version)}`;
+
 export const latestVersion = "1.0";
 export const latestVersionHandler = versionHandlers[latestVersion];

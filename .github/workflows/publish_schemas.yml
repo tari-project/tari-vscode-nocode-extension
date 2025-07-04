@@ -50,6 +50,12 @@ jobs:
           ref: gh-pages
           path: gh-pages
           fetch-depth: 0
+      - name: List files after artifact download
+        run: |
+          pwd
+          ls -lR
+          ls -l schemas
+          ls schemas/*.json || echo 'No JSON schemas found'
       - name: Check if schema changed
         id: schema_diff
         run: |

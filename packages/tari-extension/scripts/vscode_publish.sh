@@ -23,7 +23,7 @@ PUBLISH_OUTPUT=$(npx -y @vscode/vsce publish -p $VSCE_PAT 2>&1) || true
 if echo "$PUBLISH_OUTPUT" | grep -q "already exists"; then
   echo "Extension with this version already exists. Skipping publish."
 else
-  if echo "$PUBLISH_OUTPUT" | grep -q "VS Code extension published successfully"; then
+  if echo "$PUBLISH_OUTPUT" | grep -q "Published"; then
     echo "$PUBLISH_OUTPUT"
   else
     echo "$PUBLISH_OUTPUT"

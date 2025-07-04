@@ -18,7 +18,7 @@ import { SafeParseReturnType, z } from "zod";
 import CallInputSelect from "../../input/call-input-select";
 import { Label } from "@/components/ui/label";
 
-const HANDLE_STARTING_OFFSET = 68;
+const HANDLE_STARTING_OFFSET = 98;
 const FULL_ROW_HEIGHT = ROW_HEIGHT + ROW_PADDING;
 
 function GenericNode(props: NodeProps<GenericNode>) {

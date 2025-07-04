@@ -44,6 +44,9 @@ jobs:
         with:
           name: github-pages
           path: schemas
+      - name: Extract schema artifact
+        run: |
+          tar -xf schemas/artifact.tar -C schemas
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
         with:

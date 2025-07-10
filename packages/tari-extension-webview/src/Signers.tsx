@@ -63,7 +63,12 @@ function Signers({ configuration, open, onToggle }: SignersProps) {
   }, [setAccountData, setSigner, walletDaemonAddress]);
 
   const handleWalletConnectConnect = useCallback(async () => {
-    const walletConnectProvider = new WalletConnectTariSigner(walletConnectProjectId || DEFAULT_TARI_PROJECT_ID);
+    const params = {
+      projectId: walletConnectProjectId || DEFAULT_TARI_PROJECT_ID,
+      requiredPermissions: ["Admin"],
+      optionalPermissions: [],
+    };
+    const walletConnectProvider = new WalletConnectTariSigner(params);
     await walletConnectProvider.connect();
     const accountData = await walletConnectProvider.getAccount();
     setAccountData(accountData);

@@ -9,6 +9,7 @@ import {
   XYPosition,
 } from "@xyflow/react";
 import { SafeParseReturnType } from "zod";
+import { LatestPersistedState } from "@/store/persistence/types.ts";
 
 export enum NodeType {
   GenericNode = "genericNode",
@@ -34,11 +35,13 @@ export interface CallNodeMetadata {
 
 export type GenericNodeMetadata = CallNodeMetadata;
 export type GenericNodeIcon = "enter" | "rocket" | "home" | "cube" | "check-circled" | "archive" | "component";
+
 export enum InputConnectionType {
   None = 0,
   Parameter,
   ComponentAddress,
 }
+
 export interface GenericNodeInputType {
   inputConnectionType: InputConnectionType;
   type: Type;
@@ -46,11 +49,13 @@ export interface GenericNodeInputType {
   label?: string;
   validValues?: string[];
 }
+
 export interface GenericNodeOutputType {
   type: Type;
   name: string;
   label?: string;
 }
+
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type GenericNodeData = {
   type: GenericNodeType;
@@ -84,6 +89,11 @@ export type InputParamsNode = Node<InputParamsNodeData, NodeType.InputParamsNode
 
 export type CustomNode = GenericNode | InputParamsNode;
 
+export interface SchemaAndVersion {
+  $schema: string;
+  version: string;
+}
+
 export interface QueryBuilderState {
   readOnly: boolean;
   nodes: CustomNode[];
@@ -106,6 +116,8 @@ export interface QueryBuilderState {
   removeNode: (nodeId: string) => void;
   saveStateToString: () => string;
   loadStateFromString: (state: string) => void;
+  setState: (state: SchemaAndVersion & LatestPersistedState) => void;
+  getState: () => SchemaAndVersion & LatestPersistedState;
   isValidInputParamsTitle: (nodeId: string, title: string) => boolean;
   updateInputParamsTitle: (nodeId: string, title: string) => void;
   updateInputParamsNode: (nodeId: string, paramId: string, value: SafeParseReturnType<unknown, unknown>) => void;

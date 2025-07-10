@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { addEdge, applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
 import { v4 as uuidv4 } from "uuid";
-import { CustomNode, InputConnectionType, NodeType, type QueryBuilderState } from "./types";
+import { CustomNode, InputConnectionType, NodeType, type QueryBuilderState, SchemaAndVersion } from "./types";
 import { NODE_ENTRY, NODE_EXIT } from "@/components/query-builder/nodes/generic-node.types";
 import { getSchemaFullPath, latestVersionHandler, versionHandlers } from "./persistence/handlers";
 import { NEW_INPUT_PARAM } from "@/components/query-builder/nodes/input/constants";
@@ -12,6 +12,7 @@ import {
   CALL_NODE_RETURN_TUPLE_2,
 } from "@/components/query-builder/nodes/call-node.types";
 import { TariType } from "@/query-builder/tari-type";
+import { LatestPersistedState } from "@/store/persistence/types.ts";
 
 const DROP_NODE_OFFSET_X = 200;
 const DROP_NODE_OFFSET_Y = 50;
@@ -242,43 +243,30 @@ const useStore = create<QueryBuilderState>((set, get) => ({
     }
   },
   saveStateToString: () => {
+    const { getState } = get();
+    const state = getState();
+    return JSON.stringify(state, undefined, 2);
+  },
+  loadStateFromString: (state) => {
+    let parsedState: SchemaAndVersion & LatestPersistedState;
+    try {
+      parsedState = JSON.parse(state) as SchemaAndVersion & LatestPersistedState;
+    } catch (error) {
+      throw new Error(`Failed to parse state: ${String(error)}`);
+    }
+
+    set(validateState(parsedState));
+  },
+  getState: () => {
     const state = get();
     const persistedState = latestVersionHandler.save(state);
-    const withSchema = {
+    return {
       $schema: getSchemaFullPath(persistedState.version),
       ...persistedState,
     };
-    return JSON.stringify(withSchema, undefined, 2);
   },
-  loadStateFromString: (state) => {
-    try {
-      const parsedState = JSON.parse(state) as { version?: string } | undefined;
-      if (typeof parsedState?.version !== "string") {
-        throw new Error("Invalid persisted state: Missing or invalid version.");
-      }
-
-      const version = parsedState.version;
-      const handler = versionHandlers[version];
-
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!handler) {
-        throw new Error(`No handler found for version: ${version}`);
-      }
-
-      const validationResult = handler.load(parsedState);
-
-      if (validationResult.success) {
-        if (version === "1.0") {
-          set({ nodes: validationResult.data.nodes, edges: validationResult.data.edges });
-        } else {
-          throw new Error(`Unsupported version: ${version}`);
-        }
-      } else {
-        throw new Error(`Validation failed: ${validationResult.error.toString()}`);
-      }
-    } catch (error) {
-      throw new Error(`Failed to load state: ${String(error)}`);
-    }
+  setState: (state) => {
+    set(validateState(state));
   },
   isValidInputParamsTitle: (nodeId, title) => {
     if (!title.length || /\s/g.test(title) || !/^[a-zA-Z]/.test(title)) {
@@ -357,7 +345,7 @@ const useStore = create<QueryBuilderState>((set, get) => ({
     }
   },
   isValidInputParamsName: (nodeId, paramId, name) => {
-    if (!name.length || /\s/g.test(name) || !!/^[a-zA-Z]/.test(name)) {
+    if (!name.length || /\s/g.test(name) || /^[a-zA-Z]/.test(name)) {
       return false;
     }
     const node = get().getNodeById(nodeId);
@@ -396,5 +384,36 @@ const useStore = create<QueryBuilderState>((set, get) => ({
     }
   },
 }));
+
+function validateState(state: (SchemaAndVersion & LatestPersistedState) | undefined) {
+  if (typeof state?.version !== "string") {
+    throw new Error("Invalid persisted state: Missing or invalid version.");
+  }
+
+  try {
+    const version = state.version;
+    const handler = versionHandlers[version];
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!handler) {
+      throw new Error(`No handler found for version: ${version}`);
+    }
+
+    const validationResult = handler.load(state);
+
+    if (validationResult.success) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (version === "1.0") {
+        return { nodes: validationResult.data.nodes, edges: validationResult.data.edges };
+      } else {
+        throw new Error(`Unsupported version: ${String(version)}`);
+      }
+    } else {
+      throw new Error(`Validation failed: ${validationResult.error.toString()}`);
+    }
+  } catch (error) {
+    throw new Error(`Failed to load state: ${String(error)}`);
+  }
+}
 
 export default useStore;

@@ -7,6 +7,9 @@ import {
   Viewport,
   Panel,
   MiniMap,
+  OnEdgesChange,
+  OnNodesChange,
+  OnConnect,
 } from "@xyflow/react";
 import {
   CALL_NODE_DRAG_DROP_TYPE,
@@ -94,6 +97,9 @@ export interface QueryBuilderProps {
   getTransactionProps?: () => Promise<TransactionProps>;
   executeTransaction?: (transaction: UnsignedTransactionV1) => Promise<void>;
   showGeneratedCode?: (code: string, type: GeneratedCodeType) => Promise<void>;
+  onEdgesChange?: OnEdgesChange;
+  onNodesChange?: OnNodesChange;
+  onConnect?: OnConnect;
 }
 
 const nodeTypes = {
@@ -111,6 +117,9 @@ function Flow({
   getTransactionProps,
   executeTransaction,
   showGeneratedCode,
+  onEdgesChange: onEdgesChangeCallback,
+  onNodesChange: onNodesChangeCallback,
+  onConnect: onConnectCallback,
 }: QueryBuilderProps) {
   const {
     nodes,
@@ -465,9 +474,18 @@ function Flow({
           edgeTypes={edgeTypes}
           nodes={nodes}
           edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
+          onNodesChange={(change) => {
+            onNodesChange(change);
+            onNodesChangeCallback?.(change);
+          }}
+          onEdgesChange={(change) => {
+            onEdgesChange(change);
+            onEdgesChangeCallback?.(change);
+          }}
+          onConnect={(connection) => {
+            onConnect(connection);
+            onConnectCallback?.(connection);
+          }}
           onMove={onMove}
           onDragOver={onDragOver}
           onDrop={onDrop}

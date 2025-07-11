@@ -114,7 +114,7 @@ function GenericNode(props: NodeProps<GenericNode>) {
 
       {title && <h3 className="text-center font-bold pt-1 pb-3 border-b">{title}</h3>}
 
-      {inputs && (
+      {inputs?.length ? (
         <form noValidate>
           {inputs.map((input) => {
             const type = new TariType(input.type);
@@ -185,7 +185,7 @@ function GenericNode(props: NodeProps<GenericNode>) {
             }
           })}
         </form>
-      )}
+      ) : null}
 
       {outputType && renderOutputs(outputType, getOutputOffset)}
     </>

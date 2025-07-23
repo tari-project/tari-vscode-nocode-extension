@@ -21,6 +21,7 @@ export class TemplateReader {
     if (!fn) {
       return null;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const args = fn.arguments || [];
     const isMethod = args[0]?.name === "self";
     const inputs = args.map((arg) => {

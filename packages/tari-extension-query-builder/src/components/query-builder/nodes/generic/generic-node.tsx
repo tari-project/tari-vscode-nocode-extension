@@ -13,7 +13,7 @@ import { OUTPUT_HEIGHT, ROW_HEIGHT, ROW_HEIGHT_PX, ROW_PADDING } from "../consta
 import CallInputCheckbox from "../../input/call-input-checkbox";
 import { Separator } from "@/components/ui/separator";
 import { CALL_NODE_RETURN, CALL_NODE_RETURN_TUPLE_1, CALL_NODE_RETURN_TUPLE_2 } from "../call-node.types";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { SafeParseReturnType, z } from "zod";
 import CallInputSelect from "../../input/call-input-select";
 import { Label } from "@/components/ui/label";
@@ -56,6 +56,25 @@ function GenericNode(props: NodeProps<GenericNode>) {
   const handleOnChange = (argName: string, value: SafeParseReturnType<unknown, unknown>) => {
     updateNodeArgValue(id, argName, value);
   };
+
+  useEffect(() => {
+    if (!inputs) {
+      return;
+    }
+    // Update initial checkbox values to false (instead of leaving it undefined)
+    for (const input of inputs) {
+      const type = new TariType(input.type);
+      if (type.getInputControlType() === InputControlType.CheckBoxInput) {
+        const value = getNodeValue(input.name);
+        if (value == null) {
+          updateNodeArgValue(id, input.name, {
+            success: true,
+            data: false,
+          });
+        }
+      }
+    }
+  }, [id, inputs, getNodeValue, updateNodeArgValue]);
 
   return (
     <>

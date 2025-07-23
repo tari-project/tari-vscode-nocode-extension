@@ -1,6 +1,7 @@
 import { Type } from "@tari-project/typescript-bindings";
 import { HTMLInputTypeAttribute } from "react";
 import { SafeParseReturnType, z, ZodFirstPartySchemaTypes } from "zod";
+import { WrappedBigInt } from "./wrapped-bigint";
 
 export enum InputControlType {
   TextBoxInput = "TextBoxInput",
@@ -178,7 +179,8 @@ function getTypeProps(type: Type): TypeProps {
       })
       .refine((val) => BigInt(val) <= maxValue, {
         message: `Value must be less than or equal to ${maxValue.toString()}`,
-      });
+      })
+      .transform((val) => new WrappedBigInt(val));
   }
 
   return { htmlType, minValue, maxValue, validator };

@@ -1956,6 +1956,9 @@ packages:
   '@tari-project/tari-permissions@0.11.0':
     resolution: {integrity: sha512-tmRt7SUSLjcJe0L2kyMGIoUsa14gOPAKmzgKlCsZqafJVadquENe32jY+QY8KDTxQxbf/ZLLXZcckYlSPt0KYw==}
 
+  '@tari-project/tari-permissions@0.12.2':
+    resolution: {integrity: sha512-azXLaFtVvpLLD4evsOTM6rIh0EJS2D2Ag0310P/znOFPLN2dUhnK1wfioOQmHtqVs/AWbm+Ld3aKt5A3KT0m2g==}
+
   '@tari-project/tari-provider@0.11.0':
     resolution: {integrity: sha512-oBCposQkxMpSzN2Rul4UWGWPAt6FpNeu5u5Ic6e7hV3MZvJCYyahKg1j9PV80XkkEpQ7ZZVYE3KTi6KzRHabzQ==}
 
@@ -6817,6 +6820,8 @@ snapshots:
 
   '@tari-project/tari-permissions@0.11.0': {}
 
+  '@tari-project/tari-permissions@0.12.2': {}
+
   '@tari-project/tari-provider@0.11.0':
     dependencies:
       '@tari-project/tarijs-types': 0.11.0
@@ -6893,7 +6898,7 @@ snapshots:
 
   '@tari-project/wallet-connect-signer@0.11.0(@types/react@19.1.8)(react@19.0.0)(typescript@5.7.3)(zod@3.25.67)':
     dependencies:
-      '@tari-project/tari-permissions': 0.11.0
+      '@tari-project/tari-permissions': 0.12.2
       '@tari-project/tari-signer': 0.11.0
       '@tari-project/tarijs-builders': 0.11.0
       '@tari-project/tarijs-types': 0.11.0

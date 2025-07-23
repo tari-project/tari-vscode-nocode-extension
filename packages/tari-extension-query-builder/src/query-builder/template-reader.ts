@@ -22,10 +22,7 @@ export class TemplateReader {
       return null;
     }
     const args = fn.arguments;
-    if (!args.length) {
-      return null;
-    }
-    const isMethod = args[0].name === "self";
+    const isMethod = !!(args.length && args[0].name === "self");
     const inputs = args.map((arg) => {
       if (arg.name === "self") {
         return {

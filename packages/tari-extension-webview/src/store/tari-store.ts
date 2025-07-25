@@ -4,7 +4,7 @@ import {
   Substate,
   TransactionStatus,
 } from "@tari-project/tarijs-all";
-import { TariConfigurationKey, TariProviderType } from "@tari-project/tari-extension-common";
+import { TariConfigurationKey, TariNetwork, TariProviderType } from "@tari-project/tari-extension-common";
 import { create } from "zustand";
 import { DEFAULT_WALLET_DAEMON_ADDRESS } from "../constants";
 import { createWalletDaemonSigner } from "../utils/signers";
@@ -16,7 +16,7 @@ import {
   TransactionExecutionResult,
 } from "./types";
 import { persistStateMiddleware } from "./persist-state-middleware";
-import { SubstateType, TemplateDef } from "@tari-project/typescript-bindings";
+import { AccountInfo, SubstateType, TemplateDef } from "@tari-project/typescript-bindings";
 
 const MAX_TRANSACTION_EXECUTION_RESULTS = 5;
 
@@ -34,8 +34,27 @@ export const useTariStore = create<TariStore & TariStoreEphemeral & TariStoreAct
     setSigner: (signer) => {
       set(() => ({ signer }));
     },
-    setAccountData: (accountData) => {
-      set(() => ({ accountData }));
+    setWalletInfo: (walletInfo) => {
+      set(() => ({ walletInfo }));
+    },
+    setAccounts: (accounts) => {
+      let selectedAccountKeyIndex = undefined;
+      let selectedAccountAddress = undefined;
+      if (accounts?.accounts && accounts.accounts.length > 0) {
+        const defaultAccount = accounts.accounts.find((acc) => acc.account.is_default);
+        selectedAccountKeyIndex = defaultAccount ? defaultAccount.account.key_index : undefined;
+        selectedAccountAddress = extractComponentAddress(defaultAccount);
+      }
+      set(() => ({ accounts, selectedAccountKeyIndex, selectedAccountAddress }));
+    },
+    setSelectedAccountKeyIndex: (selectedAccountKeyIndex) => {
+      const state = get();
+      let selectedAccountAddress = undefined;
+      if (state.accounts?.accounts && selectedAccountKeyIndex !== undefined) {
+        const accInfo = state.accounts.accounts.find((acc) => acc.account.key_index === selectedAccountKeyIndex);
+        selectedAccountAddress = extractComponentAddress(accInfo);
+      }
+      set(() => ({ selectedAccountKeyIndex, selectedAccountAddress }));
     },
     accountsActionsOpen: false,
     setAccountsActionsOpen: (accountsActionsOpen) => {
@@ -71,7 +90,10 @@ export const useTariStore = create<TariStore & TariStoreEphemeral & TariStoreAct
       }
       const serializedState = {
         configuration: state.configuration,
-        accountData: state.accountData,
+        walletInfo: state.walletInfo,
+        accounts: state.accounts,
+        selectedAccountKeyIndex: state.selectedAccountKeyIndex,
+        selectedAccountAddress: state.selectedAccountAddress,
         accountsActionsOpen: state.accountsActionsOpen,
         listSubstatesActionsOpen: state.listSubstatesActionsOpen,
         substateDetailsActionsOpen: state.substateDetailsActionsOpen,
@@ -106,7 +128,10 @@ export const useTariStore = create<TariStore & TariStoreEphemeral & TariStoreAct
       set(() => ({
         signer,
         configuration: serializedState.configuration,
-        accountData: serializedState.accountData,
+        walletInfo: serializedState.walletInfo,
+        accounts: serializedState.accounts,
+        selectedAccountKeyIndex: serializedState.selectedAccountKeyIndex,
+        selectedAccountAddress: serializedState.selectedAccountAddress,
         accountsActionsOpen: serializedState.accountsActionsOpen,
         listSubstatesActionsOpen: serializedState.listSubstatesActionsOpen,
         substateDetailsActionsOpen: serializedState.substateDetailsActionsOpen,
@@ -182,5 +207,36 @@ export const useTariStore = create<TariStore & TariStoreEphemeral & TariStoreAct
         });
       },
     },
+    getNetworkName: () => {
+      const state = get();
+      if (!state.walletInfo) {
+        return undefined;
+      }
+
+      switch (state.walletInfo.network.toLowerCase()) {
+        case "mainnet":
+          return TariNetwork.MainNet;
+        case "stagenet":
+          return TariNetwork.StageNet;
+        case "nextnet":
+          return TariNetwork.NextNet;
+        case "localnet":
+          return TariNetwork.LocalNet;
+        case "igor":
+          return TariNetwork.Igor;
+        case "esmeralda":
+          return TariNetwork.Esmeralda;
+      }
+
+      return undefined;
+    },
   })),
 );
+
+const extractComponentAddress = (account?: AccountInfo): string | undefined => {
+  const address = account ? account.account.address : undefined;
+  if (typeof address === "string") {
+    return address;
+  }
+  return address && "Component" in address ? address.Component : undefined;
+};

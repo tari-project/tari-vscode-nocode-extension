@@ -281,7 +281,7 @@ export class ExecutionPlanner {
     const descriptions: TransactionDescription[] = [];
     descriptions.push({
       type: "feeTransactionPayFromComponent",
-      args: [accountAddress, fee.getStringValue()],
+      args: [accountAddress, fee],
     });
     for (const nodeId of executionOrder) {
       const node = nodes.get(nodeId);

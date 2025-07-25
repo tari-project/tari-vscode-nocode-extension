@@ -1,4 +1,5 @@
 import {
+  Amount,
   buildTransactionRequest,
   Network,
   submitAndWaitForTransaction,
@@ -9,7 +10,7 @@ import { TransactionResult, UnsignedTransactionV1 } from "@tari-project/typescri
 
 function buildTransaction(network: Network): UnsignedTransactionV1 {
   const builder = new TransactionBuilder(network);
-  builder.feeTransactionPayFromComponent("ACCOUNT_ADDRESS", "12345");
+  builder.feeTransactionPayFromComponent("ACCOUNT_ADDRESS", Amount.of(12345));
   builder.callMethod(
     {
       componentAddress: "COMPONENT_ADDRESS",
@@ -42,5 +43,5 @@ export async function executeTransaction(
   const submitTransactionRequest = buildTransactionRequest(buildTransaction(network), accountId);
 
   const txResult = await submitAndWaitForTransaction(signer, submitTransactionRequest);
-  return txResult.result;
+  return txResult.result.result;
 }

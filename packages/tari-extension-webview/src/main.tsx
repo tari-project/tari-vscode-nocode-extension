@@ -56,20 +56,20 @@ function registerMessenger() {
   });
 
   messenger.registerHandler("getAccountAddress", () => {
-    const accountData = useTariStore.getState().accountData;
-    return accountData ? Promise.resolve(accountData.address) : Promise.reject(new Error("Please, connect first!"));
+    const address = useTariStore.getState().selectedAccountAddress;
+    return address ? Promise.resolve(address) : Promise.reject(new Error("Please, connect first!"));
   });
 
   messenger.registerHandler("executeTransaction", async (request: ExecuteTransactionRequest) => {
     const {
-      accountData,
+      selectedAccountKeyIndex,
       signer,
       closeAllActions,
       setTransactionExecutionActionsOpen,
       transactionExecutionAction,
       configuration,
     } = useTariStore.getState();
-    if (!signer || !accountData) {
+    if (!signer || !selectedAccountKeyIndex) {
       throw new Error("Please, connect first!");
     }
 
@@ -78,7 +78,7 @@ function registerMessenger() {
 
     const submitTransactionRequest = buildTransactionRequest(
       request.transaction as unknown as UnsignedTransactionV1,
-      accountData.account_id,
+      selectedAccountKeyIndex,
     );
     const response = await signer.submitTransaction(submitTransactionRequest);
     const result = await waitForAnyTransactionResult(signer, response.transaction_id);

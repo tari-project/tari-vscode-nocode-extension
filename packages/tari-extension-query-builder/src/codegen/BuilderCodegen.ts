@@ -49,6 +49,7 @@ export class BuilderCodegen {
           false,
           undefined,
           factory.createNamedImports([
+            factory.createImportSpecifier(false, undefined, factory.createIdentifier("Amount")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("buildTransactionRequest")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("Network")),
             factory.createImportSpecifier(false, undefined, factory.createIdentifier("submitAndWaitForTransaction")),
@@ -206,7 +207,10 @@ export class BuilderCodegen {
               ),
               factory.createReturnStatement(
                 factory.createPropertyAccessExpression(
-                  factory.createIdentifier("txResult"),
+                  factory.createPropertyAccessExpression(
+                    factory.createIdentifier("txResult"),
+                    factory.createIdentifier("result"),
+                  ),
                   factory.createIdentifier("result"),
                 ),
               ),
@@ -250,7 +254,14 @@ export class BuilderCodegen {
           factory.createIdentifier("feeTransactionPayFromComponent"),
         ),
         undefined,
-        [factory.createStringLiteral(description.args[0]), factory.createStringLiteral(description.args[1])],
+        [
+          factory.createStringLiteral(description.args[0]),
+          factory.createCallExpression(
+            factory.createPropertyAccessExpression(factory.createIdentifier("Amount"), factory.createIdentifier("of")),
+            undefined,
+            [factory.createNumericLiteral(Number(description.args[1]))],
+          ),
+        ],
       ),
     );
   }

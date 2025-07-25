@@ -1,0 +1,7 @@
+.list-overflow::part(body) {
+  overflow: visible;
+}
+
+.list-overflow:last-child {
+  margin-bottom: 0;
+}

@@ -12,7 +12,7 @@ import {
   VscodeDivider,
 } from "@vscode-elements/react-elements";
 import * as ve from "@vscode-elements/elements";
-import "./list-substates.css";
+import "./list-overflow.css";
 import { useTariStore } from "../store/tari-store";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import { JsonOutlineItem } from "@tari-project/tari-extension-common";
@@ -125,7 +125,7 @@ function ListSubstatesActions({ signer, onViewDetails, open, onToggle }: ListSub
 
   return (
     <>
-      <VscodeCollapsible ref={collapsibleRef} open={open ?? false} title="List Substates" className="list-substates">
+      <VscodeCollapsible ref={collapsibleRef} open={open ?? false} title="List Substates" className="list-overflow">
         <VscodeFormContainer>
           <VscodeFormGroup>
             <VscodeLabel htmlFor="substateType">Substate Type</VscodeLabel>

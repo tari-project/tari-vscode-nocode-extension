@@ -1,14 +1,26 @@
 import { TariSigner } from "@tari-project/tarijs-all";
-import { VscodeCollapsible, VscodeDivider, VscodeIcon, VscodeProgressRing } from "@vscode-elements/react-elements";
+import {
+  VscodeCollapsible,
+  VscodeDivider,
+  VscodeFormContainer,
+  VscodeFormGroup,
+  VscodeIcon,
+  VscodeLabel,
+  VscodeOption,
+  VscodeProgressRing,
+  VscodeSingleSelect,
+  VscodeTextfield,
+} from "@vscode-elements/react-elements";
 import * as ve from "@vscode-elements/elements";
 import { useCollapsibleToggle } from "../hooks/collapsible-toggle";
 import { useTariStore } from "../store/tari-store";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { JsonOutline } from "../json-parser/JsonOutline";
 import JsonOutlineTree from "../components/JsonOutlineTree";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import { ACCOUNT_KNOWN_PARTS } from "../json-parser/known-parts/account";
 import { JsonOutlineItem } from "@tari-project/tari-extension-common";
+import { AccountGetResponse } from "@tari-project/typescript-bindings";
 
 interface AccountActionsProps {
   signer: TariSigner;
@@ -19,12 +31,16 @@ interface AccountActionsProps {
 function AccountActions({ signer, open, onToggle }: AccountActionsProps) {
   const refreshRef = useRef<ve.VscodeIcon | null>(null);
   const messenger = useTariStore((state) => state.messenger);
-  const accountData = useTariStore((state) => state.accountData);
-  const setAccountData = useTariStore((state) => state.setAccountData);
+  const getNetworkName = useTariStore((state) => state.getNetworkName);
+  const accounts = useTariStore((state) => state.accounts);
+  const setSelectedAccountKeyIndex = useTariStore((state) => state.setSelectedAccountKeyIndex);
+  const selectedAccountKeyIndex = useTariStore((state) => state.selectedAccountKeyIndex);
+  const selectedAccountAddress = useTariStore((state) => state.selectedAccountAddress);
   const [jsonDocument, setJsonDocument] = useState<JsonDocument | undefined>(undefined);
   const [outlineItems, setOutlineItems] = useState<JsonOutlineItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [shouldShowDocument, setShouldShowDocument] = useState(false);
+  const [accountData, setAccountData] = useState<AccountGetResponse | undefined>(undefined);
 
   const handleRefreshClick = (event: MouseEvent) => {
     event.stopPropagation();
@@ -75,11 +91,11 @@ function AccountActions({ signer, open, onToggle }: AccountActionsProps) {
     }
   }, [open, accountData, messenger, shouldShowDocument, setShouldShowDocument]);
 
-  const fetchAccountInformation = async () => {
-    if (messenger) {
+  const fetchAccountInformation = useCallback(async () => {
+    if (messenger && selectedAccountAddress) {
       setLoading(true);
       try {
-        const account = await signer.getAccount();
+        const account = await signer.getAccountByAddress(selectedAccountAddress);
         setAccountData(account);
         setShouldShowDocument(true);
       } catch (error: unknown) {
@@ -87,25 +103,47 @@ function AccountActions({ signer, open, onToggle }: AccountActionsProps) {
       }
       setLoading(false);
     }
-  };
-
-  const handleAccountToggled = async (open: boolean) => {
-    if (open && !jsonDocument) {
-      await fetchAccountInformation();
-    }
-  };
+  }, [messenger, selectedAccountAddress, signer]);
 
   const collapsibleRef = useCollapsibleToggle((open) => {
     if (onToggle) {
       onToggle(open);
     }
-    void handleAccountToggled(open);
   });
+
+  const handleAccountChange = (event: Event) => {
+    const target = event.target as HTMLSelectElement;
+    const selectedKeyIndex = Number(target.value);
+    setSelectedAccountKeyIndex(selectedKeyIndex);
+  };
 
   return (
     <>
-      <VscodeCollapsible ref={collapsibleRef} open={open ?? false} title="Account">
+      <VscodeCollapsible ref={collapsibleRef} open={open ?? false} title="Account" className="list-overflow">
         <VscodeIcon ref={refreshRef} name="refresh" id="btn-refresh" actionIcon title="Refresh" slot="actions" />
+        <VscodeFormContainer>
+          <VscodeFormGroup>
+            <VscodeLabel htmlFor="network">Network</VscodeLabel>
+            <VscodeTextfield id="network" value={getNetworkName()} readonly />
+          </VscodeFormGroup>
+          <VscodeFormGroup>
+            <VscodeLabel htmlFor="account">Account</VscodeLabel>
+            <VscodeSingleSelect
+              id="account"
+              value={selectedAccountKeyIndex !== undefined ? String(selectedAccountKeyIndex) : undefined}
+              onChange={handleAccountChange}
+            >
+              {accounts?.accounts.map((accInfo) => {
+                const displayName = accInfo.account.name ?? `Account ${String(accInfo.account.key_index)}`;
+                return (
+                  <VscodeOption key={accInfo.account.key_index} value={String(accInfo.account.key_index)}>
+                    {displayName}
+                  </VscodeOption>
+                );
+              })}
+            </VscodeSingleSelect>
+          </VscodeFormGroup>
+        </VscodeFormContainer>
         {loading && <VscodeProgressRing />}
         {!loading && jsonDocument && (
           <div>

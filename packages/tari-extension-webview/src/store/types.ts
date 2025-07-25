@@ -1,12 +1,17 @@
+import { GetTransactionResultResponse, ListSubstatesResponse, Substate, TariSigner } from "@tari-project/tarijs-all";
 import {
-  AccountData,
-  GetTransactionResultResponse,
-  ListSubstatesResponse,
-  Substate,
-  TariSigner,
-} from "@tari-project/tarijs-all";
-import { SubstateType, TemplateDef } from "@tari-project/typescript-bindings";
-import { Messenger, TariConfiguration, TariProviderType, WebViewMessages } from "@tari-project/tari-extension-common";
+  AccountsListResponse,
+  SubstateType,
+  TemplateDef,
+  WalletGetInfoResponse,
+} from "@tari-project/typescript-bindings";
+import {
+  Messenger,
+  TariConfiguration,
+  TariNetwork,
+  TariProviderType,
+  WebViewMessages,
+} from "@tari-project/tari-extension-common";
 import { WebviewApi } from "vscode-webview";
 
 export interface TransactionExecutionResult {
@@ -70,7 +75,10 @@ export interface TransactionExecutionAction {
 
 export interface TariStore {
   configuration?: TariConfiguration;
-  accountData?: AccountData;
+  walletInfo?: WalletGetInfoResponse;
+  accounts?: AccountsListResponse;
+  selectedAccountKeyIndex?: number;
+  selectedAccountAddress?: string;
   accountsActionsOpen: boolean;
   listSubstatesActionsOpen: boolean;
   substateDetailsActionsOpen: boolean;
@@ -91,7 +99,9 @@ export interface TariStoreAction {
   setMessenger: (vscode: TariStoreEphemeral["messenger"]) => void;
   setConfiguration: (vscode: TariStore["configuration"]) => void;
   setSigner: (vscode: TariStoreEphemeral["signer"]) => void;
-  setAccountData: (vscode: TariStore["accountData"]) => void;
+  setWalletInfo: (vscode: TariStore["walletInfo"]) => void;
+  setAccounts: (vscode: TariStore["accounts"]) => void;
+  setSelectedAccountKeyIndex: (vscode: TariStore["selectedAccountKeyIndex"]) => void;
   setAccountsActionsOpen: (vscode: TariStore["accountsActionsOpen"]) => void;
   setListSubstatesActionsOpen: (vscode: TariStore["listSubstatesActionsOpen"]) => void;
   setSubstateDetailsActionsOpen: (vscode: TariStore["substateDetailsActionsOpen"]) => void;
@@ -104,4 +114,5 @@ export interface TariStoreAction {
   substateDetailsActions: SubstateDetailsAction;
   templateActions: TemplateAction;
   transactionExecutionAction: TransactionExecutionAction;
+  getNetworkName: () => TariNetwork | undefined;
 }

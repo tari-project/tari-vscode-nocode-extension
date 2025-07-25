@@ -184,7 +184,7 @@ function Flow({
       try {
         const executionOrder = planner.getExecutionOrder();
         const { network, accountAddress, fee } = await getTransactionProps();
-        const details = planner.buildTransactionDescription(executionOrder, accountAddress, new Amount(fee));
+        const details = planner.buildTransactionDescription(executionOrder, accountAddress, Amount.of(fee));
         return { network, planner, details };
       } catch (e) {
         let errorMessage = "Failed to determine execution order";

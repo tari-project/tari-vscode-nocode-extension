@@ -1,12 +1,9 @@
 import {
   VscodeButton,
   VscodeCollapsible,
-  VscodeDivider,
   VscodeFormGroup,
   VscodeFormHelper,
   VscodeLabel,
-  VscodeOption,
-  VscodeSingleSelect,
   VscodeTabHeader,
   VscodeTabPanel,
   VscodeTabs,
@@ -15,12 +12,13 @@ import {
 import * as ve from "@vscode-elements/elements";
 import { useTariStore } from "./store/tari-store";
 import { WalletConnectTariSigner } from "@tari-project/wallet-connect-signer";
-import { TariConfiguration, TariNetwork, TariProviderType } from "@tari-project/tari-extension-common";
-import { useCallback, useRef, useState } from "react";
+import { TariConfiguration, TariProviderType } from "@tari-project/tari-extension-common";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCollapsibleToggle } from "./hooks/collapsible-toggle";
 import { useEnterKey } from "./hooks/textfield-enter";
 import { DEFAULT_TARI_PROJECT_ID, DEFAULT_WALLET_DAEMON_ADDRESS } from "./constants";
 import { createWalletDaemonSigner } from "./utils/signers";
+import { TariSigner } from "@tari-project/tarijs-all";
 
 const PROVIDERS = [TariProviderType.WalletDemon, TariProviderType.WalletConnect];
 
@@ -34,7 +32,9 @@ function Signers({ configuration, open, onToggle }: SignersProps) {
   const messenger = useTariStore((state) => state.messenger);
   const provider = useTariStore((state) => state.signer);
   const setSigner = useTariStore((state) => state.setSigner);
-  const setAccountData = useTariStore((state) => state.setAccountData);
+  const setWalletInfo = useTariStore((state) => state.setWalletInfo);
+  const setAccounts = useTariStore((state) => state.setAccounts);
+  const getNetworkName = useTariStore((state) => state.getNetworkName);
 
   const [selectedProviderIndex, setSelectedProviderIndex] = useState<number>(
     PROVIDERS.indexOf(configuration.defaultProvider),
@@ -45,22 +45,38 @@ function Signers({ configuration, open, onToggle }: SignersProps) {
     configuration.walletConnectProjectId ?? "",
   );
   const walletConnectProjectIdRef = useRef<ve.VscodeTextfield>(null);
-  const [network, setNetwork] = useState<string>(configuration.network);
   const [connecting, setConnecting] = useState<boolean>(false);
 
   const collapsibleRef = useCollapsibleToggle(onToggle ?? (() => undefined));
 
+  const updateStoreOnConnect = useCallback(
+    async (signer: TariSigner) => {
+      setSigner(signer);
+      const walletInfo = await signer.getWalletInfo();
+      setWalletInfo(walletInfo);
+      const accounts = await signer.accountsList({ offset: 0, limit: 100 });
+      setAccounts(accounts);
+    },
+    [setWalletInfo, setAccounts, setSigner],
+  );
+
+  useEffect(() => {
+    const network = getNetworkName();
+    if (messenger && network) {
+      messenger.send("setNetwork", network).catch(console.log);
+    }
+  }, [messenger, getNetworkName]);
+
   const handleDisconnect = () => {
-    setAccountData(undefined);
+    setWalletInfo(undefined);
+    setAccounts(undefined);
     setSigner(undefined);
   };
 
   const handleWalletDaemonConnect = useCallback(async () => {
     const walletDaemonProvider = await createWalletDaemonSigner(walletDaemonAddress || DEFAULT_WALLET_DAEMON_ADDRESS);
-    const accountData = await walletDaemonProvider.getAccount();
-    setAccountData(accountData);
-    setSigner(walletDaemonProvider);
-  }, [setAccountData, setSigner, walletDaemonAddress]);
+    await updateStoreOnConnect(walletDaemonProvider);
+  }, [updateStoreOnConnect, walletDaemonAddress]);
 
   const handleWalletConnectConnect = useCallback(async () => {
     const params = {
@@ -70,10 +86,8 @@ function Signers({ configuration, open, onToggle }: SignersProps) {
     };
     const walletConnectProvider = new WalletConnectTariSigner(params);
     await walletConnectProvider.connect();
-    const accountData = await walletConnectProvider.getAccount();
-    setAccountData(accountData);
-    setSigner(walletConnectProvider);
-  }, [setAccountData, setSigner, walletConnectProjectId]);
+    await updateStoreOnConnect(walletConnectProvider);
+  }, [updateStoreOnConnect, walletConnectProjectId]);
 
   const handleConnect = useCallback(async () => {
     if (messenger) {
@@ -121,35 +135,9 @@ function Signers({ configuration, open, onToggle }: SignersProps) {
   useEnterKey(walletDaemonAddressRef, handleEnterPressed);
   useEnterKey(walletConnectProjectIdRef, handleEnterPressed);
 
-  const handleNetworkChange = (network: string) => {
-    setNetwork(network);
-    if (messenger) {
-      messenger.send("setNetwork", network as TariNetwork).catch(console.log);
-    }
-  };
-
   return (
     <>
       <VscodeCollapsible ref={collapsibleRef} title="Connection" open={open ?? true}>
-        <VscodeFormGroup>
-          <VscodeLabel htmlFor="network">Network</VscodeLabel>
-          <VscodeSingleSelect
-            id="network"
-            onChange={(event) => {
-              const target = event.target as ve.VscodeSingleSelect;
-              handleNetworkChange(target.value);
-            }}
-            value={network}
-          >
-            <VscodeOption>MainNet</VscodeOption>
-            <VscodeOption>StageNet</VscodeOption>
-            <VscodeOption>NextNet</VscodeOption>
-            <VscodeOption>LocalNet</VscodeOption>
-            <VscodeOption>Igor</VscodeOption>
-            <VscodeOption>Esmeralda</VscodeOption>
-          </VscodeSingleSelect>
-        </VscodeFormGroup>
-        <VscodeDivider />
         <VscodeTabs
           selectedIndex={selectedProviderIndex}
           onVscTabsSelect={(event) => {

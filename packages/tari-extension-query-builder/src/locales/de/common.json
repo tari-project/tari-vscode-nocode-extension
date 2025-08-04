@@ -14,5 +14,22 @@
   "loadFlowFromFile": "Fluss aus Datei laden",
   "exportFlow": "Fluss exportieren",
   "executionFailed": "Ausführung fehlgeschlagen",
-  "dismiss": "Schließen"
+  "dismiss": "Schließen",
+  "unknownErrorLoadingFlow": "Beim Laden des Flows ist ein unbekannter Fehler aufgetreten.",
+  "failedToReadFile": "Die ausgewählte Datei konnte nicht gelesen werden.",
+  "start": "START",
+  "logLevel": "Protokollebene",
+  "message": "Nachricht",
+  "key": "Schlüssel",
+  "resourceAddress": "Ressourcenadresse",
+  "minimumAmount": "Mindestbetrag",
+  "componentName": "Komponentenname",
+  "resourceName": "Ressourcenname",
+  "componentAddressAllocation": "Komponentenadressenzuweisung",
+  "resourceAddressAllocation": "Ressourcenadressenzuweisung",
+  "ambiguousOrder": "Mehrdeutige Reihenfolge zwischen den Operationen \"{{nodeA}}\" und \"{{nodeB}}\". Bitte fügen Sie explizite Verbindungen hinzu.",
+  "cycleDetected": "Zyklus erkannt! Stellen Sie sicher, dass Sie ihn beseitigen.",
+  "missingDataInNodes": "Fehlende Daten im Knoten \"{{node}}\" und anderen Knoten.",
+  "missingDataInNode": "Fehlende Daten im Knoten \"{{node}}\"",
+  "transactionExecuted": "Transaktion ausgeführt"
 }

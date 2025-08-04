@@ -14,5 +14,22 @@
   "loadFlowFromFile": "파일에서 플로우 로드",
   "exportFlow": "플로우 내보내기",
   "executionFailed": "실행 실패",
-  "dismiss": "닫기"
+  "dismiss": "닫기",
+  "unknownErrorLoadingFlow": "플로우를 로드하는 동안 알 수 없는 오류가 발생했습니다.",
+  "failedToReadFile": "선택한 파일을 읽지 못했습니다.",
+  "start": "시작",
+  "logLevel": "로그 수준",
+  "message": "메시지",
+  "key": "키",
+  "resourceAddress": "리소스 주소",
+  "minimumAmount": "최소 금액",
+  "componentName": "컴포넌트 이름",
+  "resourceName": "리소스 이름",
+  "componentAddressAllocation": "컴포넌트 주소 할당",
+  "resourceAddressAllocation": "리소스 주소 할당",
+  "ambiguousOrder": "\"{{nodeA}}\" 및 \"{{nodeB}}\" 작업 간의 모호한 순서입니다. 명시적 연결을 추가하십시오.",
+  "cycleDetected": "주기가 감지되었습니다! 반드시 제거하십시오.",
+  "missingDataInNodes": "노드 \"{{node}}\" 및 기타 노드에 데이터가 없습니다.",
+  "missingDataInNode": "노드 \"{{node}}\"에 데이터가 없습니다",
+  "transactionExecuted": "트랜잭션이 실행되었습니다"
 }

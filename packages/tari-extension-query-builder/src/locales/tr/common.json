@@ -14,5 +14,22 @@
   "loadFlowFromFile": "Akışı dosyadan yükle",
   "exportFlow": "Akışı dışa aktar",
   "executionFailed": "Yürütme başarısız oldu",
-  "dismiss": "Kapat"
+  "dismiss": "Kapat",
+  "unknownErrorLoadingFlow": "Akış yüklenirken bilinmeyen bir hata oluştu.",
+  "failedToReadFile": "Seçilen dosya okunamadı.",
+  "start": "BAŞLAT",
+  "logLevel": "Günlük Seviyesi",
+  "message": "Mesaj",
+  "key": "Anahtar",
+  "resourceAddress": "Kaynak Adresi",
+  "minimumAmount": "Minimum Tutar",
+  "componentName": "Bileşen Adı",
+  "resourceName": "Kaynak Adı",
+  "componentAddressAllocation": "Bileşen Adresi Ataması",
+  "resourceAddressAllocation": "Kaynak Adresi Ataması",
+  "ambiguousOrder": "\"{{nodeA}}\" ve \"{{nodeB}}\" işlemleri arasında belirsiz sıra. Lütfen açık bağlantılar ekleyin.",
+  "cycleDetected": "Döngü algılandı! Lütfen ortadan kaldırdığınızdan emin olun.",
+  "missingDataInNodes": "Düğüm \"{{node}}\" ve diğer düğümlerde eksik veri.",
+  "missingDataInNode": "Düğüm \"{{node}}\"de eksik veri",
+  "transactionExecuted": "İşlem yürütüldü"
 }

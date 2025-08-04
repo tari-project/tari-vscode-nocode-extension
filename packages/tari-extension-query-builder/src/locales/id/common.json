@@ -14,5 +14,22 @@
   "loadFlowFromFile": "Muat Alur dari file",
   "exportFlow": "Ekspor Alur",
   "executionFailed": "Eksekusi gagal",
-  "dismiss": "Tutup"
+  "dismiss": "Tutup",
+  "unknownErrorLoadingFlow": "Terjadi kesalahan tak diketahui saat memuat alur.",
+  "failedToReadFile": "Gagal membaca file yang dipilih.",
+  "start": "MULAI",
+  "logLevel": "Tingkat Log",
+  "message": "Pesan",
+  "key": "Kunci",
+  "resourceAddress": "Alamat Sumber Daya",
+  "minimumAmount": "Jumlah Minimum",
+  "componentName": "Nama Komponen",
+  "resourceName": "Nama Sumber Daya",
+  "componentAddressAllocation": "Alokasi Alamat Komponen",
+  "resourceAddressAllocation": "Alokasi Alamat Sumber Daya",
+  "ambiguousOrder": "Urutan ambigu antara operasi \"{{nodeA}}\" dan \"{{nodeB}}\". Harap tambahkan koneksi eksplisit.",
+  "cycleDetected": "Siklus terdeteksi! Pastikan Anda menghilangkannya.",
+  "missingDataInNodes": "Data hilang di node \"{{node}}\" dan node lainnya.",
+  "missingDataInNode": "Data hilang di node \"{{node}}\"",
+  "transactionExecuted": "Transaksi dieksekusi"
 }

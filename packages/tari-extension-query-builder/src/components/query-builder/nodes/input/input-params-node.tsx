@@ -12,6 +12,7 @@ import CallInputText from "../../input/call-input-text";
 import EditableLabel from "./editable-label";
 import { useCallback, useEffect } from "react";
 import { SafeParseReturnType } from "zod";
+import { useTranslation } from "react-i18next";
 
 const HANDLE_STARTING_OFFSET = 68;
 const FULL_ROW_HEIGHT = ROW_HEIGHT + ROW_PADDING;
@@ -19,6 +20,7 @@ const FULL_ROW_HEIGHT = ROW_HEIGHT + ROW_PADDING;
 function InputParamsNode(props: NodeProps<InputParamsNode>) {
   const { id, data } = props;
   const { title, inputs } = data;
+  const { t } = useTranslation();
 
   const updateNodeInternals = useUpdateNodeInternals();
   const removeNode = useStore((store) => store.removeNode);
@@ -170,9 +172,9 @@ function InputParamsNode(props: NodeProps<InputParamsNode>) {
       <>
         <Separator className="my-4 h-px w-full bg-gray-300 dark:bg-gray-600" />
         <div className="flex justify-end w-full">
-          <span className="italic text-xs pr-2">Drag, to add new parameter</span>
+          <span className="italic text-xs pr-2">{t("dragToAddParameter")}</span>
         </div>
-
+ 
         <Handle
           id={NEW_INPUT_PARAM}
           type="source"

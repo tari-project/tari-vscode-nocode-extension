@@ -14,5 +14,22 @@
   "loadFlowFromFile": "Load flow from file",
   "exportFlow": "Export flow",
   "executionFailed": "Execution failed",
-  "dismiss": "Dismiss"
+  "dismiss": "Dismiss",
+  "unknownErrorLoadingFlow": "An unknown error occurred while loading the flow.",
+  "failedToReadFile": "Failed to read the selected file.",
+  "start": "START",
+  "logLevel": "Log Level",
+  "message": "Message",
+  "key": "Key",
+  "resourceAddress": "Resource Address",
+  "minimumAmount": "Minimum Amount",
+  "componentName": "Component Name",
+  "resourceName": "Resource Name",
+  "componentAddressAllocation": "ComponentAddressAllocation",
+  "resourceAddressAllocation": "ResourceAddressAllocation",
+  "ambiguousOrder": "Ambiguous order between \"{{nodeA}}\" and \"{{nodeB}}\" operations. Please, add explicit connections.",
+  "cycleDetected": "Cycle detected! Make sure to eliminate it.",
+  "missingDataInNodes": "Missing data in node \"{{node}}\" and other nodes.",
+  "missingDataInNode": "Missing data in node \"{{node}}\"",
+  "transactionExecuted": "Transaction executed"
 }

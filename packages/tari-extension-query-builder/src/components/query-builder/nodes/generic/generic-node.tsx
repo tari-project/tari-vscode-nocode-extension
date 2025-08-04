@@ -17,6 +17,7 @@ import { useCallback, useEffect } from "react";
 import { SafeParseReturnType, z } from "zod";
 import CallInputSelect from "../../input/call-input-select";
 import { Label } from "@/components/ui/label";
+import { useTranslation } from "react-i18next";
 
 const HANDLE_STARTING_OFFSET = 98;
 const FULL_ROW_HEIGHT = ROW_HEIGHT + ROW_PADDING;
@@ -24,6 +25,7 @@ const FULL_ROW_HEIGHT = ROW_HEIGHT + ROW_PADDING;
 function GenericNode(props: NodeProps<GenericNode>) {
   const { id, data } = props;
   const { hasEnterConnection, hasExitConnection, icon, badge, title, largeCaption, inputs, output } = data;
+  const { t } = useTranslation();
 
   const removeNode = useStore((store) => store.removeNode);
   const readOnly = useStore((store) => store.readOnly);
@@ -157,7 +159,7 @@ function GenericNode(props: NodeProps<GenericNode>) {
                       return z
                         .string()
                         .refine((val) => validValues.includes(val), {
-                          message: `Invalid value. Must be one of: ${validValues.join(", ")}`,
+                          message: t("invalidValue", { validValues: validValues.join(", ") }),
                         })
                         .safeParse(data);
                     }}

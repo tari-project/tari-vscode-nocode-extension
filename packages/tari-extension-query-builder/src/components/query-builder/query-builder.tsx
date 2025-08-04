@@ -437,25 +437,25 @@ function Flow({
           {
             inputConnectionType: InputConnectionType.None,
             name: "key",
-            label: "Key",
+            label: t("key"),
             type: { Vec: "U8" },
           },
           {
             inputConnectionType: InputConnectionType.None,
             name: "resource_address",
-            label: "Resource Address",
+            label: t("resourceAddress"),
             type: { Other: { name: "ResourceAddress" } },
           },
           {
             inputConnectionType: InputConnectionType.None,
             name: "min_amount",
-            label: "Minimum Amount",
+            label: t("minimumAmount"),
             type: { Other: { name: "Amount" } },
           },
         ],
       },
     });
-  }, [addNodeAt]);
+  }, [addNodeAt, t]);
 
   const handleAddAllocateComponentAddressNode = useCallback(() => {
     addNodeAt({
@@ -465,23 +465,23 @@ function Flow({
         hasEnterConnection: true,
         hasExitConnection: true,
         icon: "component",
-        title: "Allocate Component Address",
+        title: t("allocateComponentAddress"),
         inputs: [
           {
             inputConnectionType: InputConnectionType.None,
             name: "component_name",
-            label: "Component Name",
+            label: t("componentName"),
             type: "String",
           },
         ],
         output: {
           type: { Other: { name: "ComponentAddressAllocation" } },
           name: ALLOCATE_COMPONENT_ADDRESS_RESULT,
-          label: "ComponentAddressAllocation",
+          label: t("componentAddressAllocation"),
         },
       },
     });
-  }, [addNodeAt]);
+  }, [addNodeAt, t]);
 
   const handleAddAllocateResourceAddressNode = useCallback(() => {
     addNodeAt({
@@ -491,23 +491,23 @@ function Flow({
         hasEnterConnection: true,
         hasExitConnection: true,
         icon: "archive",
-        title: "Allocate Resource Address",
+        title: t("allocateResourceAddress"),
         inputs: [
           {
             inputConnectionType: InputConnectionType.None,
             name: "resource_name",
-            label: "Resource Name",
+            label: t("resourceName"),
             type: "String",
           },
         ],
         output: {
           type: { Other: { name: "ResourceAddressAllocation" } },
           name: ALLOCATE_RESOURCE_ADDRESS_RESULT,
-          label: "ResourceAddressAllocation",
+          label: t("resourceAddressAllocation"),
         },
       },
     });
-  }, [addNodeAt]);
+  }, [addNodeAt, t]);
 
   useEffect(() => {
     const root = window.document.documentElement;

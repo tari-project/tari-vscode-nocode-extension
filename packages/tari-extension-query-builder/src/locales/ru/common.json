@@ -14,5 +14,22 @@
   "loadFlowFromFile": "Загрузить поток из файла",
   "exportFlow": "Экспортировать поток",
   "executionFailed": "Выполнение не удалось",
-  "dismiss": "Закрыть"
+  "dismiss": "Закрыть",
+  "unknownErrorLoadingFlow": "Произошла неизвестная ошибка при загрузке потока.",
+  "failedToReadFile": "Не удалось прочитать выбранный файл.",
+  "start": "НАЧАТЬ",
+  "logLevel": "Уровень журнала",
+  "message": "Сообщение",
+  "key": "Ключ",
+  "resourceAddress": "Адрес ресурса",
+  "minimumAmount": "Минимальная сумма",
+  "componentName": "Имя компонента",
+  "resourceName": "Имя ресурса",
+  "componentAddressAllocation": "Выделение адреса компонента",
+  "resourceAddressAllocation": "Выделение адреса ресурса",
+  "ambiguousOrder": "Неоднозначный порядок между операциями \"{{nodeA}}\" и \"{{nodeB}}\". Пожалуйста, добавьте явные соединения.",
+  "cycleDetected": "Обнаружен цикл! Убедитесь, что вы его устранили.",
+  "missingDataInNodes": "Отсутствуют данные в узле \"{{node}}\" и других узлах.",
+  "missingDataInNode": "Отсутствуют данные в узле \"{{node}}\"",
+  "transactionExecuted": "Транзакция выполнена"
 }

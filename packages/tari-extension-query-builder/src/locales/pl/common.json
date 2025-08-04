@@ -14,5 +14,22 @@
   "loadFlowFromFile": "Załaduj przepływ z pliku",
   "exportFlow": "Eksportuj przepływ",
   "executionFailed": "Wykonanie nie powiodło się",
-  "dismiss": "Zamknij"
+  "dismiss": "Zamknij",
+  "unknownErrorLoadingFlow": "Wystąpił nieznany błąd podczas ładowania przepływu.",
+  "failedToReadFile": "Nie udało się odczytać wybranego pliku.",
+  "start": "START",
+  "logLevel": "Poziom logowania",
+  "message": "Wiadomość",
+  "key": "Klucz",
+  "resourceAddress": "Adres zasobu",
+  "minimumAmount": "Minimalna kwota",
+  "componentName": "Nazwa komponentu",
+  "resourceName": "Nazwa zasobu",
+  "componentAddressAllocation": "Alokacja adresu komponentu",
+  "resourceAddressAllocation": "Alokacja adresu zasobu",
+  "ambiguousOrder": "Niejednoznaczna kolejność między operacjami \"{{nodeA}}\" i \"{{nodeB}}\". Dodaj jawne połączenia.",
+  "cycleDetected": "Wykryto cykl! Upewnij się, że go wyeliminujesz.",
+  "missingDataInNodes": "Brak danych w węźle \"{{node}}\" i innych węzłach.",
+  "missingDataInNode": "Brak danych w węźle \"{{node}}\"",
+  "transactionExecuted": "Transakcja została wykonana"
 }

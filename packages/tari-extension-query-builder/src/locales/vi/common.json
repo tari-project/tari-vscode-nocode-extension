@@ -14,5 +14,22 @@
   "loadFlowFromFile": "Tải Luồng từ tệp",
   "exportFlow": "Xuất Luồng",
   "executionFailed": "Thực thi thất bại",
-  "dismiss": "Đóng"
+  "dismiss": "Đóng",
+  "unknownErrorLoadingFlow": "Đã xảy ra lỗi không xác định khi tải luồng.",
+  "failedToReadFile": "Không đọc được tệp đã chọn.",
+  "start": "BẮT ĐẦU",
+  "logLevel": "Cấp độ Nhật ký",
+  "message": "Thông báo",
+  "key": "Khóa",
+  "resourceAddress": "Địa chỉ Tài nguyên",
+  "minimumAmount": "Số tiền tối thiểu",
+  "componentName": "Tên Thành phần",
+  "resourceName": "Tên Tài nguyên",
+  "componentAddressAllocation": "Cấp phát Địa chỉ Thành phần",
+  "resourceAddressAllocation": "Cấp phát Địa chỉ Tài nguyên",
+  "ambiguousOrder": "Thứ tự không rõ ràng giữa các thao tác \"{{nodeA}}\" và \"{{nodeB}}\". Vui lòng thêm các kết nối rõ ràng.",
+  "cycleDetected": "Phát hiện chu kỳ! Hãy đảm bảo bạn loại bỏ nó.",
+  "missingDataInNodes": "Thiếu dữ liệu trong nút \"{{node}}\" và các nút khác.",
+  "missingDataInNode": "Thiếu dữ liệu trong nút \"{{node}}\"",
+  "transactionExecuted": "Giao dịch đã được thực thi"
 }

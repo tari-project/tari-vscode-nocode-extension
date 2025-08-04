@@ -1,0 +1,39 @@
+{
+  "name": "tari-universe-tapplet",
+  "private": true,
+  "version": "0.0.16",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run clean && tsc -b && vite build",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "preview": "vite preview",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@tari-project/tarijs-all": "catalog:",
+    "@tari-project/tari-extension-common": "workspace:^",
+    "@tari-project/tari-extension-query-builder": "workspace:^",
+    "@tari-project/typescript-bindings": "catalog:",
+    "@tari-project/wallet-daemon-signer": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-react-refresh": "catalog:",
+    "globals": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vite": "catalog:"
+  }
+}

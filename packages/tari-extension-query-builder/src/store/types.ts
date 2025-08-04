@@ -10,6 +10,7 @@ import {
 } from "@xyflow/react";
 import { SafeParseReturnType } from "zod";
 import { LatestPersistedState } from "@/store/persistence/types.ts";
+import { Language } from "@/components/query-builder/i18n";
 
 export enum NodeType {
   GenericNode = "genericNode",
@@ -95,12 +96,14 @@ export interface SchemaAndVersion {
 }
 
 export interface QueryBuilderState {
+  language: Language;
   readOnly: boolean;
   nodes: CustomNode[];
   edges: Edge[];
   centerX: number;
   centerY: number;
   changeCounter: number;
+  setLanguage: (language: Language) => void;
   updateCenter: (centerX: number, centerY: number) => void;
   setReadOnly: (value: boolean) => void;
   onNodesChange: OnNodesChange<CustomNode>;

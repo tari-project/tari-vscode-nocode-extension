@@ -20,6 +20,8 @@ import {
 import useStore from "../../store/store";
 import { useShallow } from "zustand/shallow";
 import { InputConnectionType, GenericNodeType, NodeType, QueryBuilderState } from "@/store/types";
+import { useTranslation } from "react-i18next";
+import i18n, { resolveI18nLanguage } from "./i18n";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ButtonEdge from "./edges/button-edge";
 import { TariFlowNodeDetails } from "@/types";
@@ -46,10 +48,12 @@ import {
   CheckCircledIcon,
   Component1Icon,
   EnterIcon,
+  FileTextIcon,
   InputIcon,
   LayersIcon,
   PlayIcon,
   RocketIcon,
+  UploadIcon,
 } from "@radix-ui/react-icons";
 import GenericNode from "./nodes/generic/generic-node";
 import InputParamsNode from "./nodes/input/input-params-node";
@@ -79,6 +83,7 @@ export type Theme = "dark" | "light";
 const selector = (state: QueryBuilderState) => ({
   nodes: state.nodes,
   edges: state.edges,
+  setLanguage: state.setLanguage,
   setReadOnly: state.setReadOnly,
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
@@ -89,11 +94,15 @@ const selector = (state: QueryBuilderState) => ({
   addNodeAt: state.addNodeAt,
   getNodeById: state.getNodeById,
   isValidInputParamsTitle: state.isValidInputParamsTitle,
+  loadStateFromString: state.loadStateFromString,
+  saveStateToString: state.saveStateToString,
 });
 
 export interface QueryBuilderProps {
+  language?: string;
   theme: Theme;
   readOnly?: boolean;
+  allowLoadAndExportFlow?: boolean;
   getTransactionProps?: () => Promise<TransactionProps>;
   executeTransaction?: (transaction: UnsignedTransactionV1) => Promise<void>;
   showGeneratedCode?: (code: string, type: GeneratedCodeType) => Promise<void>;
@@ -112,8 +121,10 @@ const edgeTypes = {
 };
 
 function Flow({
+  language,
   theme,
   readOnly = false,
+  allowLoadAndExportFlow = false,
   getTransactionProps,
   executeTransaction,
   showGeneratedCode,
@@ -124,6 +135,7 @@ function Flow({
   const {
     nodes,
     edges,
+    setLanguage,
     setReadOnly,
     onNodesChange,
     onEdgesChange,
@@ -133,13 +145,60 @@ function Flow({
     addNodeAt,
     getNodeById,
     isValidInputParamsTitle,
+    loadStateFromString,
+    saveStateToString,
   } = useStore(useShallow(selector));
+  const { t } = useTranslation();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [viewport, setViewport] = useState(useViewport());
   const [loading, setLoading] = useState(false);
   const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const reactflowRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const loadFlow = useCallback(
+    (readDataString: string) => {
+      try {
+        loadStateFromString(readDataString);
+      } catch (error) {
+        if (error instanceof Error) {
+          setErrorMessage(error.message);
+          setIsErrorDialogOpen(true);
+        } else {
+          setErrorMessage("An unknown error occurred while loading the flow.");
+          setIsErrorDialogOpen(true);
+        }
+      }
+    },
+    [setErrorMessage, setIsErrorDialogOpen, loadStateFromString],
+  );
+
+  const readFileAndLoadFlow = useCallback(
+    (file: File) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const readDataString = e.target?.result as string;
+        loadFlow(readDataString);
+      };
+      reader.onerror = () => {
+        setErrorMessage("Failed to read the selected file.");
+        setIsErrorDialogOpen(true);
+      };
+      reader.readAsText(file);
+    },
+    [loadFlow, setErrorMessage, setIsErrorDialogOpen],
+  );
+
+  const onFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        readFileAndLoadFlow(file);
+      }
+    },
+    [readFileAndLoadFlow],
+  );
 
   const executeEnabled = !!getTransactionProps && !!executeTransaction;
   const generateCodeEnabled = !!getTransactionProps && !!showGeneratedCode;
@@ -160,6 +219,16 @@ function Flow({
     (event: React.DragEvent<HTMLElement>) => {
       event.preventDefault();
 
+      if (allowLoadAndExportFlow && event.dataTransfer.files.length > 0) {
+        const files = Array.from(event.dataTransfer.files);
+        const tariFiles = files.filter((file) => file.name.endsWith(".tari"));
+
+        if (tariFiles.length > 0) {
+          readFileAndLoadFlow(tariFiles[0]);
+          return;
+        }
+      }
+
       const data = event.dataTransfer.getData(CALL_NODE_DRAG_DROP_TYPE);
       if (data) {
         const json = JSON.parse(data) as TariFlowNodeDetails;
@@ -175,7 +244,7 @@ function Flow({
         }
       }
     },
-    [addNodeAt, viewport],
+    [addNodeAt, viewport, allowLoadAndExportFlow, readFileAndLoadFlow],
   );
 
   const buildTransactionDescriptions = useCallback(
@@ -260,6 +329,25 @@ function Flow({
     },
     [getTransactionProps, executeTransaction, buildTransactionDescriptions],
   );
+
+  const handleLoadFlow = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleExportFlow = () => {
+    const flowData = saveStateToString();
+    const blob = new Blob([flowData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "flow.tari";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   const handleGenerateCode = useCallback(
     async (typescript: boolean) => {
@@ -349,25 +437,25 @@ function Flow({
           {
             inputConnectionType: InputConnectionType.None,
             name: "key",
-            label: "Key",
+            label: t("key"),
             type: { Vec: "U8" },
           },
           {
             inputConnectionType: InputConnectionType.None,
             name: "resource_address",
-            label: "Resource Address",
+            label: t("resourceAddress"),
             type: { Other: { name: "ResourceAddress" } },
           },
           {
             inputConnectionType: InputConnectionType.None,
             name: "min_amount",
-            label: "Minimum Amount",
+            label: t("minimumAmount"),
             type: { Other: { name: "Amount" } },
           },
         ],
       },
     });
-  }, [addNodeAt]);
+  }, [addNodeAt, t]);
 
   const handleAddAllocateComponentAddressNode = useCallback(() => {
     addNodeAt({
@@ -377,23 +465,23 @@ function Flow({
         hasEnterConnection: true,
         hasExitConnection: true,
         icon: "component",
-        title: "Allocate Component Address",
+        title: t("allocateComponentAddress"),
         inputs: [
           {
             inputConnectionType: InputConnectionType.None,
             name: "component_name",
-            label: "Component Name",
+            label: t("componentName"),
             type: "String",
           },
         ],
         output: {
           type: { Other: { name: "ComponentAddressAllocation" } },
           name: ALLOCATE_COMPONENT_ADDRESS_RESULT,
-          label: "ComponentAddressAllocation",
+          label: t("componentAddressAllocation"),
         },
       },
     });
-  }, [addNodeAt]);
+  }, [addNodeAt, t]);
 
   const handleAddAllocateResourceAddressNode = useCallback(() => {
     addNodeAt({
@@ -403,23 +491,23 @@ function Flow({
         hasEnterConnection: true,
         hasExitConnection: true,
         icon: "archive",
-        title: "Allocate Resource Address",
+        title: t("allocateResourceAddress"),
         inputs: [
           {
             inputConnectionType: InputConnectionType.None,
             name: "resource_name",
-            label: "Resource Name",
+            label: t("resourceName"),
             type: "String",
           },
         ],
         output: {
           type: { Other: { name: "ResourceAddressAllocation" } },
           name: ALLOCATE_RESOURCE_ADDRESS_RESULT,
-          label: "ResourceAddressAllocation",
+          label: t("resourceAddressAllocation"),
         },
       },
     });
-  }, [addNodeAt]);
+  }, [addNodeAt, t]);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -430,6 +518,13 @@ function Flow({
   useEffect(() => {
     setReadOnly(readOnly);
   }, [setReadOnly, readOnly]);
+
+  useEffect(() => {
+    if (language) {
+      setLanguage(resolveI18nLanguage(language));
+      i18n.changeLanguage(language).catch(console.log);
+    }
+  }, [setLanguage, language]);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -462,6 +557,7 @@ function Flow({
 
   return (
     <>
+      <input type="file" accept=".tari" ref={fileInputRef} style={{ display: "none" }} onChange={onFileChange} />
       <ReactFlowProvider>
         <ReactFlow
           ref={reactflowRef}
@@ -512,7 +608,7 @@ function Flow({
                   }}
                   disabled={!executeEnabled}
                 >
-                  <PlayIcon /> Execute
+                  <PlayIcon /> {t("execute")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={() => {
@@ -520,11 +616,11 @@ function Flow({
                   }}
                   disabled={!executeEnabled}
                 >
-                  <LayersIcon /> Execute - Dry Run
+                  <LayersIcon /> {t("executeDryRun")}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuSub>
-                  <DropdownMenuSubTrigger hidden={!generateCodeEnabled}>Generate Code</DropdownMenuSubTrigger>
+                  <DropdownMenuSubTrigger hidden={!generateCodeEnabled}>{t("generateCode")}</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
@@ -532,46 +628,65 @@ function Flow({
                           handleGenerateCode(true).catch(console.log);
                         }}
                       >
-                        TypeScript
+                        {t("typescript")}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onSelect={() => {
                           handleGenerateCode(false).catch(console.log);
                         }}
                       >
-                        JavaScript
+                        {t("javascript")}
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
                 <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Add Instruction</DropdownMenuSubTrigger>
+                  <DropdownMenuSubTrigger>{t("addInstruction")}</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem onSelect={handleAddInputParamsNode}>
-                        <InputIcon /> Input Parameters Node
+                        <InputIcon /> {t("inputParametersNode")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddStartNode}>
-                        <EnterIcon /> Start Node
+                        <EnterIcon /> {t("startNode")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddEmitLogNode}>
-                        <RocketIcon /> Emit Log
+                        <RocketIcon /> {t("emitLog")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddAssertBucketContainsNode}>
                         <CheckCircledIcon />
-                        Assert Bucket Contains
+                        {t("assertBucketContains")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddAllocateComponentAddressNode}>
                         <Component1Icon />
-                        Allocate Component Address
+                        {t("allocateComponentAddress")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddAllocateResourceAddressNode}>
                         <ArchiveIcon />
-                        Allocate Resource Address
+                        {t("allocateResourceAddress")}
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
+                {allowLoadAndExportFlow && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        handleLoadFlow();
+                      }}
+                    >
+                      <FileTextIcon /> {t("loadFlowFromFile")}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        handleExportFlow();
+                      }}
+                    >
+                      <UploadIcon /> {t("exportFlow")}
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </Panel>
@@ -583,11 +698,11 @@ function Flow({
       <AlertDialog open={isErrorDialogOpen} onOpenChange={setIsErrorDialogOpen}>
         <AlertDialogContent className="border-[var(--foreground)]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Execution failed</AlertDialogTitle>
+            <AlertDialogTitle>{t("executionFailed")}</AlertDialogTitle>
             <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Dismiss</AlertDialogCancel>
+            <AlertDialogCancel>{t("dismiss")}</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -596,8 +711,10 @@ function Flow({
 }
 
 function QueryBuilder({
+  language,
   theme,
   readOnly = false,
+  allowLoadAndExportFlow = false,
   getTransactionProps,
   executeTransaction,
   showGeneratedCode,
@@ -605,8 +722,10 @@ function QueryBuilder({
   return (
     <ReactFlowProvider>
       <Flow
+        language={language}
         theme={theme}
         readOnly={readOnly}
+        allowLoadAndExportFlow={allowLoadAndExportFlow}
         getTransactionProps={getTransactionProps}
         executeTransaction={executeTransaction}
         showGeneratedCode={showGeneratedCode}

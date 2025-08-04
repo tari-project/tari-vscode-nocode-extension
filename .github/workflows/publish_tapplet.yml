@@ -1,0 +1,63 @@
+---
+name: Publish Tapplet to GitHub Releases
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on tags starting with 'v'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+        with:
+          auto-install: true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build tari-universe-tapplet
+        run: moon tari-universe-tapplet:build
+
+      - name: Get package version
+        id: get_version
+        run: echo "version=$(jq -r .version ./packages/tari-universe-tapplet/package.json)" >> $GITHUB_OUTPUT
+
+      - name: Create tar.gz archive
+        run: tar -czvf tari-universe-tapplet-v${{ steps.get_version.outputs.version }}.tar.gz -C packages/tari-universe-tapplet/dist .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tari-universe-tapplet-artifact
+          path: tari-universe-tapplet-v${{ steps.get_version.outputs.version }}.tar.gz
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Release of ${{ github.ref }}
+
+            See the attached artifact for the tapplet build.
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: tari-universe-tapplet-v${{ steps.get_version.outputs.version }}.tar.gz
+          asset_name: tari-universe-tapplet-v${{ steps.get_version.outputs.version }}.tar.gz
+          asset_content_type: application/gzip

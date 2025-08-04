@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 const ICON_WIDTH = 30;
 const SPACE_WIDTH = 8;
@@ -16,6 +17,7 @@ export interface EditableLabelProps {
 }
 
 function EditableLabel({ initialLabel, onLabelChange, isValidLabel, onRemove }: EditableLabelProps) {
+  const { t } = useTranslation();
   const [label, setLabel] = useState(initialLabel);
   const [isHovering, setIsHovering] = useState(false);
   const [open, setOpen] = useState(false);
@@ -123,7 +125,7 @@ function EditableLabel({ initialLabel, onLabelChange, isValidLabel, onRemove }: 
                   onKeyDown={handleKeyDown}
                 />
                 <Button className="nodrag" size="sm" onClick={handleSave} disabled={!isInputValid}>
-                  Update
+                  {t("update")}
                 </Button>
               </div>
             </PopoverContent>

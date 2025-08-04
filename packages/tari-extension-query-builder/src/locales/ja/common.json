@@ -1,0 +1,18 @@
+{
+  "execute": "実行",
+  "executeDryRun": "実行 - ドライラン",
+  "generateCode": "コード生成",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "指示を追加",
+  "inputParametersNode": "入力パラメータノード",
+  "startNode": "開始ノード",
+  "emitLog": "ログを出力",
+  "assertBucketContains": "バケットに〜が含まれていることを確認",
+  "allocateComponentAddress": "コンポーネントアドレスを割り当て",
+  "allocateResourceAddress": "リソースアドレスを割り当て",
+  "loadFlowFromFile": "ファイルからフローをロード",
+  "exportFlow": "フローをエクスポート",
+  "executionFailed": "実行に失敗しました",
+  "dismiss": "閉じる"
+}

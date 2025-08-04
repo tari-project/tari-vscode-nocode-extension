@@ -1,0 +1,18 @@
+{
+  "execute": "执行",
+  "executeDryRun": "执行 - 试运行",
+  "generateCode": "生成代码",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "添加指令",
+  "inputParametersNode": "输入参数节点",
+  "startNode": "起始节点",
+  "emitLog": "发出日志",
+  "assertBucketContains": "断言存储桶包含",
+  "allocateComponentAddress": "分配组件地址",
+  "allocateResourceAddress": "分配资源地址",
+  "loadFlowFromFile": "从文件加载流程",
+  "exportFlow": "导出流程",
+  "executionFailed": "执行失败",
+  "dismiss": "关闭"
+}

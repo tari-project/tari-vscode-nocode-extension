@@ -1,0 +1,18 @@
+{
+  "execute": "Ausführen",
+  "executeDryRun": "Ausführen - Testlauf",
+  "generateCode": "Code generieren",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Anweisung hinzufügen",
+  "inputParametersNode": "Eingabeparameter-Knoten",
+  "startNode": "Startknoten",
+  "emitLog": "Protokoll ausgeben",
+  "assertBucketContains": "Bucket enthält Assert",
+  "allocateComponentAddress": "Komponentenadresse zuweisen",
+  "allocateResourceAddress": "Ressourcenadresse zuweisen",
+  "loadFlowFromFile": "Fluss aus Datei laden",
+  "exportFlow": "Fluss exportieren",
+  "executionFailed": "Ausführung fehlgeschlagen",
+  "dismiss": "Schließen"
+}

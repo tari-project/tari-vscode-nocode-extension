@@ -1,0 +1,18 @@
+{
+  "execute": "Execute",
+  "executeDryRun": "Execute - Dry Run",
+  "generateCode": "Generate Code",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Add Instruction",
+  "inputParametersNode": "Input Parameters Node",
+  "startNode": "Start Node",
+  "emitLog": "Emit Log",
+  "assertBucketContains": "Assert Bucket Contains",
+  "allocateComponentAddress": "Allocate Component Address",
+  "allocateResourceAddress": "Allocate Resource Address",
+  "loadFlowFromFile": "Load flow from file",
+  "exportFlow": "Export flow",
+  "executionFailed": "Execution failed",
+  "dismiss": "Dismiss"
+}

@@ -1,0 +1,18 @@
+{
+  "execute": "Thực thi",
+  "executeDryRun": "Thực thi - Chạy thử",
+  "generateCode": "Tạo Mã",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Thêm Hướng dẫn",
+  "inputParametersNode": "Nút Tham số Đầu vào",
+  "startNode": "Nút Bắt đầu",
+  "emitLog": "Phát Nhật ký",
+  "assertBucketContains": "Xác nhận Thùng chứa",
+  "allocateComponentAddress": "Cấp phát Địa chỉ Thành phần",
+  "allocateResourceAddress": "Cấp phát Địa chỉ Tài nguyên",
+  "loadFlowFromFile": "Tải Luồng từ tệp",
+  "exportFlow": "Xuất Luồng",
+  "executionFailed": "Thực thi thất bại",
+  "dismiss": "Đóng"
+}

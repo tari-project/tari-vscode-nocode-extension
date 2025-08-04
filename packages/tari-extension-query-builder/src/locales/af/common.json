@@ -1,0 +1,18 @@
+{
+  "execute": "Voer uit",
+  "executeDryRun": "Voer uit - Droë Uitvoering",
+  "generateCode": "Genereer Kode",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Voeg Instruksie by",
+  "inputParametersNode": "Invoer Parameters Node",
+  "startNode": "Begin Node",
+  "emitLog": "Stuur Log",
+  "assertBucketContains": "Bevestig dat Bucket Bevat",
+  "allocateComponentAddress": "Toewys Komponent Adres",
+  "allocateResourceAddress": "Toewys Hulpbron Adres",
+  "loadFlowFromFile": "Laai Vloei vanaf lêer",
+  "exportFlow": "Voer Vloei uit",
+  "executionFailed": "Uitvoering het misluk",
+  "dismiss": "Verwerp"
+}

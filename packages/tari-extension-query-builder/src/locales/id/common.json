@@ -1,0 +1,18 @@
+{
+  "execute": "Jalankan",
+  "executeDryRun": "Jalankan - Uji Coba",
+  "generateCode": "Hasilkan Kode",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Tambah Instruksi",
+  "inputParametersNode": "Node Parameter Input",
+  "startNode": "Node Mulai",
+  "emitLog": "Kirim Log",
+  "assertBucketContains": "Pastikan Ember Berisi",
+  "allocateComponentAddress": "Alokasikan Alamat Komponen",
+  "allocateResourceAddress": "Alokasikan Alamat Sumber Daya",
+  "loadFlowFromFile": "Muat Alur dari file",
+  "exportFlow": "Ekspor Alur",
+  "executionFailed": "Eksekusi gagal",
+  "dismiss": "Tutup"
+}

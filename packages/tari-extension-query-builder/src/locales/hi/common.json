@@ -1,0 +1,18 @@
+{
+  "execute": "निष्पादित करें",
+  "executeDryRun": "निष्पादित करें - ड्राई रन",
+  "generateCode": "कोड उत्पन्न करें",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "निर्देश जोड़ें",
+  "inputParametersNode": "इनपुट पैरामीटर नोड",
+  "startNode": "स्टार्ट नोड",
+  "emitLog": "लॉग उत्सर्जित करें",
+  "assertBucketContains": "बकेट में यह है सत्यापित करें",
+  "allocateComponentAddress": "घटक पता आवंटित करें",
+  "allocateResourceAddress": "संसाधन पता आवंटित करें",
+  "loadFlowFromFile": "फ़ाइल से प्रवाह लोड करें",
+  "exportFlow": "प्रवाह निर्यात करें",
+  "executionFailed": "निष्पादन विफल रहा",
+  "dismiss": "खारिज करें"
+}

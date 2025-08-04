@@ -1,0 +1,18 @@
+{
+  "execute": "실행",
+  "executeDryRun": "실행 - 드라이런",
+  "generateCode": "코드 생성",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "지침 추가",
+  "inputParametersNode": "입력 매개변수 노드",
+  "startNode": "시작 노드",
+  "emitLog": "로그 내보내기",
+  "assertBucketContains": "버킷에 포함된 항목 확인",
+  "allocateComponentAddress": "컴포넌트 주소 할당",
+  "allocateResourceAddress": "리소스 주소 할당",
+  "loadFlowFromFile": "파일에서 플로우 로드",
+  "exportFlow": "플로우 내보내기",
+  "executionFailed": "실행 실패",
+  "dismiss": "닫기"
+}

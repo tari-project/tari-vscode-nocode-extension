@@ -1,0 +1,18 @@
+{
+  "execute": "Exécuter",
+  "executeDryRun": "Exécuter - Essai",
+  "generateCode": "Générer le code",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Ajouter une instruction",
+  "inputParametersNode": "Nœud de paramètres d'entrée",
+  "startNode": "Nœud de départ",
+  "emitLog": "Émettre un journal",
+  "assertBucketContains": "Vérifier que le bucket contient",
+  "allocateComponentAddress": "Allouer l'adresse du composant",
+  "allocateResourceAddress": "Allouer l'adresse de la ressource",
+  "loadFlowFromFile": "Charger le flux depuis un fichier",
+  "exportFlow": "Exporter le flux",
+  "executionFailed": "L'exécution a échoué",
+  "dismiss": "Rejeter"
+}

@@ -1,0 +1,18 @@
+{
+  "execute": "Çalıştır",
+  "executeDryRun": "Çalıştır - Kuru Çalıştırma",
+  "generateCode": "Kod Üret",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Talimat Ekle",
+  "inputParametersNode": "Girdi Parametreleri Düğümü",
+  "startNode": "Başlangıç Düğümü",
+  "emitLog": "Günlük Yayınla",
+  "assertBucketContains": "Kovan Şunu İçeriyor Doğrula",
+  "allocateComponentAddress": "Bileşen Adresi Ata",
+  "allocateResourceAddress": "Kaynak Adresi Ata",
+  "loadFlowFromFile": "Akışı dosyadan yükle",
+  "exportFlow": "Akışı dışa aktar",
+  "executionFailed": "Yürütme başarısız oldu",
+  "dismiss": "Kapat"
+}

@@ -1,0 +1,18 @@
+{
+  "execute": "Выполнить",
+  "executeDryRun": "Выполнить - Пробный запуск",
+  "generateCode": "Сгенерировать код",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Добавить инструкцию",
+  "inputParametersNode": "Узел входных параметров",
+  "startNode": "Начальный узел",
+  "emitLog": "Выдать журнал",
+  "assertBucketContains": "Утверждать, что корзина содержит",
+  "allocateComponentAddress": "Выделить адрес компонента",
+  "allocateResourceAddress": "Выделить адрес ресурса",
+  "loadFlowFromFile": "Загрузить поток из файла",
+  "exportFlow": "Экспортировать поток",
+  "executionFailed": "Выполнение не удалось",
+  "dismiss": "Закрыть"
+}

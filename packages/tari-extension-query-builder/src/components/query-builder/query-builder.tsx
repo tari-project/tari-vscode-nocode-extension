@@ -20,6 +20,8 @@ import {
 import useStore from "../../store/store";
 import { useShallow } from "zustand/shallow";
 import { InputConnectionType, GenericNodeType, NodeType, QueryBuilderState } from "@/store/types";
+import { useTranslation } from "react-i18next";
+import i18n, { resolveI18nLanguage } from "./i18n";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ButtonEdge from "./edges/button-edge";
 import { TariFlowNodeDetails } from "@/types";
@@ -146,6 +148,7 @@ function Flow({
     loadStateFromString,
     saveStateToString,
   } = useStore(useShallow(selector));
+  const { t } = useTranslation();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [viewport, setViewport] = useState(useViewport());
   const [loading, setLoading] = useState(false);
@@ -518,7 +521,8 @@ function Flow({
 
   useEffect(() => {
     if (language) {
-      setLanguage(language);
+      setLanguage(resolveI18nLanguage(language));
+      i18n.changeLanguage(language).catch(console.log);
     }
   }, [setLanguage, language]);
 
@@ -604,7 +608,7 @@ function Flow({
                   }}
                   disabled={!executeEnabled}
                 >
-                  <PlayIcon /> Execute
+                  <PlayIcon /> {t("execute")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={() => {
@@ -612,11 +616,11 @@ function Flow({
                   }}
                   disabled={!executeEnabled}
                 >
-                  <LayersIcon /> Execute - Dry Run
+                  <LayersIcon /> {t("executeDryRun")}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuSub>
-                  <DropdownMenuSubTrigger hidden={!generateCodeEnabled}>Generate Code</DropdownMenuSubTrigger>
+                  <DropdownMenuSubTrigger hidden={!generateCodeEnabled}>{t("generateCode")}</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
@@ -624,42 +628,42 @@ function Flow({
                           handleGenerateCode(true).catch(console.log);
                         }}
                       >
-                        TypeScript
+                        {t("typescript")}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onSelect={() => {
                           handleGenerateCode(false).catch(console.log);
                         }}
                       >
-                        JavaScript
+                        {t("javascript")}
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
                 <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Add Instruction</DropdownMenuSubTrigger>
+                  <DropdownMenuSubTrigger>{t("addInstruction")}</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem onSelect={handleAddInputParamsNode}>
-                        <InputIcon /> Input Parameters Node
+                        <InputIcon /> {t("inputParametersNode")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddStartNode}>
-                        <EnterIcon /> Start Node
+                        <EnterIcon /> {t("startNode")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddEmitLogNode}>
-                        <RocketIcon /> Emit Log
+                        <RocketIcon /> {t("emitLog")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddAssertBucketContainsNode}>
                         <CheckCircledIcon />
-                        Assert Bucket Contains
+                        {t("assertBucketContains")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddAllocateComponentAddressNode}>
                         <Component1Icon />
-                        Allocate Component Address
+                        {t("allocateComponentAddress")}
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleAddAllocateResourceAddressNode}>
                         <ArchiveIcon />
-                        Allocate Resource Address
+                        {t("allocateResourceAddress")}
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
@@ -672,14 +676,14 @@ function Flow({
                         handleLoadFlow();
                       }}
                     >
-                      <FileTextIcon /> Load flow from file
+                      <FileTextIcon /> {t("loadFlowFromFile")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onSelect={() => {
                         handleExportFlow();
                       }}
                     >
-                      <UploadIcon /> Export flow
+                      <UploadIcon /> {t("exportFlow")}
                     </DropdownMenuItem>
                   </>
                 )}
@@ -694,11 +698,11 @@ function Flow({
       <AlertDialog open={isErrorDialogOpen} onOpenChange={setIsErrorDialogOpen}>
         <AlertDialogContent className="border-[var(--foreground)]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Execution failed</AlertDialogTitle>
+            <AlertDialogTitle>{t("executionFailed")}</AlertDialogTitle>
             <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Dismiss</AlertDialogCancel>
+            <AlertDialogCancel>{t("dismiss")}</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

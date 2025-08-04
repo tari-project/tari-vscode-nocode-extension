@@ -1,0 +1,18 @@
+{
+  "execute": "Wykonaj",
+  "executeDryRun": "Wykonaj - Symulacja",
+  "generateCode": "Generuj kod",
+  "typescript": "TypeScript",
+  "javascript": "JavaScript",
+  "addInstruction": "Dodaj instrukcję",
+  "inputParametersNode": "Węzeł parametrów wejściowych",
+  "startNode": "Węzeł początkowy",
+  "emitLog": "Wyemituj log",
+  "assertBucketContains": "Sprawdź, czy koszyk zawiera",
+  "allocateComponentAddress": "Przydziel adres komponentu",
+  "allocateResourceAddress": "Przydziel adres zasobu",
+  "loadFlowFromFile": "Załaduj przepływ z pliku",
+  "exportFlow": "Eksportuj przepływ",
+  "executionFailed": "Wykonanie nie powiodło się",
+  "dismiss": "Zamknij"
+}

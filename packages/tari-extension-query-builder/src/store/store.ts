@@ -13,19 +13,20 @@ import {
 } from "@/components/query-builder/nodes/call-node.types";
 import { TariType } from "@/query-builder/tari-type";
 import { LatestPersistedState } from "@/store/persistence/types.ts";
+import { Language } from "@/components/query-builder/i18n";
 
 const DROP_NODE_OFFSET_X = 200;
 const DROP_NODE_OFFSET_Y = 50;
 
 const useStore = create<QueryBuilderState>((set, get) => ({
-  language: "en",
+  language: Language.EN,
   readOnly: false,
   nodes: [],
   edges: [],
   centerX: 0,
   centerY: 0,
   changeCounter: 0,
-  setLanguage: (language: string) => {
+  setLanguage: (language: Language) => {
     set({ language });
   },
   updateCenter: (centerX, centerY) => {

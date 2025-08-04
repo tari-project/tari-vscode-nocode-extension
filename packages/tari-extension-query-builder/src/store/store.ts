@@ -18,12 +18,16 @@ const DROP_NODE_OFFSET_X = 200;
 const DROP_NODE_OFFSET_Y = 50;
 
 const useStore = create<QueryBuilderState>((set, get) => ({
+  language: "en",
   readOnly: false,
   nodes: [],
   edges: [],
   centerX: 0,
   centerY: 0,
   changeCounter: 0,
+  setLanguage: (language: string) => {
+    set({ language });
+  },
   updateCenter: (centerX, centerY) => {
     set({ centerX, centerY });
   },

@@ -95,12 +95,14 @@ export interface SchemaAndVersion {
 }
 
 export interface QueryBuilderState {
+  language: string;
   readOnly: boolean;
   nodes: CustomNode[];
   edges: Edge[];
   centerX: number;
   centerY: number;
   changeCounter: number;
+  setLanguage: (language: string) => void;
   updateCenter: (centerX: number, centerY: number) => void;
   setReadOnly: (value: boolean) => void;
   onNodesChange: OnNodesChange<CustomNode>;

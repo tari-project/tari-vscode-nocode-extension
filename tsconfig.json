@@ -22,6 +22,9 @@
     },
     {
       "path": "packages/tari-extension-query-builder-webview"
+    },
+    {
+      "path": "packages/tari-universe-tapplet"
     }
   ]
 }

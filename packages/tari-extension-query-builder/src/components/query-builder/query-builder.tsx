@@ -46,10 +46,12 @@ import {
   CheckCircledIcon,
   Component1Icon,
   EnterIcon,
+  FileTextIcon,
   InputIcon,
   LayersIcon,
   PlayIcon,
   RocketIcon,
+  UploadIcon,
 } from "@radix-ui/react-icons";
 import GenericNode from "./nodes/generic/generic-node";
 import InputParamsNode from "./nodes/input/input-params-node";
@@ -79,6 +81,7 @@ export type Theme = "dark" | "light";
 const selector = (state: QueryBuilderState) => ({
   nodes: state.nodes,
   edges: state.edges,
+  setLanguage: state.setLanguage,
   setReadOnly: state.setReadOnly,
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
@@ -89,11 +92,15 @@ const selector = (state: QueryBuilderState) => ({
   addNodeAt: state.addNodeAt,
   getNodeById: state.getNodeById,
   isValidInputParamsTitle: state.isValidInputParamsTitle,
+  loadStateFromString: state.loadStateFromString,
+  saveStateToString: state.saveStateToString,
 });
 
 export interface QueryBuilderProps {
+  language?: string;
   theme: Theme;
   readOnly?: boolean;
+  allowLoadAndExportFlow?: boolean;
   getTransactionProps?: () => Promise<TransactionProps>;
   executeTransaction?: (transaction: UnsignedTransactionV1) => Promise<void>;
   showGeneratedCode?: (code: string, type: GeneratedCodeType) => Promise<void>;
@@ -112,8 +119,10 @@ const edgeTypes = {
 };
 
 function Flow({
+  language,
   theme,
   readOnly = false,
+  allowLoadAndExportFlow = false,
   getTransactionProps,
   executeTransaction,
   showGeneratedCode,
@@ -124,6 +133,7 @@ function Flow({
   const {
     nodes,
     edges,
+    setLanguage,
     setReadOnly,
     onNodesChange,
     onEdgesChange,
@@ -133,6 +143,8 @@ function Flow({
     addNodeAt,
     getNodeById,
     isValidInputParamsTitle,
+    loadStateFromString,
+    saveStateToString,
   } = useStore(useShallow(selector));
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [viewport, setViewport] = useState(useViewport());
@@ -140,6 +152,50 @@ function Flow({
   const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const reactflowRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const loadFlow = useCallback(
+    (readDataString: string) => {
+      try {
+        loadStateFromString(readDataString);
+      } catch (error) {
+        if (error instanceof Error) {
+          setErrorMessage(error.message);
+          setIsErrorDialogOpen(true);
+        } else {
+          setErrorMessage("An unknown error occurred while loading the flow.");
+          setIsErrorDialogOpen(true);
+        }
+      }
+    },
+    [setErrorMessage, setIsErrorDialogOpen, loadStateFromString],
+  );
+
+  const readFileAndLoadFlow = useCallback(
+    (file: File) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const readDataString = e.target?.result as string;
+        loadFlow(readDataString);
+      };
+      reader.onerror = () => {
+        setErrorMessage("Failed to read the selected file.");
+        setIsErrorDialogOpen(true);
+      };
+      reader.readAsText(file);
+    },
+    [loadFlow, setErrorMessage, setIsErrorDialogOpen],
+  );
+
+  const onFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        readFileAndLoadFlow(file);
+      }
+    },
+    [readFileAndLoadFlow],
+  );
 
   const executeEnabled = !!getTransactionProps && !!executeTransaction;
   const generateCodeEnabled = !!getTransactionProps && !!showGeneratedCode;
@@ -160,6 +216,16 @@ function Flow({
     (event: React.DragEvent<HTMLElement>) => {
       event.preventDefault();
 
+      if (allowLoadAndExportFlow && event.dataTransfer.files.length > 0) {
+        const files = Array.from(event.dataTransfer.files);
+        const tariFiles = files.filter((file) => file.name.endsWith(".tari"));
+
+        if (tariFiles.length > 0) {
+          readFileAndLoadFlow(tariFiles[0]);
+          return;
+        }
+      }
+
       const data = event.dataTransfer.getData(CALL_NODE_DRAG_DROP_TYPE);
       if (data) {
         const json = JSON.parse(data) as TariFlowNodeDetails;
@@ -175,7 +241,7 @@ function Flow({
         }
       }
     },
-    [addNodeAt, viewport],
+    [addNodeAt, viewport, allowLoadAndExportFlow, readFileAndLoadFlow],
   );
 
   const buildTransactionDescriptions = useCallback(
@@ -260,6 +326,25 @@ function Flow({
     },
     [getTransactionProps, executeTransaction, buildTransactionDescriptions],
   );
+
+  const handleLoadFlow = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleExportFlow = () => {
+    const flowData = saveStateToString();
+    const blob = new Blob([flowData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "flow.tari";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   const handleGenerateCode = useCallback(
     async (typescript: boolean) => {
@@ -432,6 +517,12 @@ function Flow({
   }, [setReadOnly, readOnly]);
 
   useEffect(() => {
+    if (language) {
+      setLanguage(language);
+    }
+  }, [setLanguage, language]);
+
+  useEffect(() => {
     const updateDimensions = () => {
       if (reactflowRef.current) {
         setDimensions({
@@ -462,6 +553,7 @@ function Flow({
 
   return (
     <>
+      <input type="file" accept=".tari" ref={fileInputRef} style={{ display: "none" }} onChange={onFileChange} />
       <ReactFlowProvider>
         <ReactFlow
           ref={reactflowRef}
@@ -572,6 +664,25 @@ function Flow({
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
+                {allowLoadAndExportFlow && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        handleLoadFlow();
+                      }}
+                    >
+                      <FileTextIcon /> Load flow from file
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        handleExportFlow();
+                      }}
+                    >
+                      <UploadIcon /> Export flow
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </Panel>
@@ -596,8 +707,10 @@ function Flow({
 }
 
 function QueryBuilder({
+  language,
   theme,
   readOnly = false,
+  allowLoadAndExportFlow = false,
   getTransactionProps,
   executeTransaction,
   showGeneratedCode,
@@ -605,8 +718,10 @@ function QueryBuilder({
   return (
     <ReactFlowProvider>
       <Flow
+        language={language}
         theme={theme}
         readOnly={readOnly}
+        allowLoadAndExportFlow={allowLoadAndExportFlow}
         getTransactionProps={getTransactionProps}
         executeTransaction={executeTransaction}
         showGeneratedCode={showGeneratedCode}

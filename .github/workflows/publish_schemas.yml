@@ -24,7 +24,7 @@ jobs:
           mkdir -p schemas
           cp packages/tari-extension-query-builder/schemas/*.json schemas/
       - name: Upload Schema Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: schemas
 

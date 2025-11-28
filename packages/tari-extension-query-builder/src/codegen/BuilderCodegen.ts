@@ -45,6 +45,7 @@ export class BuilderCodegen {
     return factory.createNodeArray([
       factory.createImportDeclaration(
         undefined,
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         factory.createImportClause(
           false,
           undefined,
@@ -62,6 +63,7 @@ export class BuilderCodegen {
       ),
       factory.createImportDeclaration(
         undefined,
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         factory.createImportClause(
           false,
           undefined,

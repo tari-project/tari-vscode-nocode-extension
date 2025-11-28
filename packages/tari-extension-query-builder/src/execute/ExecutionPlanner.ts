@@ -1,5 +1,5 @@
 import { NODE_ENTRY, NODE_EXIT } from "@/components/query-builder/nodes/generic-node.types";
-import { CustomNode, GenericNode, GenericNodeType, InputParamsNode, NodeType } from "@/store/types";
+import { CustomNode, GenericNode, GenericNodeType, NodeType } from "@/store/types";
 import { LogLevel, Type, UnsignedTransactionV1 } from "@tari-project/typescript-bindings";
 import { Edge } from "@xyflow/react";
 import { CycleDetectedError } from "./CycleDetectedError";
@@ -53,7 +53,7 @@ export class ExecutionPlanner {
   }
 
   private mapGenericNode(node: GenericNode): Node {
-    const inputParameters: Node["inputParameters"] | undefined = node.data.inputs
+    const inputParameters: Node["inputParameters"] = node.data.inputs
       ? Object.fromEntries(node.data.inputs.map((input) => [input.name, { type: input.type }]))
       : undefined;
     return {
@@ -111,7 +111,7 @@ export class ExecutionPlanner {
   }
 
   private init() {
-    this.genericNodes = this.customNodes.filter((node) => node.type === NodeType.GenericNode) as GenericNode[];
+    this.genericNodes = this.customNodes.filter((node) => node.type === NodeType.GenericNode);
     this.nodes = this.genericNodes.map((node) => this.mapGenericNode(node));
     this.nodeMap = new Map(this.nodes.map((node) => [node.id, node]));
     this.outputToInputDependencies = new Map();
@@ -232,10 +232,7 @@ export class ExecutionPlanner {
     const connectedParents = new Set(parentEdges.map((edge) => edge.source));
 
     const inputParamsNodes = new Map(
-      (this.customNodes.filter((node) => node.type === NodeType.InputParamsNode) as InputParamsNode[]).map((node) => [
-        node.id,
-        node.data,
-      ]),
+      this.customNodes.filter((node) => node.type === NodeType.InputParamsNode).map((node) => [node.id, node.data]),
     );
     const inputParams =
       inputParamsNodes.size > 0

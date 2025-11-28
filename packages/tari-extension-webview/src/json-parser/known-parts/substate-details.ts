@@ -49,7 +49,7 @@ const componentState: KnownJsonPart = {
     let hoverMessage: Markdown | undefined;
 
     const property = node.parent;
-    if (property?.children && property.children.length === 2) {
+    if (property?.children?.length === 2) {
       const { offset, length } = property.children[1];
       const stateJson = json.substring(offset, offset + length);
       const state = parseCbor(JSON.parse(stateJson) as CborValue);

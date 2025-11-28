@@ -21,7 +21,7 @@ catalog:
   "@tari-project/tarijs-all": =0.13.0
   "@tari-project/typescript-bindings": =1.15.0
   "@tari-project/wallet-connect-signer": =0.13.0
-  "@tari-project/wallet-daemon-signer": =0.13.0
+  "@tari-project/wallet-daemon-signer": =0.14.4
   "@types/node": ^24.10.1
   "@types/react": ^19.2.7
   "@types/react-dom": ^19.2.3

@@ -20,7 +20,7 @@ catalog:
   "@vitejs/plugin-react": ^5.1.1
   "@tari-project/tarijs-all": =0.13.0
   "@tari-project/typescript-bindings": =1.15.0
-  "@tari-project/wallet-connect-signer": =0.13.0
+  "@tari-project/wallet-connect-signer": =0.14.4
   "@tari-project/wallet-daemon-signer": =0.13.0
   "@types/node": ^24.10.1
   "@types/react": ^19.2.7

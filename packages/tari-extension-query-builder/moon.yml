@@ -41,11 +41,6 @@ tasks:
     inputs:
       - "@files(sources)"
       - "@files(configs)"
-  ladle:
-    command: "pnpm run ladle"
-    inputs:
-      - "@files(sources)"
-      - "@files(configs)"
   generate-schema:
     command: "pnpm run generate:schema"
     inputs:

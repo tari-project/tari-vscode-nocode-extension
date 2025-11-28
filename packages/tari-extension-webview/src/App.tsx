@@ -3,10 +3,6 @@ import { useTariStore } from "./store/tari-store";
 import Signers from "./Signers";
 import SignerActions from "./SignerActions";
 
-if (import.meta.env.DEV) {
-  await import("@vscode-elements/webview-playground");
-}
-
 function App() {
   const messenger = useTariStore((state) => state.messenger);
   const signer = useTariStore((state) => state.signer);
@@ -14,6 +10,14 @@ function App() {
   const setConfiguration = useTariStore((state) => state.setConfiguration);
   const restoreState = useTariStore((state) => state.restoreState);
   const [signersOpen, setSignersOpen] = useState(true);
+  const [prevSigner, setPrevSigner] = useState(signer);
+
+  if (signer !== prevSigner) {
+    setPrevSigner(signer);
+    if (signer) {
+      setSignersOpen(false);
+    }
+  }
 
   useEffect(() => {
     restoreState().catch(console.log);
@@ -33,10 +37,10 @@ function App() {
   }, [messenger, setConfiguration]);
 
   useEffect(() => {
-    if (signer) {
-      setSignersOpen(false);
+    if (import.meta.env.DEV) {
+       void import("@vscode-elements/webview-playground");
     }
-  }, [signer]);
+  }, []);
 
   if (configuration) {
     return (

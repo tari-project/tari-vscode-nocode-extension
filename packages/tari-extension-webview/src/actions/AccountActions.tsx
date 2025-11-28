@@ -14,7 +14,7 @@ import {
 import * as ve from "@vscode-elements/elements";
 import { useCollapsibleToggle } from "../hooks/collapsible-toggle";
 import { useTariStore } from "../store/tari-store";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { JsonOutline } from "../json-parser/JsonOutline";
 import JsonOutlineTree from "../components/JsonOutlineTree";
 import { JsonDocument } from "../json-parser/JsonDocument";
@@ -36,16 +36,43 @@ function AccountActions({ signer, open, onToggle }: AccountActionsProps) {
   const setSelectedAccountKeyIndex = useTariStore((state) => state.setSelectedAccountKeyIndex);
   const selectedAccountKeyIndex = useTariStore((state) => state.selectedAccountKeyIndex);
   const selectedAccountAddress = useTariStore((state) => state.selectedAccountAddress);
-  const [jsonDocument, setJsonDocument] = useState<JsonDocument | undefined>(undefined);
-  const [outlineItems, setOutlineItems] = useState<JsonOutlineItem[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [shouldShowDocument, setShouldShowDocument] = useState(false);
   const [accountData, setAccountData] = useState<AccountGetResponse | undefined>(undefined);
 
-  const handleRefreshClick = (event: MouseEvent) => {
-    event.stopPropagation();
-    void fetchAccountInformation();
-  };
+  const jsonDocument = useMemo(() => {
+    if (!accountData) return undefined;
+    return new JsonDocument("Account", accountData);
+  }, [accountData]);
+
+  const outlineItems = useMemo(() => {
+    if (!jsonDocument) return [];
+    const outline = new JsonOutline(jsonDocument, ACCOUNT_KNOWN_PARTS);
+    return outline.items;
+  }, [jsonDocument]);
+
+  const fetchAccountInformation = useCallback(async () => {
+    if (messenger && selectedAccountAddress) {
+      setLoading(true);
+      try {
+        const account = await signer.getAccountByAddress(selectedAccountAddress);
+        setAccountData(account);
+        setShouldShowDocument(true);
+      } catch (error: unknown) {
+        await messenger.send("showError", { message: "Failed to get account info", detail: String(error) });
+      }
+      setLoading(false);
+    }
+  }, [messenger, selectedAccountAddress, signer]);
+
+  const handleRefreshClick = useCallback(
+    (event: Event) => {
+      event.stopPropagation();
+      void fetchAccountInformation();
+    },
+    [fetchAccountInformation],
+  );
 
   const handleItemSelect = async (item: JsonOutlineItem) => {
     if (messenger && jsonDocument) {
@@ -66,44 +93,22 @@ function AccountActions({ signer, open, onToggle }: AccountActionsProps) {
     return () => {
       refreshElement.removeEventListener("click", handleRefreshClick);
     };
-  });
+  }, [handleRefreshClick]);
 
   useEffect(() => {
-    if (!open || !accountData || !messenger) {
-      return;
-    }
-    const document = new JsonDocument("Account", accountData);
-    setJsonDocument(document);
-    const outline = new JsonOutline(document, ACCOUNT_KNOWN_PARTS);
-    setOutlineItems(outline.items);
-
-    if (shouldShowDocument) {
+    if (shouldShowDocument && jsonDocument && messenger) {
       messenger
         .send("showJsonOutline", {
-          id: document.id,
-          json: document.jsonString,
-          outlineItems: outline.items,
+          id: jsonDocument.id,
+          json: jsonDocument.jsonString,
+          outlineItems: outlineItems,
         })
         .then(() => {
           setShouldShowDocument(false);
         })
         .catch(console.error);
     }
-  }, [open, accountData, messenger, shouldShowDocument, setShouldShowDocument]);
-
-  const fetchAccountInformation = useCallback(async () => {
-    if (messenger && selectedAccountAddress) {
-      setLoading(true);
-      try {
-        const account = await signer.getAccountByAddress(selectedAccountAddress);
-        setAccountData(account);
-        setShouldShowDocument(true);
-      } catch (error: unknown) {
-        await messenger.send("showError", { message: "Failed to get account info", detail: String(error) });
-      }
-      setLoading(false);
-    }
-  }, [messenger, selectedAccountAddress, signer]);
+  }, [shouldShowDocument, jsonDocument, outlineItems, messenger]);
 
   const collapsibleRef = useCollapsibleToggle((open) => {
     if (onToggle) {

@@ -9,6 +9,15 @@
   "engines": {
     "node": "24.11.1"
   },
+  "pnpm": {
+    "overrides": {
+      "@tari-project/tari-signer": "0.13.0",
+      "@tari-project/tarijs-all": "0.13.0",
+      "@tari-project/typescript-bindings": "1.15.0",
+      "@tari-project/wallet-connect-signer": "0.13.0",
+      "@tari-project/wallet-daemon-signer": "0.13.0"
+    }
+  },
   "devDependencies": {
     "@moonrepo/cli": "^1.41.7"
   }

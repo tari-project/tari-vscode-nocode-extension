@@ -381,11 +381,11 @@ importers:
         specifier: 'catalog:'
         version: 0.14.4
       '@vscode-elements/elements':
-        specifier: ^1.13.1
-        version: 1.13.1
+        specifier: ^1.17.0
+        version: 1.17.0
       '@vscode-elements/react-elements':
-        specifier: ^0.9.0
-        version: 0.9.0(@types/react@19.2.7)(react@19.2.0)
+        specifier: ^1.15.1
+        version: 1.15.1(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@vscode/codicons':
         specifier: ^0.0.43
         version: 0.0.43
@@ -2075,13 +2075,14 @@ packages:
   '@volar/typescript@2.4.12':
     resolution: {integrity: sha512-HJB73OTJDgPc80K30wxi3if4fSsZZAOScbj2fcicMuOPoOkcf9NNAINb33o+DzhBdF9xTKC1gnPmIRDous5S0g==}
 
-  '@vscode-elements/elements@1.13.1':
-    resolution: {integrity: sha512-bqsKRbm8yoFhLRHyUaXSE9ydsbGJLrWx5nBTILchx/EkYxcsYJjHFMtGZ8wJG9gaDdve46g1mjq1FZuWY2327Q==}
+  '@vscode-elements/elements@1.17.0':
+    resolution: {integrity: sha512-7kx1kqZGue3I5YcUOxy5fM/x32XSNzubStWQP5m0rG6Q5bvZVjQfmycsVjS+5PWk+a3dbFoM/XBt2ld1TjIQ/g==}
 
-  '@vscode-elements/react-elements@0.9.0':
-    resolution: {integrity: sha512-pGWp6OBDAZXJ0tZqN+2SCiKhvhW3/cE4XJyiVHXH4Ft6KteuNVg20oexFv0M66U9iAZElQjPF8M9pBBABLaUZg==}
+  '@vscode-elements/react-elements@1.15.1':
+    resolution: {integrity: sha512-AePFOL39rvAaeC7t1ZOVc05ixBK6F3NAaST5kgRpP0K9h+XFA2x8RBZpdvYsEtX3lu/wtW71qqdA6Z3xskuiWA==}
     peerDependencies:
-      react: ^18.0.0
+      react: 17 || 18 || 19
+      react-dom: 17 || 18 || 19
 
   '@vscode-elements/webview-playground@1.9.0':
     resolution: {integrity: sha512-0VMzdeLisbmACMXSyNhtkgca/wLmBMrVq4T0T8MGzPhLg9uDcgEaCscTdVaNg2tPwfCtmSN2BU8KGTEH1iqdhA==}
@@ -7511,15 +7512,16 @@ snapshots:
       path-browserify: 1.0.1
       vscode-uri: 3.1.0
 
-  '@vscode-elements/elements@1.13.1':
+  '@vscode-elements/elements@1.17.0':
     dependencies:
       lit: 3.3.0
 
-  '@vscode-elements/react-elements@0.9.0(@types/react@19.2.7)(react@19.2.0)':
+  '@vscode-elements/react-elements@1.15.1(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       '@lit/react': 1.0.7(@types/react@19.2.7)
-      '@vscode-elements/elements': 1.13.1
+      '@vscode-elements/elements': 1.17.0
       react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
     transitivePeerDependencies:
       - '@types/react'
 

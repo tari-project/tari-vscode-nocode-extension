@@ -19,7 +19,7 @@
     "react-dom": "catalog:",
     "@tari-project/tari-extension-common": "workspace:^",
     "@tari-project/tari-extension-query-builder": "workspace:^",
-    "use-debounce": "^10.0.5"
+    "use-debounce": "^10.0.6"
   },
   "devDependencies": {
     "@eslint/js": "catalog:",

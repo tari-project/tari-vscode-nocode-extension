@@ -15,7 +15,10 @@
       "@tari-project/tarijs-all": "0.13.0",
       "@tari-project/typescript-bindings": "1.15.0",
       "@tari-project/wallet-connect-signer": "0.13.0",
-      "@tari-project/wallet-daemon-signer": "0.13.0"
+      "@tari-project/wallet-daemon-signer": "0.13.0",
+      "glob": "^11.1.0",
+      "js-yaml": "^4.1.1",
+      "brace-expansion": "^1.1.12"
     }
   },
   "devDependencies": {

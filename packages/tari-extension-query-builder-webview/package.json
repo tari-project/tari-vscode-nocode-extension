@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "preview": "vite preview",
-    "ladle": "ladle serve"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@tari-project/tarijs-all": "catalog:",

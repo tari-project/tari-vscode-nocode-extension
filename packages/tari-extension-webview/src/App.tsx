@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     if (import.meta.env.DEV) {
-       void import("@vscode-elements/webview-playground");
+      void import("@vscode-elements/webview-playground");
     }
   }, []);
 

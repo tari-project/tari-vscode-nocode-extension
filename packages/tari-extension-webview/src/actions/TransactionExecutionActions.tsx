@@ -13,7 +13,7 @@ import {
   VscodeTableRow,
 } from "@vscode-elements/react-elements";
 import { useTariStore } from "../store/tari-store";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import JsonOutlineTree from "../components/JsonOutlineTree";
 import { JsonOutlineItem } from "@tari-project/tari-extension-common";
@@ -40,40 +40,46 @@ function TransactionExecutionActions({ open, onToggle }: TransactionExecutionAct
     useShallow(selector),
   );
   const messenger = useTariStore((state) => state.messenger);
-  const [jsonDocument, setJsonDocument] = useState<JsonDocument | undefined>(undefined);
-  const [outlineItems, setOutlineItems] = useState<JsonOutlineItem[]>([]);
   const [shouldShowDocument, setShouldShowDocument] = useState(false);
   const hasItems = transactionExecutions && transactionExecutions.length > 0;
 
-  useEffect(() => {
-    if (!open || !openedTransactionResult || !messenger) {
-      return;
+  const jsonDocument = useMemo(() => {
+    if (!open || !openedTransactionResult) {
+      return undefined;
     }
     const json = openedTransactionResult.result;
     if (!json) {
-      return;
+      return undefined;
     }
-    const document = new JsonDocument("Execution result", json);
-    setJsonDocument(document);
-    const outline = new JsonOutline(document, TRANSACTION_EXECUTION_PARTS);
-    setOutlineItems(outline.items);
+    return new JsonDocument("Execution result", json);
+  }, [open, openedTransactionResult]);
 
-    if (shouldShowDocument) {
+  const outlineItems = useMemo(() => {
+    if (!jsonDocument) {
+      return [];
+    }
+    const outline = new JsonOutline(jsonDocument, TRANSACTION_EXECUTION_PARTS);
+    return outline.items;
+  }, [jsonDocument]);
+
+  useEffect(() => {
+    if (shouldShowDocument && messenger && jsonDocument) {
       messenger
         .send("showJsonOutline", {
-          id: document.id,
-          json: document.jsonString,
-          outlineItems: outline.items,
+          id: jsonDocument.id,
+          json: jsonDocument.jsonString,
+          outlineItems: outlineItems,
         })
         .then(() => {
           setShouldShowDocument(false);
         })
         .catch(console.error);
     }
-  }, [open, openedTransactionResult, messenger, shouldShowDocument, setShouldShowDocument]);
+  }, [shouldShowDocument, messenger, jsonDocument, outlineItems]);
 
   const handleLoadTransaction = (result: GetTransactionResultResponse) => {
     setOpenedTransactionResult(result);
+    setShouldShowDocument(true);
   };
 
   const handleItemSelect = async (item: JsonOutlineItem) => {

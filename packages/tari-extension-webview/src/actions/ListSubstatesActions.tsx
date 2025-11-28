@@ -16,7 +16,7 @@ import "./list-overflow.css";
 import { useTariStore } from "../store/tari-store";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import { JsonOutlineItem } from "@tari-project/tari-extension-common";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import JsonOutlineTree from "../components/JsonOutlineTree";
 import { JsonOutline } from "../json-parser/JsonOutline";
 import { SUBSTATE_LIST_PARTS } from "../json-parser/known-parts/substate-list";
@@ -62,12 +62,26 @@ function ListSubstatesActions({ signer, onViewDetails, open, onToggle }: ListSub
     setLimit,
     setOffset,
   } = useTariStore(useShallow(selector));
-  const [jsonDocument, setJsonDocument] = useState<JsonDocument | undefined>(undefined);
-  const [outlineItems, setOutlineItems] = useState<JsonOutlineItem[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [shouldShowDocument, setShouldShowDocument] = useState(false);
 
   const collapsibleRef = useCollapsibleToggle(onToggle ?? (() => undefined));
+
+  const jsonDocument = useMemo(() => {
+    if (!open || !substates) {
+      return undefined;
+    }
+    return new JsonDocument("Substates", substates);
+  }, [open, substates]);
+
+  const outlineItems = useMemo(() => {
+    if (!jsonDocument) {
+      return [];
+    }
+    const outline = new JsonOutline(jsonDocument, SUBSTATE_LIST_PARTS);
+    return outline.items;
+  }, [jsonDocument]);
 
   const handleItemSelect = async (item: JsonOutlineItem) => {
     if (messenger && jsonDocument) {
@@ -81,27 +95,19 @@ function ListSubstatesActions({ signer, onViewDetails, open, onToggle }: ListSub
   };
 
   useEffect(() => {
-    if (!open || !substates || !messenger) {
-      return;
-    }
-    const document = new JsonDocument("Substates", substates);
-    setJsonDocument(document);
-    const outline = new JsonOutline(document, SUBSTATE_LIST_PARTS);
-    setOutlineItems(outline.items);
-
-    if (shouldShowDocument) {
+    if (shouldShowDocument && messenger && jsonDocument) {
       messenger
         .send("showJsonOutline", {
-          id: document.id,
-          json: document.jsonString,
-          outlineItems: outline.items,
+          id: jsonDocument.id,
+          json: jsonDocument.jsonString,
+          outlineItems: outlineItems,
         })
         .then(() => {
           setShouldShowDocument(false);
         })
         .catch(console.error);
     }
-  }, [open, substates, messenger, shouldShowDocument, setShouldShowDocument]);
+  }, [shouldShowDocument, messenger, jsonDocument, outlineItems]);
 
   const fetchSubstateList = async () => {
     if (messenger) {

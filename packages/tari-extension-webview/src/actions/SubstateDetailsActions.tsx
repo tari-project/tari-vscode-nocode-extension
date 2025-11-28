@@ -1,6 +1,6 @@
 import { TariSigner } from "@tari-project/tarijs-all";
 import { useTariStore } from "../store/tari-store";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { JsonOutlineItem } from "@tari-project/tari-extension-common";
 import { JsonDocument } from "../json-parser/JsonDocument";
 import {
@@ -44,13 +44,27 @@ function SubstateDetailsActions({
 }: SubstateDetailsActionsProps) {
   const messenger = useTariStore((state) => state.messenger);
   const { substateId, substate, setSubstateId, setSubstate } = useTariStore(useShallow(selector));
-  const [jsonDocument, setJsonDocument] = useState<JsonDocument | undefined>(undefined);
-  const [outlineItems, setOutlineItems] = useState<JsonOutlineItem[]>([]);
   const [loading, setLoading] = useState(false);
   const substateIdRef = useRef<ve.VscodeTextfield>(null);
   const [shouldShowDocument, setShouldShowDocument] = useState(false);
+  const lastExternalIdRef = useRef<string | undefined>(undefined);
 
   const collapsibleRef = useCollapsibleToggle(onToggle ?? (() => undefined));
+
+  const jsonDocument = useMemo(() => {
+    if (!open || !substate) {
+      return undefined;
+    }
+    return new JsonDocument("Substate details", substate);
+  }, [open, substate]);
+
+  const outlineItems = useMemo(() => {
+    if (!jsonDocument) {
+      return [];
+    }
+    const outline = new JsonOutline(jsonDocument, SUBSTATE_DETAILS_PARTS);
+    return outline.items;
+  }, [jsonDocument]);
 
   const handleItemSelect = async (item: JsonOutlineItem) => {
     if (messenger && jsonDocument) {
@@ -64,27 +78,19 @@ function SubstateDetailsActions({
   };
 
   useEffect(() => {
-    if (!open || !substate || !messenger) {
-      return;
-    }
-    const document = new JsonDocument("Substate details", substate);
-    setJsonDocument(document);
-    const outline = new JsonOutline(document, SUBSTATE_DETAILS_PARTS);
-    setOutlineItems(outline.items);
-
-    if (shouldShowDocument) {
+    if (shouldShowDocument && messenger && jsonDocument) {
       messenger
         .send("showJsonOutline", {
-          id: document.id,
-          json: document.jsonString,
-          outlineItems: outline.items,
+          id: jsonDocument.id,
+          json: jsonDocument.jsonString,
+          outlineItems: outlineItems,
         })
         .then(() => {
           setShouldShowDocument(false);
         })
         .catch(console.error);
     }
-  }, [open, substate, messenger, shouldShowDocument, setShouldShowDocument]);
+  }, [shouldShowDocument, messenger, jsonDocument, outlineItems]);
 
   const fetchSubstateDetails = useCallback(
     async (substateIdToFetch: string) => {
@@ -112,9 +118,12 @@ function SubstateDetailsActions({
   useEnterKey(substateIdRef, handleEnterPressed);
 
   useEffect(() => {
-    if (externalSubstateId !== undefined) {
+    if (externalSubstateId !== undefined && externalSubstateId !== lastExternalIdRef.current) {
+      lastExternalIdRef.current = externalSubstateId;
       setSubstateId(externalSubstateId);
-      void fetchSubstateDetails(externalSubstateId);
+      setTimeout(() => {
+        void fetchSubstateDetails(externalSubstateId);
+      }, 0);
     }
   }, [externalSubstateId, fetchSubstateDetails, setSubstateId]);
 

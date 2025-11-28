@@ -8,7 +8,7 @@ interface PropertyDetails {
 }
 
 export function getPropertyDetails(node?: Node): PropertyDetails | null {
-  if (!node || node.type !== "property") {
+  if (node?.type !== "property") {
     return null;
   }
   const values = node.children?.map(getNodeRawValue) ?? [];

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { useDebounce } from "use-debounce";
 import { QueryBuilder, TemplateReader, useStore } from "@tari-project/tari-extension-query-builder";
 import {
@@ -20,7 +20,7 @@ interface AppProps {
 function App({ messenger }: AppProps) {
   const [theme, setTheme] = useState<Theme>("dark");
   const [editable, setEditable] = useState(true);
-  const [readySent, setReadySent] = useState(false);
+  const readySent = useRef(false);
 
   const changeCounter = useStore((store) => store.changeCounter);
   const saveStateToString = useStore((store) => store.saveStateToString);
@@ -67,11 +67,11 @@ function App({ messenger }: AppProps) {
       return Promise.resolve(undefined);
     });
 
-    if (!readySent) {
+    if (!readySent.current) {
       messenger.send("ready", undefined).catch(console.log);
-      setReadySent(true);
+      readySent.current = true;
     }
-  }, [messenger, saveStateToString, loadStateFromString, addNodesToCenter, readySent, setReadySent]);
+  }, [messenger, saveStateToString, loadStateFromString, addNodesToCenter]);
 
   useEffect(() => {
     if (!messenger || !changeCounterDebounced) {

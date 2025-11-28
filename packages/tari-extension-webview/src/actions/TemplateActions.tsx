@@ -1,6 +1,6 @@
 import { TariSigner } from "@tari-project/tarijs-all";
 import { useCollapsibleToggle } from "../hooks/collapsible-toggle";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTariStore } from "../store/tari-store";
 import {
   VscodeButton,
@@ -40,13 +40,26 @@ function TemplateActions({ signer, open, onToggle }: TemplateActionsProps) {
   const newFlowRef = useRef<ve.VscodeIcon | null>(null);
   const messenger = useTariStore((state) => state.messenger);
   const { templateAddress, templateDef, setTemplateAddress, setTemplateDef } = useTariStore(useShallow(selector));
-  const [jsonDocument, setJsonDocument] = useState<JsonDocument | undefined>(undefined);
-  const [outlineItems, setOutlineItems] = useState<JsonOutlineItem[]>([]);
   const [loading, setLoading] = useState(false);
   const templateAddressRef = useRef<ve.VscodeTextfield>(null);
   const [shouldShowDocument, setShouldShowDocument] = useState(false);
 
   const collapsibleRef = useCollapsibleToggle(onToggle ?? (() => undefined));
+
+  const jsonDocument = useMemo(() => {
+    if (!open || !templateDef) {
+      return undefined;
+    }
+    return new JsonDocument("Template definition", templateDef);
+  }, [open, templateDef]);
+
+  const outlineItems = useMemo(() => {
+    if (!jsonDocument) {
+      return [];
+    }
+    const outline = new JsonOutline(jsonDocument, TEMPLATE_DETAILS_PARTS);
+    return outline.items;
+  }, [jsonDocument]);
 
   const handleItemSelect = async (item: JsonOutlineItem) => {
     if (messenger && jsonDocument) {
@@ -80,12 +93,15 @@ function TemplateActions({ signer, open, onToggle }: TemplateActionsProps) {
     };
   };
 
-  const handleNewFlowClick = (event: MouseEvent) => {
-    event.stopPropagation();
-    if (messenger) {
-      messenger.send("newTariFlow", undefined).catch(console.log);
-    }
-  };
+  const handleNewFlowClick = useCallback(
+    (event: MouseEvent) => {
+      event.stopPropagation();
+      if (messenger) {
+        messenger.send("newTariFlow", undefined).catch(console.log);
+      }
+    },
+    [messenger],
+  );
 
   useEffect(() => {
     if (!newFlowRef.current) return;
@@ -95,30 +111,22 @@ function TemplateActions({ signer, open, onToggle }: TemplateActionsProps) {
     return () => {
       newFlowElement.removeEventListener("click", handleNewFlowClick);
     };
-  });
+  }, [handleNewFlowClick]);
 
   useEffect(() => {
-    if (!open || !templateDef || !messenger) {
-      return;
-    }
-    const document = new JsonDocument("Template definition", templateDef);
-    setJsonDocument(document);
-    const outline = new JsonOutline(document, TEMPLATE_DETAILS_PARTS);
-    setOutlineItems(outline.items);
-
-    if (shouldShowDocument) {
+    if (shouldShowDocument && messenger && jsonDocument) {
       messenger
         .send("showJsonOutline", {
-          id: document.id,
-          json: document.jsonString,
-          outlineItems: outline.items,
+          id: jsonDocument.id,
+          json: jsonDocument.jsonString,
+          outlineItems: outlineItems,
         })
         .then(() => {
           setShouldShowDocument(false);
         })
         .catch(console.error);
     }
-  }, [open, templateDef, messenger, shouldShowDocument, setShouldShowDocument]);
+  }, [shouldShowDocument, messenger, jsonDocument, outlineItems]);
 
   const fetchTemplateDetails = useCallback(
     async (templateAddressToFetch: string) => {

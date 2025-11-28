@@ -174,10 +174,10 @@ function getTypeProps(type: Type): TypeProps {
         { message: "Invalid bigint string" },
       )
       .transform((val) => BigInt(val))
-      .refine((val) => BigInt(val) >= minValue, {
+      .refine((val) => val >= minValue, {
         message: `Value must be greater than or equal to ${minValue.toString()}`,
       })
-      .refine((val) => BigInt(val) <= maxValue, {
+      .refine((val) => val <= maxValue, {
         message: `Value must be less than or equal to ${maxValue.toString()}`,
       })
       .transform((val) => new WrappedBigInt(val));

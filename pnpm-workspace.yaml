@@ -15,7 +15,7 @@ catalog:
   uuid: ^13.0.0
   vitest: ^4.0.14
   vite: ^7.2.4
-  zustand: "^5.0.8"
+  zustand: "^5.0.9"
   "@eslint/js": ^9.39.1
   "@vitejs/plugin-react": ^5.1.1
   "@tari-project/tarijs-all": =0.13.0

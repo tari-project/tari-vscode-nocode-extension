@@ -11,10 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/tari-project/tari-vscode-nocode-extension.git"
   },
-  "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "keywords": [],
   "author": "Tari Labs",
   "license": "ISC",

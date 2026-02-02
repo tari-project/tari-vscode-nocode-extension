@@ -10,8 +10,6 @@ on:
 env:
   # Set the Node.js version to use
   NODE_VERSION: '24'
-  # Set the pnpm version to use
-  PNPM_VERSION: '10'
 
 permissions:
   id-token: write
@@ -26,8 +24,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6

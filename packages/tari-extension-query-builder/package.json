@@ -1,8 +1,19 @@
 {
   "name": "@tari-project/tari-extension-query-builder",
-  "private": false,
-  "version": "0.0.16",
+  "version": "0.0.17",
   "type": "module",
+  "homepage": "https://github.com/tari-project/tari-vscode-nocode-extension#readme",
+  "bugs": {
+    "url": "https://github.com/tari-project/tari-vscode-nocode-extension/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tari-project/tari-vscode-nocode-extension.git"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --build tsconfig.lib.json && BUILD_LIB=true vite build",

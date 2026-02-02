@@ -1,8 +1,19 @@
 {
   "name": "@tari-project/tari-extension-common",
-  "private": false,
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Tari VS Code extension common code",
+  "homepage": "https://github.com/tari-project/tari-vscode-nocode-extension#readme",
+  "bugs": {
+    "url": "https://github.com/tari-project/tari-vscode-nocode-extension/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tari-project/tari-vscode-nocode-extension.git"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build:cjs": "tsc -p tsconfig.json",
     "build:esm": "tsc -p tsconfig.esm.json",
@@ -12,7 +23,7 @@
     "format:fix": "prettier --write ."
   },
   "keywords": [],
-  "author": "",
+  "author": "Tari Labs",
   "license": "ISC",
   "files": [
     "dist"

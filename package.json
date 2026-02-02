@@ -1,14 +1,27 @@
 {
   "name": "tari-extension",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Tari VS Code extension",
   "type": "module",
+  "homepage": "https://github.com/tari-project/tari-vscode-nocode-extension#readme",
+  "bugs": {
+    "url": "https://github.com/tari-project/tari-vscode-nocode-extension/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tari-project/tari-vscode-nocode-extension.git"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Tari Labs",
   "license": "ISC",
   "engines": {
     "node": "24.11.1"
   },
+  "packageManager": "pnpm@10.28.0",
   "pnpm": {
     "overrides": {
       "@tari-project/tari-signer": "0.13.0",

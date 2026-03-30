@@ -92,7 +92,7 @@ jobs:
       - name: Deploy to GitHub Pages
         if: steps.schema_diff.outputs.skip_publish == 'false'
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Skip deploy (schema unchanged)

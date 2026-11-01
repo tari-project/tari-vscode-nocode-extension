@@ -170,6 +170,20 @@ describe(ExecutionPlanner, () => {
         const executor = new ExecutionPlanner(nodes, edges);
         expect(() => executor.getExecutionOrder()).toThrowError(CycleDetectedError);
       });
+
+      it("there is a 2-node cycle between an exit-entry edge and an output-input edge", () => {
+        const nodes: GenericNode[] = [
+          buildNode("A", { output: buildOutputParameter("output_a") }),
+          buildNode("B", { inputs: [buildInputParameter("input_b")] }),
+        ];
+        const edges: Edge[] = [
+          buildEdge({ nodeId: "B", handleId: NODE_EXIT }, { nodeId: "A", handleId: NODE_ENTRY }),
+          buildEdge({ nodeId: "A", handleId: "output_a" }, { nodeId: "B", handleId: "input_b" }),
+        ];
+
+        const executor = new ExecutionPlanner(nodes, edges);
+        expect(() => executor.getExecutionOrder()).toThrowError(CycleDetectedError);
+      });
     });
   });
 });

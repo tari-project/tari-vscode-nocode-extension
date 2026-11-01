@@ -12,6 +12,7 @@ import {
   TransactionDetails,
 } from "@/execute/types";
 import { Type } from "@tari-project/typescript-bindings";
+import { WrappedBigInt } from "@/query-builder/wrapped-bigint";
 import * as ts from "typescript";
 
 const factory = ts.factory;
@@ -339,20 +340,10 @@ export class BuilderCodegen {
     if (description.name !== "EmitLog") {
       throw new Error(`Unknown instruction: ${description.name}`);
     }
-    const getArg = (idx: number) => {
-      const arg = description.args[idx];
-      return arg.type === "input"
-        ? factory.createPropertyAccessExpression(
-            factory.createIdentifier(arg.reference.name),
-            factory.createIdentifier(arg.reference.inputParam.name),
-          )
-        : description.args[idx].value;
-    };
-
     const call = {
       [description.name]: {
-        level: getArg(0),
-        message: getArg(1),
+        level: this.createArgValueAst(description.args[0]),
+        message: this.createArgValueAst(description.args[1]),
       },
     };
 
@@ -408,9 +399,21 @@ export class BuilderCodegen {
   }
 }
 
+function createNumericOrBigIntAst(val: number | bigint): ts.Expression {
+  if (val < 0) {
+    const absStr = typeof val === "bigint" ? (-val).toString() : Math.abs(val).toString();
+    return factory.createPrefixUnaryExpression(ts.SyntaxKind.MinusToken, factory.createNumericLiteral(absStr));
+  }
+  return factory.createNumericLiteral(val.toString());
+}
+
 function transformObjectToAst(obj: unknown): ts.Expression | ts.Expression[] {
   if (Array.isArray(obj)) {
     return obj.map((item) => transformObjectToAst(item) as ts.Expression);
+  }
+
+  if (obj instanceof WrappedBigInt) {
+    return createNumericOrBigIntAst(obj.valueOf());
   }
 
   if (typeof obj === "object" && obj !== null) {
@@ -423,8 +426,8 @@ function transformObjectToAst(obj: unknown): ts.Expression | ts.Expression[] {
     return factory.createObjectLiteralExpression(properties, true);
   } else if (typeof obj === "string") {
     return factory.createStringLiteral(obj);
-  } else if (typeof obj === "number") {
-    return factory.createNumericLiteral(obj);
+  } else if (typeof obj === "number" || typeof obj === "bigint") {
+    return createNumericOrBigIntAst(obj);
   } else if (typeof obj === "boolean") {
     return obj ? factory.createTrue() : factory.createFalse();
   } else if (obj === null) {

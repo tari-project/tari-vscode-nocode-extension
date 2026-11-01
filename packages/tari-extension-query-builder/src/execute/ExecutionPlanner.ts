@@ -88,24 +88,27 @@ export class ExecutionPlanner {
       if (node.outputParameter) {
         this.outputToInputDependencies.set(node.id, []);
       }
+      if (node.exitPoint) {
+        this.addOutgoingConnection(node.id, node.exitPoint);
+        this.adjustIncomingConnectionCount(node.exitPoint, 1);
+      }
+    }
+    for (const node of this.nodes) {
       if (node.inputParameters) {
         for (const paramName in node.inputParameters) {
           const sourceNodeId = node.inputParameters[paramName].source;
           if (sourceNodeId) {
-            if (!node.exitPoint || node.exitPoint !== sourceNodeId) {
+            const existingOut = this.outgoingConnections.get(sourceNodeId);
+            if (!existingOut?.includes(node.id)) {
               this.addOutgoingConnection(sourceNodeId, node.id);
               this.adjustIncomingConnectionCount(node.id, 1);
-              const deps = this.outputToInputDependencies.get(sourceNodeId);
-              if (deps) {
-                deps.push(node.id);
-              }
+            }
+            const deps = this.outputToInputDependencies.get(sourceNodeId);
+            if (deps && !deps.includes(node.id)) {
+              deps.push(node.id);
             }
           }
         }
-      }
-      if (node.exitPoint) {
-        this.addOutgoingConnection(node.id, node.exitPoint);
-        this.adjustIncomingConnectionCount(node.exitPoint, 1);
       }
     }
   }

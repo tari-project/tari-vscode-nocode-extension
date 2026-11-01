@@ -164,6 +164,9 @@ function getTypeProps(type: Type): TypeProps {
       .string()
       .refine(
         (val) => {
+          if (val.trim().length === 0) {
+            return false;
+          }
           try {
             BigInt(val);
             return true;
